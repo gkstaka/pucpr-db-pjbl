@@ -4,4 +4,5 @@ from sqlalchemy.orm import DeclarativeBase
 
 
 class Base(DeclarativeBase):
-    pass
+    def __init__(self, **kw: Any):
+        super().__init__(**kw)
