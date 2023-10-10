@@ -1,0 +1,8 @@
+cffi==1.15.1
+cryptography==41.0.3
+greenlet==2.0.2
+pycparser==2.21
+PyMySQL==1.1.0
+SQLAlchemy==2.0.20
+SQLAlchemy-Utils==0.41.1
+typing_extensions==4.7.1
