@@ -13,3 +13,4 @@ from models.dosage import Dosage
 from models.medicine import Medicine
 from models.treatment import Treatment
 from models.medical_record import MedicalRecord
+from models.suggestion import Suggestion

@@ -1,6 +1,4 @@
-from datetime import datetime
-
-from sqlalchemy import VARCHAR, DATETIME, ForeignKey
+from sqlalchemy import ForeignKey
 from sqlalchemy.dialects.mysql import MEDIUMINT
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 

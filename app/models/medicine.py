@@ -1,10 +1,10 @@
-from datetime import datetime
+from typing import List
 
-from sqlalchemy import VARCHAR, DATETIME, ForeignKey
+from sqlalchemy import VARCHAR
 from sqlalchemy.dialects.mysql import MEDIUMINT
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from models import Base, Dosage
+from models import Base
 
 
 class Medicine(Base):
@@ -26,7 +26,13 @@ class Medicine(Base):
     contraindication: Mapped[str] = mapped_column(
         "contraindication", VARCHAR(200), nullable=False, unique=False
     )
-    suggestions: Mapped["Suggestion"] = relationship(
+    suggestions: Mapped[List["Suggestion"]] = relationship(
         back_populates="medicine", cascade="all, delete-orphan"
     )
 
+    def __init__(self, name, composition, usage_type, indication, contraindication):
+        self.name = name
+        self.composition = composition
+        self.usage_type = usage_type
+        self.indication = indication
+        self.contraindication = contraindication

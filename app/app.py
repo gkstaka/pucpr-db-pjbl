@@ -1,6 +1,14 @@
 from datetime import datetime
 
-from models import Person, Professional, Patient, Doctor, Psychologist, Consultation
+from models import (
+    Person,
+    Professional,
+    Patient,
+    Doctor,
+    Psychologist,
+    Consultation,
+    Medicine,
+)
 from services.database import session
 from utils.database_utils import create_db
 
@@ -592,6 +600,55 @@ def create_consultations():
     session.add_all(consultations)
 
 
+def create_medicines():
+    medicines = [
+        Medicine(
+            name="Paracetamol",
+            composition="Magnesium stearate, cellulose, docusate sodium and sodium benzoate or sodium lauryl sulfate, starch, hydroxypropyl methylcellulose, propylene glycol",
+            usage_type="Oral use",
+            indication="Adults",
+            contraindication="Kids",
+        ),
+        Medicine(
+            name="Ibuprofen",
+            composition="Croscarmellose sodium, colloidal silicon dioxide, hypromellose, iron oxide, polyethylene glycol",
+            usage_type="Oral use",
+            indication="Pain relief, fever reduction, anti-inflammatory",
+            contraindication="Patients with a history of allergic reactions to aspirin or NSAIDs",
+        ),
+        Medicine(
+            name="Amoxicillin",
+            composition="Colloidal silicon dioxide, polyethylene glycol, starch, sodium lauryl sulfate, titanium dioxide",
+            usage_type="Oral use",
+            indication="Bacterial infections",
+            contraindication="Patients with a history of allergic reactions to penicillin",
+        ),
+        Medicine(
+            name="Omeprazole",
+            composition="Crospovidone, hypromellose, magnesium stearate, mannitol, sodium lauryl sulfate",
+            usage_type="Oral use",
+            indication="Gastric acid reduction",
+            contraindication="Patients with hypersensitivity to proton pump inhibitors",
+        ),
+        Medicine(
+            name="Loratadine",
+            composition="Calcium phosphate, lactose, magnesium stearate, corn starch",
+            usage_type="Oral use",
+            indication="Allergy relief",
+            contraindication="Patients with severe kidney disorders",
+        ),
+        Medicine(
+            name="Aspirin",
+            composition="Corn starch, hypromellose, powdered cellulose, triacetin",
+            usage_type="Oral use",
+            indication="Pain relief, fever reduction, anti-inflammatory",
+            contraindication="Patients with a history of bleeding disorders",
+        ),
+    ]
+
+    session.add_all(medicines)
+
+
 if __name__ == "__main__":
     print("Creating database...")
     create_db()
@@ -602,5 +659,11 @@ if __name__ == "__main__":
     create_doctors()
     create_psychologists()
     create_consultations()
+    create_medicines()
+
+    # Todo:
+    # create_dosages()
+    # create_suggestions()
+    # create_medical_record()
 
     session.commit()
