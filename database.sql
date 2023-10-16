@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `psychiatric_hospital`.`person` (
     `city` VARCHAR(200) NULL,
     `state` CHAR(2) NULL,
     `country` CHAR(3) NULL,
-    `phone` CHAR(11) NOT NULL,
+    `phone` VARCHAR(14) NOT NULL,
     `email` VARCHAR(50) NOT NULL,
     PRIMARY KEY (`id`)
 );
