@@ -3,7 +3,7 @@ from typing import List
 from datetime import date
 from sqlalchemy import VARCHAR, CHAR, INTEGER, DATE
 
-from models import Base, Professional, Patient
+from models import Base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.dialects.mysql import MEDIUMINT
 
