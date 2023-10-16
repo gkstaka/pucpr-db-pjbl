@@ -30,7 +30,7 @@ class Patient(Base):
         "emergency_contact_name", VARCHAR(200), nullable=False, unique=False
     )
     emergency_contact_phone: Mapped[str] = mapped_column(
-        "emergency_contact_phone", CHAR(11), nullable=False, unique=False
+        "emergency_contact_phone", VARCHAR(14), nullable=False, unique=False
     )
     health_insurance: Mapped[str] = mapped_column(
         "health_insurance", VARCHAR(50), nullable=False, unique=False

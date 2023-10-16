@@ -1,4 +1,4 @@
-from sqlalchemy import ForeignKey, CHAR
+from sqlalchemy import ForeignKey, VARCHAR
 from sqlalchemy.dialects.mysql import MEDIUMINT
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -17,7 +17,7 @@ class Doctor(Base):
         primary_key=True,
     )
 
-    crm: Mapped[str] = mapped_column("crm", CHAR(10), nullable=False, unique=True)
+    crm: Mapped[str] = mapped_column("crm", VARCHAR(10), nullable=False, unique=True)
     professional: Mapped["Professional"] = relationship(back_populates="doctors")
 
     def __init__(self, crm, professional):
