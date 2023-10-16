@@ -504,27 +504,27 @@ def create_doctors():
 
     doctors = [
         Doctor(
-            crm=39489,
+            crm="39489",
             professional=professionals[0],
         ),
         Doctor(
-            crm=340809,
+            crm="340809",
             professional=professionals[1],
         ),
         Doctor(
-            crm=20398,
+            crm="20398",
             professional=professionals[2],
         ),
         Doctor(
-            crm=32322311,
+            crm="32322311",
             professional=professionals[3],
         ),
         Doctor(
-            crm=3948939,
+            crm="3948939",
             professional=professionals[4],
         ),
         Doctor(
-            crm=39489999,
+            crm="39489999",
             professional=professionals[5],
         ),
     ]
