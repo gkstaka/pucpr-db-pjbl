@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `psychiatric_hospital`.`patient` (
     `marital_status` VARCHAR(200) NOT NULL,
     `profession` VARCHAR(200) NOT NULL,
     `emergency_contact_name` VARCHAR(200) NOT NULL,
-    `emergency_contact_phone` VARCHAR(200) NOT NULL,
+    `emergency_contact_phone` VARCHAR(14) NOT NULL,
     `health_insurance` VARCHAR(50) NOT NULL,
     `hospitalization_date` DATETIME NOT NULL DEFAULT (NOW()),
     PRIMARY KEY (`id`),
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `psychiatric_hospital`.`professional` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `psychiatric_hospital`.`doctor` (
     `id` MEDIUMINT UNSIGNED NOT NULL,
-    `crm` CHAR(10) NOT NULL,
+    `crm` VARCHAR(10) NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE (`crm`),
     FOREIGN KEY (`id`) REFERENCES `psychiatric_hospital`.`professional` (`id`)
@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `psychiatric_hospital`.`doctor` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `psychiatric_hospital`.`psychologist` (
     `id` MEDIUMINT UNSIGNED NOT NULL,
-    `crp` CHAR(10) NOT NULL,
+    `crp` VARCHAR(10) NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE (`crp`),
     FOREIGN KEY (`id`) REFERENCES `psychiatric_hospital`.`professional` (`id`)
