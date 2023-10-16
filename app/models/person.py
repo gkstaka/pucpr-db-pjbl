@@ -3,7 +3,7 @@ from typing import List
 from datetime import date
 from sqlalchemy import VARCHAR, CHAR, INTEGER, DATE
 
-from models import Base
+from models import Base, Professional, Patient
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.dialects.mysql import MEDIUMINT
 
@@ -40,7 +40,7 @@ class Person(Base):
     country: Mapped[str] = mapped_column(
         "country", CHAR(3), nullable=True, unique=False
     )
-    phone: Mapped[str] = mapped_column("phone", CHAR(14), nullable=False, unique=True)
+    phone: Mapped[str] = mapped_column("phone", VARCHAR(14), nullable=False, unique=True)
     email: Mapped[str] = mapped_column(
         "email", VARCHAR(50), nullable=False, unique=True
     )
