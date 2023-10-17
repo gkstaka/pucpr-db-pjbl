@@ -814,37 +814,37 @@ def create_therapies():
             time=datetime.strptime("01:00:00", "%H:%M:%S"),
             purpose="Cognitive behavioral therapy (CBT) is a form of psychological treatment.",
             capacity=1,
-            psychologist_id=psychologists[0].id
+            psychologist=psychologists[0]
         ),
         Therapy(
             time=datetime.strptime("02:00:00", "%H:%M:%S"),
             purpose="Dialectical behavior therapy (DBT) is a specific type of cognitive-behavioral psychotherapy.",
             capacity=1,
-            psychologist_id=psychologists[1].id
+            psychologist=psychologists[1]
         ),
         Therapy(
             time=datetime.strptime("03:00:00", "%H:%M:%S"),
             purpose="Interpersonal therapy (IPT) is a time-limited treatment.",
             capacity=1,
-            psychologist_id=psychologists[2].id
+            psychologist=psychologists[2]
         ),
         Therapy(
             time=datetime.strptime("04:00:00", "%H:%M:%S"),
             purpose="Psychodynamic therapy is a form of therapy with a focus on a holistic perspective of the client.",
             capacity=1,
-            psychologist_id=psychologists[3].id
+            psychologist=psychologists[3]
         ),
         Therapy(
             time=datetime.strptime("05:00:00", "%H:%M:%S"),
             purpose="Family therapy is a type of psychological counseling (psychotherapy) that helps family members.",
             capacity=1,
-            psychologist_id=psychologists[4].id
+            psychologist=psychologists[4]
         ),
         Therapy(
             time=datetime.strptime("06:00:00", "%H:%M:%S"),
             purpose="Couple therapy is a type of psychological therapy that helps couples of all types.",
             capacity=2,
-            psychologist_id=psychologists[5].id
+            psychologist=psychologists[5]
         )
     ]
 
