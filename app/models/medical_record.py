@@ -48,6 +48,15 @@ class MedicalRecord(Base):
         back_populates="medical_record", cascade="all, delete-orphan"
     )
 
+    def __init__(self, patient_id, doctor_id, psychologist_id, treatment_id, therapy_id, record_date, description):
+        self.patient_id = patient_id
+        self.doctor_id = doctor_id
+        self.psychologist_id = psychologist_id
+        self.treatment_id = treatment_id
+        self.therapy_id = therapy_id
+        self.record_date = record_date
+        self.description = description
+
     @classmethod
     def find_all(cls):
         return session.query(cls).all()

@@ -9,11 +9,21 @@ from models import (
     Consultation,
     Medicine,
     Dosage,
+    MedicalRecord,
+    Disorder,
+    Treatment,
+    Therapy,
+    Suggestion,
+    DoctorSuggestTreatment,
+    DoctorUpdateRecord,
+    MedicalRecordIncludedTherapy,
+    MedicineSuggestion,
+    PsychologistHelpsTreatment,
+    PsychologistUpdateRecord,
+    TreatmentTreatsDisorder
 )
 from services.database import session
 from utils.database_utils import create_db
-
-from sqlalchemy import select
 
 
 def create_people():
@@ -308,12 +318,11 @@ def create_people():
         ),
     ]
 
-    session.add_all(people)
+    Person.save_all(people)
 
 
 def create_professionals():
-    stmt = select(Person)
-    people = [person for person in session.scalars(stmt)][:12]
+    people = Person.find_all()[:12]
 
     professionals = [
         Professional(
@@ -426,12 +435,11 @@ def create_professionals():
         ),
     ]
 
-    session.add_all(professionals)
+    Professional.save_all(professionals)
 
 
 def create_patients():
-    stmt = select(Person)
-    people = [person for person in session.scalars(stmt)][12:18]
+    people = Person.find_all()[12:18]
 
     patients = [
         Patient(
@@ -496,12 +504,11 @@ def create_patients():
         ),
     ]
 
-    session.add_all(patients)
+    Patient.save_all(patients)
 
 
 def create_doctors():
-    stmt = select(Professional)
-    professionals = [professional for professional in session.scalars(stmt)][0:6]
+    professionals = Professional.find_all()[0:6]
 
     doctors = [
         Doctor(
@@ -530,12 +537,11 @@ def create_doctors():
         ),
     ]
 
-    session.add_all(doctors)
+    Doctor.save_all(doctors)
 
 
 def create_psychologists():
-    stmt = select(Professional)
-    professionals = [professional for professional in session.scalars(stmt)][6:12]
+    professionals = Professional.find_all()[6:12]
 
     psychologists = [
         Psychologist(
@@ -564,12 +570,11 @@ def create_psychologists():
         ),
     ]
 
-    session.add_all(psychologists)
+    Psychologist.save_all(psychologists)
 
 
 def create_consultations():
-    stmt = select(Patient)
-    patients = [patient for patient in session.scalars(stmt)]
+    patients = Patient.find_all()
 
     consultations = [
         Consultation(
@@ -598,7 +603,56 @@ def create_consultations():
         ),
     ]
 
-    session.add_all(consultations)
+    Consultation.save_all(consultations)
+
+
+def create_disorders():
+    disorder_list = [
+        Disorder(
+            name="Anxiety",
+            category="Anxiety disorders",
+            symptoms="Excessive worry, restlessness, fatigue, difficulty concentrating, irritability, sleep problems",
+            risk_factors="Trauma, stress due to an illness, stress buildup, personality",
+            prevalence=0.89
+        ),
+        Disorder(
+            name="Depression",
+            category="Mood disorders",
+            symptoms="Sadness, loss of interest, feelings of guilt or low self-worth, disturbed sleep or appetite, tiredness, poor concentration",
+            risk_factors="Childhood trauma, other mental disorders, abuse of alcohol or recreational drugs, personal problems, poverty or isolation",
+            prevalence=0.76
+        ),
+        Disorder(
+            name="Bipolar disorder",
+            category="Mood disorders",
+            symptoms="Mood changes, elevated mood, high energy, sleep problems, loss of appetite, psychosis",
+            risk_factors="Genetic, environmental, brain structure and function",
+            prevalence=0.35
+        ),
+        Disorder(
+            name="Schizophrenia",
+            category="Psychotic disorders",
+            symptoms="Delusions, hallucinations, disorganized thinking, lack of motivation, speaking little",
+            risk_factors="Genetic, environmental, brain chemistry, substance abuse",
+            prevalence=0.01
+        ),
+        Disorder(
+            name="Autism",
+            category="Neurodevelopmental disorders",
+            symptoms="Difficulty with communication and interaction with other people, restricted interests and repetitive behaviors",
+            risk_factors="Genetic, environmental",
+            prevalence=0.12
+        ),
+        Disorder(
+            name="ADHD",
+            category="Neurodevelopmental disorders",
+            symptoms="Difficulty paying attention, hyperactivity, impulsivity",
+            risk_factors="Genetic, environmental",
+            prevalence=0.06
+        )
+    ]
+
+    Disorder.save_all(disorder_list)
 
 
 def create_medicines():
@@ -647,7 +701,7 @@ def create_medicines():
         ),
     ]
 
-    session.add_all(medicines)
+    Medicine.save_all(medicines)
 
 
 def create_dosages():
@@ -678,7 +732,315 @@ def create_dosages():
         ),
     ]
 
-    session.add_all(dosages)
+    Dosage.save_all(dosages)
+
+
+def create_treatments():
+    disorder_list = Disorder.find_all()
+    patient_list = Patient.find_all()
+    doctor_list = Doctor.find_all()
+    psychologist_list = Psychologist.find_all()
+
+    treatments = [
+        Treatment(
+            name="Anxiety treatment",
+            start_date=datetime.strptime("2022-07-15", "%Y-%m-%d").date(),
+            planned_end_date=datetime.strptime("2023-07-15", "%Y-%m-%d").date(),
+            disorder_id=disorder_list[0].id,
+            patient_id=patient_list[0].id,
+            doctor_id=doctor_list[0].id,
+            psychologist_id=psychologist_list[0].id
+        ),
+        Treatment(
+            name="Depression treatment",
+            start_date=datetime.strptime("2023-05-15", "%Y-%m-%d").date(),
+            planned_end_date=datetime.strptime("2024-05-15", "%Y-%m-%d").date(),
+            disorder_id=disorder_list[1].id,
+            patient_id=patient_list[1].id,
+            doctor_id=doctor_list[1].id,
+            psychologist_id=psychologist_list[1].id
+        ),
+        Treatment(
+            name="Bipolar disorder treatment",
+            start_date=datetime.strptime("2023-09-15", "%Y-%m-%d").date(),
+            planned_end_date=datetime.strptime("2024-09-15", "%Y-%m-%d").date(),
+            disorder_id=disorder_list[2].id,
+            patient_id=patient_list[2].id,
+            doctor_id=doctor_list[2].id,
+            psychologist_id=psychologist_list[2].id
+        ),
+        Treatment(
+            name="Schizophrenia treatment",
+            start_date=datetime.strptime("2021-05-01", "%Y-%m-%d").date(),
+            planned_end_date=datetime.strptime("2022-05-01", "%Y-%m-%d").date(),
+            disorder_id=disorder_list[3].id,
+            patient_id=patient_list[3].id,
+            doctor_id=doctor_list[3].id,
+            psychologist_id=psychologist_list[3].id
+        ),
+        Treatment(
+            name="Autism treatment",
+            start_date=datetime.strptime("2022-03-10", "%Y-%m-%d").date(),
+            planned_end_date=datetime.strptime("2023-03-10", "%Y-%m-%d").date(),
+            disorder_id=disorder_list[4].id,
+            patient_id=patient_list[4].id,
+            doctor_id=doctor_list[4].id,
+            psychologist_id=psychologist_list[4].id
+        ),
+        Treatment(
+            name="ADHD treatment",
+            start_date=datetime.strptime("2020-01-01", "%Y-%m-%d").date(),
+            planned_end_date=datetime.strptime("2021-01-01", "%Y-%m-%d").date(),
+            disorder_id=disorder_list[5].id,
+            patient_id=patient_list[5].id,
+            doctor_id=doctor_list[5].id,
+            psychologist_id=psychologist_list[5].id
+        )
+    ]
+
+    Treatment.save_all(treatments)
+
+
+def create_therapies():
+    psychologists = Psychologist.find_all()
+
+    therapy_list = [
+        Therapy(
+            time=datetime.strptime("01:00:00", "%H:%M:%S"),
+            purpose="Cognitive behavioral therapy (CBT) is a form of psychological treatment.",
+            capacity=1,
+            psychologist_id=psychologists[0].id
+        ),
+        Therapy(
+            time=datetime.strptime("02:00:00", "%H:%M:%S"),
+            purpose="Dialectical behavior therapy (DBT) is a specific type of cognitive-behavioral psychotherapy.",
+            capacity=1,
+            psychologist_id=psychologists[1].id
+        ),
+        Therapy(
+            time=datetime.strptime("03:00:00", "%H:%M:%S"),
+            purpose="Interpersonal therapy (IPT) is a time-limited treatment.",
+            capacity=1,
+            psychologist_id=psychologists[2].id
+        ),
+        Therapy(
+            time=datetime.strptime("04:00:00", "%H:%M:%S"),
+            purpose="Psychodynamic therapy is a form of therapy with a focus on a holistic perspective of the client.",
+            capacity=1,
+            psychologist_id=psychologists[3].id
+        ),
+        Therapy(
+            time=datetime.strptime("05:00:00", "%H:%M:%S"),
+            purpose="Family therapy is a type of psychological counseling (psychotherapy) that helps family members.",
+            capacity=1,
+            psychologist_id=psychologists[4].id
+        ),
+        Therapy(
+            time=datetime.strptime("06:00:00", "%H:%M:%S"),
+            purpose="Couple therapy is a type of psychological therapy that helps couples of all types.",
+            capacity=2,
+            psychologist_id=psychologists[5].id
+        )
+    ]
+
+    Therapy.save_all(therapy_list)
+
+
+def create_medical_record():
+    patient_list = Patient.find_all()
+    doctor_list = Doctor.find_all()
+    psychologist_list = Psychologist.find_all()
+    treatment_list = Treatment.find_all()
+    therapy_list = Therapy.find_all()
+
+    medical_records = [
+        MedicalRecord(
+            patient_id=patient_list[0].id,
+            doctor_id=doctor_list[0].id,
+            psychologist_id=psychologist_list[0].id,
+            treatment_id=treatment_list[0].id,
+            therapy_id=therapy_list[0].id,
+            record_date=datetime.strptime("2022-07-15", "%Y-%m-%d").date(),
+            description="Patient is suffering from anxiety disorder"
+        ),
+        MedicalRecord(
+            patient_id=patient_list[1].id,
+            doctor_id=doctor_list[1].id,
+            psychologist_id=psychologist_list[1].id,
+            treatment_id=treatment_list[1].id,
+            therapy_id=therapy_list[1].id,
+            record_date=datetime.strptime("2023-05-15", "%Y-%m-%d").date(),
+            description="Patient is suffering from depression"
+        ),
+        MedicalRecord(
+            patient_id=patient_list[2].id,
+            doctor_id=doctor_list[2].id,
+            psychologist_id=psychologist_list[2].id,
+            treatment_id=treatment_list[2].id,
+            therapy_id=therapy_list[2].id,
+            record_date=datetime.strptime("2023-09-15", "%Y-%m-%d").date(),
+            description="Patient is suffering from bipolar disorder"
+        ),
+        MedicalRecord(
+            patient_id=patient_list[3].id,
+            doctor_id=doctor_list[3].id,
+            psychologist_id=psychologist_list[3].id,
+            treatment_id=treatment_list[3].id,
+            therapy_id=therapy_list[3].id,
+            record_date=datetime.strptime("2021-05-01", "%Y-%m-%d").date(),
+            description="Patient is suffering from schizophrenia"
+        ),
+        MedicalRecord(
+            patient_id=patient_list[4].id,
+            doctor_id=doctor_list[4].id,
+            psychologist_id=psychologist_list[4].id,
+            treatment_id=treatment_list[4].id,
+            therapy_id=therapy_list[4].id,
+            record_date=datetime.strptime("2022-03-10", "%Y-%m-%d").date(),
+            description="Patient is suffering from autism"
+        ),
+        MedicalRecord(
+            patient_id=patient_list[5].id,
+            doctor_id=doctor_list[5].id,
+            psychologist_id=psychologist_list[5].id,
+            treatment_id=treatment_list[5].id,
+            therapy_id=therapy_list[5].id,
+            record_date=datetime.strptime("2020-01-01", "%Y-%m-%d").date(),
+            description="Patient is suffering from ADHD"
+        )
+    ]
+
+    MedicalRecord.save_all(medical_records)
+
+
+def create_suggestions():
+    medicines = Medicine.find_all()
+    dosage_list = Dosage.find_all()
+    medical_records = MedicalRecord.find_all()
+
+    suggestion_list = []
+    for index in range(0, len(medicines)):
+        suggestion_list.append(
+            Suggestion(
+                medicine_id=medicines[index].id,
+                dosage_id=dosage_list[index].id,
+                medical_record_id=medical_records[index].id
+            )
+        )
+
+    Suggestion.save_all(suggestion_list)
+
+
+def create_doctor_suggest_treatment():
+    doctor_list = Doctor.find_all()
+    treatment_list = Treatment.find_all()
+
+    doctor_suggest_treatment_list = []
+    for index in range(0, len(doctor_list)):
+        doctor_suggest_treatment_list.append(
+            DoctorSuggestTreatment(
+                doctor_id=doctor_list[index].id,
+                treatment_id=treatment_list[index].id
+            )
+        )
+
+    DoctorSuggestTreatment.save_all(doctor_suggest_treatment_list)
+
+
+def create_doctor_update_record():
+    doctor_list = Doctor.find_all()
+    medical_records = MedicalRecord.find_all()
+
+    doctor_update_record_list = []
+    for index in range(0, len(doctor_list)):
+        doctor_update_record_list.append(
+            DoctorUpdateRecord(
+                doctor_id=doctor_list[index].id,
+                medical_record_id=medical_records[index].id
+            )
+        )
+
+    DoctorUpdateRecord.save_all(doctor_update_record_list)
+
+
+def create_medical_record_included_therapy():
+    medical_records = MedicalRecord.find_all()
+    therapy_list = Therapy.find_all()
+
+    medical_record_included_therapy_list = []
+    for index in range(0, len(medical_records)):
+        medical_record_included_therapy_list.append(
+            MedicalRecordIncludedTherapy(
+                medical_record_id=medical_records[index].id,
+                therapy_id=therapy_list[index].id
+            )
+        )
+
+    MedicalRecordIncludedTherapy.save_all(medical_record_included_therapy_list)
+
+
+def create_medicine_suggestion():
+    medicine_list = Medicine.find_all()
+    dosage_list = Dosage.find_all()
+
+    medicine_suggestion_list = []
+    for index in range(0, len(medicine_list)):
+        medicine_suggestion_list.append(
+            MedicineSuggestion(
+                medicine_id=medicine_list[index].id,
+                dosage_id=dosage_list[index].id
+            )
+        )
+
+    MedicineSuggestion.save_all(medicine_suggestion_list)
+
+
+def create_psychologist_helps_treatment():
+    psychologists = Psychologist.find_all()
+    treatment_list = Treatment.find_all()
+
+    psychologist_helps_treatment_list = []
+    for index in range(0, len(psychologists)):
+        psychologist_helps_treatment_list.append(
+            PsychologistHelpsTreatment(
+                psychologist_id=psychologists[index].id,
+                treatment_id=treatment_list[index].id
+            )
+        )
+
+    PsychologistHelpsTreatment.save_all(psychologist_helps_treatment_list)
+
+
+def create_psychologist_update_record():
+    psychologists = Psychologist.find_all()
+    medical_records = MedicalRecord.find_all()
+
+    psychologist_update_record_list = []
+    for index in range(0, len(psychologists)):
+        psychologist_update_record_list.append(
+            PsychologistUpdateRecord(
+                psychologist_id=psychologists[index].id,
+                medical_record_id=medical_records[index].id
+            )
+        )
+
+    PsychologistUpdateRecord.save_all(psychologist_update_record_list)
+
+
+def create_treatment_treats_disorder():
+    patient_list = Patient.find_all()
+    treatment_list = Treatment.find_all()
+
+    treatment_treats_disorder_list = []
+    for index in range(0, len(treatment_list)):
+        treatment_treats_disorder_list.append(
+            TreatmentTreatsDisorder(
+                patient_id=patient_list[index].id,
+                treatment_id=treatment_list[index].id
+            )
+        )
+
+    TreatmentTreatsDisorder.save_all(treatment_treats_disorder_list)
 
 
 if __name__ == "__main__":
@@ -686,16 +1048,27 @@ if __name__ == "__main__":
     create_db()
 
     create_people()
-    create_professionals()
     create_patients()
+
+    create_professionals()
     create_doctors()
     create_psychologists()
-    create_consultations()
-    create_medicines()
-    create_dosages()
 
-    # Todo:
-    # create_suggestions()
-    # create_medical_record()
+    create_consultations()
+    create_disorders()
+    create_dosages()
+    create_medicines()
+    create_treatments()
+    create_therapies()
+    create_medical_record()
+    create_suggestions()
+
+    create_doctor_suggest_treatment()
+    create_doctor_update_record()
+    create_medical_record_included_therapy()
+    create_medicine_suggestion()
+    create_psychologist_helps_treatment()
+    create_psychologist_update_record()
+    create_treatment_treats_disorder()
 
     session.commit()

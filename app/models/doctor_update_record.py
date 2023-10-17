@@ -25,6 +25,10 @@ class DoctorUpdateRecord(Base):
         unique=False,
     )
 
+    def __init__(self, doctor_id, medical_record_id):
+        self.doctor_id = doctor_id
+        self.medical_record_id = medical_record_id
+
     @classmethod
     def find_all(cls):
         return session.query(cls).all()

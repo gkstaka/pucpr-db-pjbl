@@ -12,9 +12,9 @@ from models.disorder import Disorder
 from models.dosage import Dosage
 from models.medicine import Medicine
 from models.treatment import Treatment
+from models.therapy import Therapy
 from models.medical_record import MedicalRecord
 from models.suggestion import Suggestion
-from models.therapy import Therapy
 
 from models.doctor_suggest_treatment import DoctorSuggestTreatment
 from models.doctor_update_record import DoctorUpdateRecord

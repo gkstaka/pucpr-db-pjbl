@@ -35,6 +35,12 @@ class Therapy(Base):
         unique=False,
     )
 
+    def __init__(self, time, purpose, capacity, psychologist_id):
+        self.time = time
+        self.purpose = purpose
+        self.capacity = capacity
+        self.psychologist_id = psychologist_id
+
     @classmethod
     def find_all(cls):
         return session.query(cls).all()

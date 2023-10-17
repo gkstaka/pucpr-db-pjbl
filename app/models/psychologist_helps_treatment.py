@@ -28,6 +28,10 @@ class PsychologistHelpsTreatment(Base):
         unique=False,
     )
 
+    def __init__(self, psychologist_id, treatment_id):
+        self.psychologist_id = psychologist_id
+        self.treatment_id = treatment_id
+
     @classmethod
     def find_all(cls):
         return session.query(cls).all()

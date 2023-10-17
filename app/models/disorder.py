@@ -31,6 +31,13 @@ class Disorder(Base):
         "prevalence", FLOAT, nullable=False, unique=False
     )
 
+    def __init__(self, name, category, symptoms, risk_factors, prevalence):
+        self.name = name
+        self.category = category
+        self.symptoms = symptoms
+        self.risk_factors = risk_factors
+        self.prevalence = prevalence
+
     @classmethod
     def find_all(cls):
         return session.query(cls).all()

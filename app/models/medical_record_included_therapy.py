@@ -6,7 +6,7 @@ from models import Base, MedicalRecord, Therapy
 from services.database import session
 
 
-class MedicalRecordIncludedTherapy:
+class MedicalRecordIncludedTherapy(Base):
     __tablename__ = "medical_record_included_therapy"
 
     id: Mapped[int] = mapped_column(
@@ -24,6 +24,10 @@ class MedicalRecordIncludedTherapy:
     therapy_id: Mapped[int] = mapped_column(
         "therapy_id", MEDIUMINT, ForeignKey(Therapy.id), nullable=False, unique=False
     )
+
+    def __init__(self, medical_record_id, therapy_id):
+        self.medical_record_id = medical_record_id
+        self.therapy_id = therapy_id
 
     @classmethod
     def find_all(cls):

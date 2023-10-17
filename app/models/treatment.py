@@ -51,6 +51,15 @@ class Treatment(Base):
         unique=False,
     )
 
+    def __init__(self, name, start_date, planned_end_date, disorder_id, patient_id, doctor_id, psychologist_id):
+        self.name = name
+        self.start_date = start_date
+        self.planned_end_date = planned_end_date
+        self.disorder_id = disorder_id
+        self.patient_id = patient_id
+        self.doctor_id = doctor_id
+        self.psychologist_id = psychologist_id
+
     @classmethod
     def find_all(cls):
         return session.query(cls).all()

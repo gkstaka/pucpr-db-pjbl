@@ -21,6 +21,10 @@ class MedicineSuggestion(Base):
         "dosage_id", MEDIUMINT, ForeignKey(Dosage.id), nullable=False, unique=False
     )
 
+    def __init__(self, medicine_id, dosage_id):
+        self.medicine_id = medicine_id
+        self.dosage_id = dosage_id
+
     @classmethod
     def find_all(cls):
         return session.query(cls).all()

@@ -25,6 +25,10 @@ class TreatmentTreatsDisorder(Base):
         unique=False,
     )
 
+    def __init__(self, patient_id, treatment_id):
+        self.patient_id = patient_id
+        self.treatment_id = treatment_id
+
     @classmethod
     def find_all(cls):
         return session.query(cls).all()
@@ -50,7 +54,7 @@ class TreatmentTreatsDisorder(Base):
     def save(cls, treatment_treats_disorder):
         session.add(treatment_treats_disorder)
         session.commit()
-    
+
     @classmethod
     def update_by_id(cls, id, new_data):
         record = session.query(cls).filter_by(id=id).first()
