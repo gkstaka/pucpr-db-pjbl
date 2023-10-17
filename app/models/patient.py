@@ -47,6 +47,7 @@ class Patient(Base):
     consultations: Mapped[List["Consultation"]] = relationship(
         back_populates="patient", cascade="all, delete-orphan"
     )
+    
 
     def __init__(
         self,

@@ -5,7 +5,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from models import Base, Professional
 from services.database import session
 
-
+from typing import List
 class Doctor(Base):
     __tablename__ = "doctor"
 
@@ -20,7 +20,9 @@ class Doctor(Base):
 
     crm: Mapped[str] = mapped_column("crm", VARCHAR(10), nullable=False, unique=True)
     professional: Mapped["Professional"] = relationship(back_populates="doctors")
-
+    consultations: Mapped[List["Consultation"]] = relationship(
+        back_populates="doctor", cascade="all, delete-orphan"
+        )
     def __init__(self, crm, professional):
         self.crm = crm
         self.professional = professional

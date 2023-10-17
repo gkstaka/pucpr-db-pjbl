@@ -4,7 +4,7 @@ from sqlalchemy import DATETIME, ForeignKey
 from sqlalchemy.dialects.mysql import MEDIUMINT
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from models import Base, Patient
+from models import Base
 from services.database import session
 
 
@@ -19,10 +19,12 @@ class Consultation(Base):
     )
     patient_id: Mapped[int] = mapped_column(ForeignKey("patient.id"))
     patient: Mapped["Patient"] = relationship(back_populates="consultations")
-
-    def __init__(self, time, patient):
+    doctor_id: Mapped[int] = mapped_column(ForeignKey("doctor.id"))
+    doctor: Mapped["Doctor"] = relationship(back_populates="consultations")
+    def __init__(self, time, patient, doctor):
         self.time = time
         self.patient = patient
+        self.doctor = doctor
 
     @classmethod
     def find_all(cls):

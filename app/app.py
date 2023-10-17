@@ -574,31 +574,37 @@ def create_psychologists():
 
 def create_consultations():
     patients = Patient.find_all()
-
+    doctors = Doctor.find_all()
     consultations = [
         Consultation(
             time=datetime.strptime("2022-07-15", "%Y-%m-%d").date(),
             patient=patients[0],
+            doctor=doctors[0],
         ),
         Consultation(
             time=datetime.strptime("2023-05-15", "%Y-%m-%d").date(),
             patient=patients[1],
+            doctor=doctors[1],
         ),
         Consultation(
             time=datetime.strptime("2023-09-15", "%Y-%m-%d").date(),
             patient=patients[2],
+            doctor=doctors[2],
         ),
         Consultation(
             time=datetime.strptime("2021-05-01", "%Y-%m-%d").date(),
             patient=patients[3],
+            doctor=doctors[3],
         ),
         Consultation(
             time=datetime.strptime("2022-03-10", "%Y-%m-%d").date(),
             patient=patients[4],
+            doctor=doctors[4],
         ),
         Consultation(
             time=datetime.strptime("2020-01-01", "%Y-%m-%d").date(),
             patient=patients[5],
+            doctor=doctors[5],
         ),
     ]
 
