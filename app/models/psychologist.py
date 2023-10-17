@@ -5,6 +5,8 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from models import Base, Professional
 from services.database import session
 
+from typing import List
+
 
 class Psychologist(Base):
     __tablename__ = "psychologist"
@@ -19,6 +21,7 @@ class Psychologist(Base):
     )
     crp: Mapped[str] = mapped_column("crp", VARCHAR(10), nullable=False, unique=True)
     professional: Mapped["Professional"] = relationship(back_populates="psychologists")
+    therapies: Mapped[List["Therapy"]] = relationship(back_populates="psychologist", cascade="all, delete-orphan")
 
     def __init__(self, crp, professional):
         self.crp = crp

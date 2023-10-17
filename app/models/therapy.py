@@ -2,7 +2,7 @@ from datetime import datetime
 
 from sqlalchemy import DATETIME, ForeignKey, VARCHAR, INTEGER
 from sqlalchemy.dialects.mysql import MEDIUMINT
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from models import Base, Patient, Psychologist, Treatment
 from services.database import session
@@ -27,19 +27,15 @@ class Therapy(Base):
         "capacity", INTEGER, nullable=False, unique=False
     )
 
-    psychologist_id: Mapped[int] = mapped_column(
-        "psychologist_id",
-        MEDIUMINT,
-        ForeignKey(Psychologist.id),
-        nullable=False,
-        unique=False,
-    )
+    psychologist_id: Mapped[int] = mapped_column(ForeignKey(Psychologist.id))
+    psychologist: Mapped["Psychologist"] = relationship(back_populates="therapies")
 
-    def __init__(self, time, purpose, capacity, psychologist_id):
+
+    def __init__(self, time, purpose, capacity, psychologist):
         self.time = time
         self.purpose = purpose
         self.capacity = capacity
-        self.psychologist_id = psychologist_id
+        self.psychologist = psychologist
 
     @classmethod
     def find_all(cls):
