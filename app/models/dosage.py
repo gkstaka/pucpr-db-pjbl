@@ -41,3 +41,13 @@ class Dosage(Base):
     @classmethod
     def find_by_dose_frequency(cls, dose_frequency):
         return session.query(cls).filter_by(dose_frequency=dose_frequency).all()
+
+    @classmethod
+    def save_all(cls, dosage_list):
+        session.add_all(dosage_list)
+        session.commit()
+
+    @classmethod
+    def save(cls, dosage):
+        session.add(dosage)
+        session.commit()

@@ -83,3 +83,13 @@ class MedicalRecord(Base):
     @classmethod
     def find_by_description(cls, description):
         return session.query(cls).filter_by(description=description).all()
+
+    @classmethod
+    def save_all(cls, medical_records):
+        session.add_all(medical_records)
+        session.commit()
+
+    @classmethod
+    def save(cls, medical_record):
+        session.add(medical_record)
+        session.commit()

@@ -43,3 +43,13 @@ class Suggestion(Base):
     @classmethod
     def find_by_medical_record_id(cls, medical_record_id):
         return session.query(cls).filter_by(medical_record_id=medical_record_id).all()
+
+    @classmethod
+    def save_all(cls, suggestions):
+        session.add_all(suggestions)
+        session.commit()
+
+    @classmethod
+    def save(cls, suggestion):
+        session.add(suggestion)
+        session.commit()

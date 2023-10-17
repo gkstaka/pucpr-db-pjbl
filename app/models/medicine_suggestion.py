@@ -36,3 +36,13 @@ class MedicineSuggestion(Base):
     @classmethod
     def find_by_dosage_id(cls, dosage_id):
         return session.query(cls).filter_by(dosage_id=dosage_id).first()
+
+    @classmethod
+    def save_all(cls, medicine_suggestions):
+        session.add_all(medicine_suggestions)
+        session.commit()
+
+    @classmethod
+    def save(cls, medicine_suggestion):
+        session.add(medicine_suggestion)
+        session.commit()

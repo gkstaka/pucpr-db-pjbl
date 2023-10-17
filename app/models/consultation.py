@@ -40,3 +40,12 @@ class Consultation(Base):
     def find_by_patient_id(cls, patient_id):
         return session.query(cls).filter_by(patient_id=patient_id).all()
 
+    @classmethod
+    def save_all(cls, consultations):
+        session.add_all(consultations)
+        session.commit()
+
+    @classmethod
+    def save(cls, consultation):
+        session.add(consultation)
+        session.commit()

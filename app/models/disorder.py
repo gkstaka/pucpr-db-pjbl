@@ -58,3 +58,13 @@ class Disorder(Base):
     @classmethod
     def find_by_prevalence(cls, prevalence):
         return session.query(cls).filter_by(prevalence=prevalence).all()
+
+    @classmethod
+    def save_all(cls, disorders):
+        session.add_all(disorders)
+        session.commit()
+
+    @classmethod
+    def save(cls, disorder):
+        session.add(disorder)
+        session.commit()

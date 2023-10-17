@@ -40,3 +40,13 @@ class TreatmentTreatsDisorder(Base):
     @classmethod
     def find_by_treatment_id(cls, treatment_id):
         return session.query(cls).filter_by(treatment_id=treatment_id).all()
+
+    @classmethod
+    def save_all(cls, treatment_treats_disorders):
+        session.add_all(treatment_treats_disorders)
+        session.commit()
+
+    @classmethod
+    def save(cls, treatment_treats_disorder):
+        session.add(treatment_treats_disorder)
+        session.commit()

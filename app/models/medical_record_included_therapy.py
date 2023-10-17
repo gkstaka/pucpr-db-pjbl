@@ -40,3 +40,13 @@ class MedicalRecordIncludedTherapy:
     @classmethod
     def find_by_therapy_id(cls, therapy_id):
         return session.query(cls).filter_by(therapy_id=therapy_id).all()
+
+    @classmethod
+    def save_all(cls, medical_record_included_therapies):
+        session.add_all(medical_record_included_therapies)
+        session.commit()
+
+    @classmethod
+    def save(cls, medical_record_included_therapy):
+        session.add(medical_record_included_therapy)
+        session.commit()

@@ -35,3 +35,13 @@ class Psychologist(Base):
     @classmethod
     def find_by_crp(cls, crp):
         return session.query(cls).filter_by(crp=crp).first()
+
+    @classmethod
+    def save_all(cls, psychologists):
+        session.add_all(psychologists)
+        session.commit()
+
+    @classmethod
+    def save(cls, psychologist):
+        session.add(psychologist)
+        session.commit()

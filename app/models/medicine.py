@@ -65,3 +65,13 @@ class Medicine(Base):
     @classmethod
     def find_by_contraindication(cls, contraindication):
         return session.query(cls).filter_by(contraindication=contraindication).all()
+
+    @classmethod
+    def save_all(cls, medicines):
+        session.add_all(medicines)
+        session.commit()
+
+    @classmethod
+    def save(cls, medicine):
+        session.add(medicine)
+        session.commit()

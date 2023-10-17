@@ -44,3 +44,13 @@ class PsychologistUpdateRecord(Base):
     @classmethod
     def find_by_medical_record_id(cls, medical_record_id):
         return session.query(cls).filter_by(medical_record_id=medical_record_id).all()
+
+    @classmethod
+    def save_all(cls, psychologist_update_records):
+        session.add_all(psychologist_update_records)
+        session.commit()
+
+    @classmethod
+    def save(cls, psychologist_update_record):
+        session.add(psychologist_update_record)
+        session.commit()

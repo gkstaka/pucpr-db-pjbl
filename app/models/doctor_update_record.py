@@ -40,3 +40,13 @@ class DoctorUpdateRecord(Base):
     @classmethod
     def find_by_medical_record_id(cls, medical_record_id):
         return session.query(cls).filter_by(medical_record_id=medical_record_id).all()
+
+    @classmethod
+    def save_all(cls, doctor_update_record_list):
+        session.add_all(doctor_update_record_list)
+        session.commit()
+
+    @classmethod
+    def save(cls, doctor_update_record):
+        session.add(doctor_update_record)
+        session.commit()

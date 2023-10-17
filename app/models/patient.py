@@ -103,3 +103,13 @@ class Patient(Base):
     @classmethod
     def find_by_hospitalization_date(cls, hospitalization_date):
         return session.query(cls).filter_by(hospitalization_date=hospitalization_date).all()
+
+    @classmethod
+    def save_all(cls, patients):
+        session.add_all(patients)
+        session.commit()
+
+    @classmethod
+    def save(cls, patient):
+        session.add(patient)
+        session.commit()

@@ -92,3 +92,13 @@ class Professional(Base):
     @classmethod
     def find_by_consultation_fee(cls, consultation_fee):
         return session.query(cls).filter_by(consultation_fee=consultation_fee).first()
+
+    @classmethod
+    def save_all(cls, professionals):
+        session.add_all(professionals)
+        session.commit()
+
+    @classmethod
+    def save(cls, professional):
+        session.add(professional)
+        session.commit()

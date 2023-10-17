@@ -164,3 +164,13 @@ class Person(Base):
             state=state,
             country=country
         ).all()
+
+    @classmethod
+    def save_all(cls, people):
+        session.add_all(people)
+        session.commit()
+
+    @classmethod
+    def save(cls, person):
+        session.add(person)
+        session.commit()

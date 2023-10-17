@@ -36,3 +36,13 @@ class Doctor(Base):
     @classmethod
     def find_by_crm(cls, crm):
         return session.query(cls).filter_by(crm=crm).first()
+
+    @classmethod
+    def save_all(cls, doctors):
+        session.add_all(doctors)
+        session.commit()
+
+    @classmethod
+    def save(cls, doctor):
+        session.add(doctor)
+        session.commit()

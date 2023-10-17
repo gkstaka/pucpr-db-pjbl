@@ -86,3 +86,13 @@ class Treatment(Base):
     @classmethod
     def find_by_psychologist_id(cls, psychologist_id):
         return session.query(cls).filter_by(psychologist_id=psychologist_id).all()
+
+    @classmethod
+    def save_all(cls, treatments):
+        session.add_all(treatments)
+        session.commit()
+
+    @classmethod
+    def save(cls, treatment):
+        session.add(treatment)
+        session.commit()
