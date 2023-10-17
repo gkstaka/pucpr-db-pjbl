@@ -46,12 +46,3 @@ class Doctor(Base):
     def save(cls, doctor):
         session.add(doctor)
         session.commit()
-
-    @classmethod
-    def update_by_id(cls, id, new_data):
-        record = session.query(cls).filter_by(id=id).first()
-        if record:
-            for key, value in new_data.items():
-                setattr(record, key, value)
-            session.commit()
-        return record

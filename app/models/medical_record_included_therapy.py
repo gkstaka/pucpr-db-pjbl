@@ -54,12 +54,3 @@ class MedicalRecordIncludedTherapy(Base):
     def save(cls, medical_record_included_therapy):
         session.add(medical_record_included_therapy)
         session.commit()
-
-    @classmethod
-    def update_by_id(cls, id, new_data):
-        record = session.query(cls).filter_by(id=id).first()
-        if record:
-            for key, value in new_data.items():
-                setattr(record, key, value)
-            session.commit()
-        return record
