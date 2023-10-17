@@ -7,6 +7,8 @@ from models import Base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.dialects.mysql import MEDIUMINT
 
+from services.database import session
+
 
 class Person(Base):
     __tablename__ = "person"
@@ -87,3 +89,78 @@ class Person(Base):
         self.country = country
         self.phone = phone
         self.email = email
+
+    @classmethod
+    def find_all(cls):
+        return session.query(cls).all()
+
+    @classmethod
+    def find_by_id(cls, id):
+        return session.query(cls).filter_by(id=id).first()
+
+    @classmethod
+    def find_by_name(cls, name):
+        return session.query(cls).filter_by(name=name).all()
+
+    @classmethod
+    def find_by_birth_date(cls, birth_date):
+        return session.query(cls).filter_by(birth_date=birth_date).all()
+
+    @classmethod
+    def find_by_sex(cls, sex):
+        return session.query(cls).filter_by(sex=sex).all()
+
+    @classmethod
+    def find_by_zip(cls, zip):
+        return session.query(cls).filter_by(zip=zip).all()
+
+    @classmethod
+    def find_by_cpf(cls, cpf):
+        return session.query(cls).filter_by(cpf=cpf).first()
+
+    @classmethod
+    def find_by_street(cls, street):
+        return session.query(cls).filter_by(street=street).all()
+
+    @classmethod
+    def find_by_street_number(cls, street_number):
+        return session.query(cls).filter_by(street_number=street_number).all()
+
+    @classmethod
+    def find_by_complement(cls, complement):
+        return session.query(cls).filter_by(complement=complement).all()
+
+    @classmethod
+    def find_by_neighborhood(cls, neighborhood):
+        return session.query(cls).filter_by(neighborhood=neighborhood).all()
+
+    @classmethod
+    def find_by_city(cls, city):
+        return session.query(cls).filter_by(city=city).all()
+
+    @classmethod
+    def find_by_state(cls, state):
+        return session.query(cls).filter_by(state=state).all()
+
+    @classmethod
+    def find_by_country(cls, country):
+        return session.query(cls).filter_by(country=country).all()
+
+    @classmethod
+    def find_by_phone(cls, phone):
+        return session.query(cls).filter_by(phone=phone).first()
+
+    @classmethod
+    def find_by_email(cls, email):
+        return session.query(cls).filter_by(email=email).first()
+
+    @classmethod
+    def find_by_address(cls, street, street_number, neighborhood, city, state, country):
+        return session.query(cls).filter_by(
+            street=street,
+            street_number=street_number,
+            neighborhood=neighborhood,
+            city=city,
+            state=state,
+            country=country
+        ).all()

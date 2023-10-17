@@ -5,6 +5,7 @@ from sqlalchemy.dialects.mysql import MEDIUMINT
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from models import Base
+from services.database import session
 
 
 class Medicine(Base):
@@ -36,3 +37,31 @@ class Medicine(Base):
         self.usage_type = usage_type
         self.indication = indication
         self.contraindication = contraindication
+
+    @classmethod
+    def find_all(cls):
+        return session.query(cls).all()
+
+    @classmethod
+    def find_by_id(cls, id):
+        return session.query(cls).filter_by(id=id).first()
+
+    @classmethod
+    def find_by_name(cls, name):
+        return session.query(cls).filter_by(name=name).first()
+
+    @classmethod
+    def find_by_composition(cls, composition):
+        return session.query(cls).filter_by(composition=composition).first()
+
+    @classmethod
+    def find_by_usage_type(cls, usage_type):
+        return session.query(cls).filter_by(usage_type=usage_type).all()
+
+    @classmethod
+    def find_by_indication(cls, indication):
+        return session.query(cls).filter_by(indication=indication).all()
+
+    @classmethod
+    def find_by_contraindication(cls, contraindication):
+        return session.query(cls).filter_by(contraindication=contraindication).all()

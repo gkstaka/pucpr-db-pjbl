@@ -5,6 +5,7 @@ from sqlalchemy.dialects.mysql import MEDIUMINT
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from models import Base, Person
+from services.database import session
 
 
 class Professional(Base):
@@ -59,3 +60,35 @@ class Professional(Base):
         self.speciality = speciality
         self.consultation_fee = consultation_fee
         self.person = person
+
+    @classmethod
+    def find_all(cls):
+        return session.query(cls).all()
+
+    @classmethod
+    def find_by_id(cls, id):
+        return session.query(cls).filter_by(id=id).first()
+
+    @classmethod
+    def find_by_enrollment(cls, enrollment):
+        return session.query(cls).filter_by(enrollment=enrollment).first()
+
+    @classmethod
+    def find_by_salary(cls, salary):
+        return session.query(cls).filter_by(salary=salary).first()
+
+    @classmethod
+    def find_by_start_date(cls, start_date):
+        return session.query(cls).filter_by(start_date=start_date).first()
+
+    @classmethod
+    def find_by_working_range(cls, working_range):
+        return session.query(cls).filter_by(working_range=working_range).first()
+
+    @classmethod
+    def find_by_speciality(cls, speciality):
+        return session.query(cls).filter_by(speciality=speciality).first()
+
+    @classmethod
+    def find_by_consultation_fee(cls, consultation_fee):
+        return session.query(cls).filter_by(consultation_fee=consultation_fee).first()

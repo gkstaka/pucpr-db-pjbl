@@ -5,6 +5,7 @@ from sqlalchemy.dialects.mysql import MEDIUMINT
 from sqlalchemy.orm import Mapped, mapped_column
 
 from models import Base, Patient, Psychologist, Treatment
+from services.database import session
 
 
 class Therapy(Base):
@@ -33,3 +34,27 @@ class Therapy(Base):
         nullable=False,
         unique=False,
     )
+
+    @classmethod
+    def find_all(cls):
+        return session.query(cls).all()
+
+    @classmethod
+    def find_by_id(cls, id):
+        return session.query(cls).filter_by(id=id).first()
+
+    @classmethod
+    def find_by_time(cls, time):
+        return session.query(cls).filter_by(time=time).all()
+
+    @classmethod
+    def find_by_purpose(cls, purpose):
+        return session.query(cls).filter_by(purpose=purpose).first()
+
+    @classmethod
+    def find_by_capacity(cls, capacity):
+        return session.query(cls).filter_by(capacity=capacity).all()
+
+    @classmethod
+    def find_by_psychologist_id(cls, psychologist_id):
+        return session.query(cls).filter_by(psychologist_id=psychologist_id).all()

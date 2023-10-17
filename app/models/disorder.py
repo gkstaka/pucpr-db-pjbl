@@ -3,6 +3,7 @@ from sqlalchemy.dialects.mysql import MEDIUMINT
 from sqlalchemy.orm import Mapped, mapped_column
 
 from models import Base
+from services.database import session
 
 
 class Disorder(Base):
@@ -29,3 +30,31 @@ class Disorder(Base):
     prevalence: Mapped[str] = mapped_column(
         "prevalence", FLOAT, nullable=False, unique=False
     )
+
+    @classmethod
+    def find_all(cls):
+        return session.query(cls).all()
+
+    @classmethod
+    def find_by_id(cls, id):
+        return session.query(cls).filter_by(id=id).first()
+
+    @classmethod
+    def find_by_name(cls, name):
+        return session.query(cls).filter_by(name=name).all()
+
+    @classmethod
+    def find_by_category(cls, category):
+        return session.query(cls).filter_by(category=category).all()
+
+    @classmethod
+    def find_by_symptoms(cls, symptoms):
+        return session.query(cls).filter_by(symptoms=symptoms).all()
+
+    @classmethod
+    def find_by_risk_factors(cls, risk_factors):
+        return session.query(cls).filter_by(risk_factors=risk_factors).all()
+
+    @classmethod
+    def find_by_prevalence(cls, prevalence):
+        return session.query(cls).filter_by(prevalence=prevalence).all()

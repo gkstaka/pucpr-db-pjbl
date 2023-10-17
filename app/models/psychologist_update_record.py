@@ -3,6 +3,7 @@ from sqlalchemy.dialects.mysql import MEDIUMINT
 from sqlalchemy.orm import Mapped, mapped_column
 
 from models import Base, MedicalRecord, Psychologist
+from services.database import session
 
 
 class PsychologistUpdateRecord(Base):
@@ -27,3 +28,19 @@ class PsychologistUpdateRecord(Base):
         nullable=False,
         unique=False,
     )
+
+    @classmethod
+    def find_all(cls):
+        return session.query(cls).all()
+
+    @classmethod
+    def find_by_id(cls, id):
+        return session.query(cls).filter_by(id=id).first()
+
+    @classmethod
+    def find_by_psychologist_id(cls, psychologist_id):
+        return session.query(cls).filter_by(psychologist_id=psychologist_id).all()
+
+    @classmethod
+    def find_by_medical_record_id(cls, medical_record_id):
+        return session.query(cls).filter_by(medical_record_id=medical_record_id).all()

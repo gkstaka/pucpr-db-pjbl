@@ -3,6 +3,7 @@ from sqlalchemy.dialects.mysql import MEDIUMINT
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from models import Base, Professional
+from services.database import session
 
 
 class Doctor(Base):
@@ -23,3 +24,15 @@ class Doctor(Base):
     def __init__(self, crm, professional):
         self.crm = crm
         self.professional = professional
+
+    @classmethod
+    def find_all(cls):
+        return session.query(cls).all()
+
+    @classmethod
+    def find_by_id(cls, id):
+        return session.query(cls).filter_by(id=id).first()
+
+    @classmethod
+    def find_by_crm(cls, crm):
+        return session.query(cls).filter_by(crm=crm).first()

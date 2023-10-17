@@ -3,6 +3,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.dialects.mysql import MEDIUMINT
 
 from models import Base, Medicine, Dosage
+from services.database import session
 
 
 class MedicineSuggestion(Base):
@@ -19,3 +20,19 @@ class MedicineSuggestion(Base):
     dosage_id: Mapped[int] = mapped_column(
         "dosage_id", MEDIUMINT, ForeignKey(Dosage.id), nullable=False, unique=False
     )
+
+    @classmethod
+    def find_all(cls):
+        return session.query(cls).all()
+
+    @classmethod
+    def find_by_id(cls, id):
+        return session.query(cls).filter_by(id=id).first()
+
+    @classmethod
+    def find_by_medicine_id(cls, medicine_id):
+        return session.query(cls).filter_by(medicine_id=medicine_id).first()
+
+    @classmethod
+    def find_by_dosage_id(cls, dosage_id):
+        return session.query(cls).filter_by(dosage_id=dosage_id).first()
