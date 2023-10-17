@@ -8,6 +8,7 @@ from models import (
     Psychologist,
     Consultation,
     Medicine,
+    Dosage,
 )
 from services.database import session
 from utils.database_utils import create_db
@@ -649,6 +650,37 @@ def create_medicines():
     session.add_all(medicines)
 
 
+def create_dosages():
+    dosages = [
+        Dosage(
+            dose_quantity=30,
+            dose_frequency=400,
+        ),
+        Dosage(
+            dose_quantity=10,
+            dose_frequency=40,
+        ),
+        Dosage(
+            dose_quantity=300,
+            dose_frequency=90,
+        ),
+        Dosage(
+            dose_quantity=20,
+            dose_frequency=300,
+        ),
+        Dosage(
+            dose_quantity=220,
+            dose_frequency=10,
+        ),
+        Dosage(
+            dose_quantity=30,
+            dose_frequency=300,
+        ),
+    ]
+
+    session.add_all(dosages)
+
+
 if __name__ == "__main__":
     print("Creating database...")
     create_db()
@@ -660,9 +692,9 @@ if __name__ == "__main__":
     create_psychologists()
     create_consultations()
     create_medicines()
+    create_dosages()
 
     # Todo:
-    # create_dosages()
     # create_suggestions()
     # create_medical_record()
 

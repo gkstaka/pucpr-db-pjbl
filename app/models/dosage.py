@@ -20,3 +20,7 @@ class Dosage(Base):
     suggestions: Mapped["Suggestion"] = relationship(
         back_populates="dosage", cascade="all, delete-orphan"
     )
+
+    def __init__(self, dose_quantity, dose_frequency):
+        self.dose_quantity = dose_quantity
+        self.dose_frequency = dose_frequency

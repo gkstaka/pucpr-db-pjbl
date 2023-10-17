@@ -40,7 +40,9 @@ class Person(Base):
     country: Mapped[str] = mapped_column(
         "country", CHAR(3), nullable=True, unique=False
     )
-    phone: Mapped[str] = mapped_column("phone", VARCHAR(14), nullable=False, unique=True)
+    phone: Mapped[str] = mapped_column(
+        "phone", VARCHAR(14), nullable=False, unique=True
+    )
     email: Mapped[str] = mapped_column(
         "email", VARCHAR(50), nullable=False, unique=True
     )
