@@ -2,7 +2,7 @@ from datetime import datetime
 
 from sqlalchemy import VARCHAR, DATETIME, ForeignKey
 from sqlalchemy.dialects.mysql import MEDIUMINT
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from models import Base, Disorder, Patient, Doctor, Psychologist
 from services.database import session
@@ -31,34 +31,17 @@ class Treatment(Base):
         default=datetime.now(),
     )
 
-    disorder_id: Mapped[int] = mapped_column(
-        "disorder_id", MEDIUMINT, ForeignKey(Disorder.id), nullable=False, unique=False
-    )
-
     patient_id: Mapped[int] = mapped_column(
-        "patient_id", MEDIUMINT, ForeignKey(Patient.id), nullable=False, unique=False
+        ForeignKey("patient.id")
     )
+    patient: Mapped["Patient"] = relationship(back_populates="treatment")
 
-    doctor_id: Mapped[int] = mapped_column(
-        "doctor_id", MEDIUMINT, ForeignKey(Doctor.id), nullable=False, unique=False
-    )
 
-    psychologist_id: Mapped[int] = mapped_column(
-        "psychologist_id",
-        MEDIUMINT,
-        ForeignKey(Psychologist.id),
-        nullable=False,
-        unique=False,
-    )
-
-    def __init__(self, name, start_date, planned_end_date, disorder_id, patient_id, doctor_id, psychologist_id):
+    def __init__(self, name, start_date, planned_end_date, patient):
         self.name = name
         self.start_date = start_date
         self.planned_end_date = planned_end_date
-        self.disorder_id = disorder_id
-        self.patient_id = patient_id
-        self.doctor_id = doctor_id
-        self.psychologist_id = psychologist_id
+        self.patient=patient
 
     @classmethod
     def find_all(cls):
