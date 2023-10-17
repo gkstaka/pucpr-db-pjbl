@@ -1,8 +1,8 @@
 from sqlalchemy import ForeignKey
 from sqlalchemy.dialects.mysql import MEDIUMINT
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from models import Base, Patient, Treatment
+from models import Base, Treatment
 from services.database import session
 
 
@@ -13,9 +13,8 @@ class TreatmentTreatsDisorder(Base):
         "id", MEDIUMINT, nullable=False, primary_key=True, autoincrement=True
     )
 
-    patient_id: Mapped[int] = mapped_column(
-        "patient_id", MEDIUMINT, ForeignKey(Patient.id), nullable=False, unique=False
-    )
+    disorder_id: Mapped[int] = mapped_column(ForeignKey("disorder.id"))
+    disorder: Mapped["Disorder"] = relationship(back_populates="treatment_treats_disorders")
 
     treatment_id: Mapped[int] = mapped_column(
         "treatment_id",
@@ -25,8 +24,8 @@ class TreatmentTreatsDisorder(Base):
         unique=False,
     )
 
-    def __init__(self, patient_id, treatment_id):
-        self.patient_id = patient_id
+    def __init__(self, disorder, treatment_id):
+        self.disorder = disorder
         self.treatment_id = treatment_id
 
     @classmethod

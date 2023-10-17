@@ -1017,14 +1017,14 @@ def create_psychologist_update_record():
 
 
 def create_treatment_treats_disorder():
-    patient_list = Patient.find_all()
+    disorder_list = Disorder.find_all()
     treatment_list = Treatment.find_all()
 
     treatment_treats_disorder_list = []
     for index in range(0, len(treatment_list)):
         treatment_treats_disorder_list.append(
             TreatmentTreatsDisorder(
-                patient_id=patient_list[index].id,
+                disorder=disorder_list[index],
                 treatment_id=treatment_list[index].id
             )
         )

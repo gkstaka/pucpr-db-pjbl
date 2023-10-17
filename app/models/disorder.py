@@ -1,11 +1,11 @@
 from sqlalchemy import VARCHAR, FLOAT
 from sqlalchemy.dialects.mysql import MEDIUMINT
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from models import Base
 from services.database import session
 
-
+from typing import List
 class Disorder(Base):
     __tablename__ = "disorder"
 
@@ -30,6 +30,9 @@ class Disorder(Base):
     prevalence: Mapped[str] = mapped_column(
         "prevalence", FLOAT, nullable=False, unique=False
     )
+
+    treatment_treats_disorders: Mapped[List["TreatmentTreatsDisorder"]] = relationship(back_populates="disorder", cascade="all, delete-orphan")
+
 
     def __init__(self, name, category, symptoms, risk_factors, prevalence):
         self.name = name
