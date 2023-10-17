@@ -741,65 +741,44 @@ def create_dosages():
 
 
 def create_treatments():
-    disorder_list = Disorder.find_all()
     patient_list = Patient.find_all()
-    doctor_list = Doctor.find_all()
-    psychologist_list = Psychologist.find_all()
 
     treatments = [
         Treatment(
             name="Anxiety treatment",
             start_date=datetime.strptime("2022-07-15", "%Y-%m-%d").date(),
             planned_end_date=datetime.strptime("2023-07-15", "%Y-%m-%d").date(),
-            disorder_id=disorder_list[0].id,
-            patient_id=patient_list[0].id,
-            doctor_id=doctor_list[0].id,
-            psychologist_id=psychologist_list[0].id
+            patient=patient_list[0]
         ),
         Treatment(
             name="Depression treatment",
             start_date=datetime.strptime("2023-05-15", "%Y-%m-%d").date(),
             planned_end_date=datetime.strptime("2024-05-15", "%Y-%m-%d").date(),
-            disorder_id=disorder_list[1].id,
-            patient_id=patient_list[1].id,
-            doctor_id=doctor_list[1].id,
-            psychologist_id=psychologist_list[1].id
+            patient=patient_list[1],
         ),
         Treatment(
             name="Bipolar disorder treatment",
             start_date=datetime.strptime("2023-09-15", "%Y-%m-%d").date(),
             planned_end_date=datetime.strptime("2024-09-15", "%Y-%m-%d").date(),
-            disorder_id=disorder_list[2].id,
-            patient_id=patient_list[2].id,
-            doctor_id=doctor_list[2].id,
-            psychologist_id=psychologist_list[2].id
+            patient=patient_list[2],
         ),
         Treatment(
             name="Schizophrenia treatment",
             start_date=datetime.strptime("2021-05-01", "%Y-%m-%d").date(),
             planned_end_date=datetime.strptime("2022-05-01", "%Y-%m-%d").date(),
-            disorder_id=disorder_list[3].id,
-            patient_id=patient_list[3].id,
-            doctor_id=doctor_list[3].id,
-            psychologist_id=psychologist_list[3].id
+            patient=patient_list[3],
         ),
         Treatment(
             name="Autism treatment",
             start_date=datetime.strptime("2022-03-10", "%Y-%m-%d").date(),
             planned_end_date=datetime.strptime("2023-03-10", "%Y-%m-%d").date(),
-            disorder_id=disorder_list[4].id,
-            patient_id=patient_list[4].id,
-            doctor_id=doctor_list[4].id,
-            psychologist_id=psychologist_list[4].id
+            patient=patient_list[4],
         ),
         Treatment(
             name="ADHD treatment",
             start_date=datetime.strptime("2020-01-01", "%Y-%m-%d").date(),
             planned_end_date=datetime.strptime("2021-01-01", "%Y-%m-%d").date(),
-            disorder_id=disorder_list[5].id,
-            patient_id=patient_list[5].id,
-            doctor_id=doctor_list[5].id,
-            psychologist_id=psychologist_list[5].id
+            patient=patient_list[5],
         )
     ]
 
