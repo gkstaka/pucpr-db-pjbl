@@ -63,14 +63,32 @@ VALUES
 (17,75,'married','Nurse','Emily','678987654','Humana','2023-09-10 00:00:00'),
 (18,68,'single','Artist','Oliver','9122334455','Kaiser','2023-10-25 00:00:00');
 
-INSERT INTO `consultation` (`id`,`time`,`patient_id`) 
+INSERT INTO `consultation` (`id`,`time`,`patient_id`, `doctor_id`) 
 VALUES 
-(1,'2022-07-15 00:00:00',13),
-(2,'2023-05-15 00:00:00',14),
-(3,'2023-09-15 00:00:00',15),
-(4,'2021-05-01 00:00:00',16),
-(5,'2022-03-10 00:00:00',17),
-(6,'2020-01-01 00:00:00',18);
+(1,'2022-07-15 00:00:00',13,1),
+(2,'2023-05-15 00:00:00',14,2),
+(3,'2023-09-15 00:00:00',15,3),
+(4,'2021-05-01 00:00:00',16,4),
+(5,'2022-03-10 00:00:00',17,5),
+(6,'2020-01-01 00:00:00',18,6);
+
+INSERT INTO `disorder` (`id`,`name`,`category`,`symptoms`,`risk_factors`,`prevalence`) 
+VALUES 
+(1,'Anxiety','Anxiety disorders','Excessive worry, restlessness, fatigue, difficulty concentrating, irritability, sleep problems','Trauma, stress due to an illness, stress buildup, personality',0.89),
+(2,'Depression','Mood disorders','Sadness, loss of interest, feelings of guilt or low self-worth, disturbed sleep or appetite, tiredness, poor concentration','Childhood trauma, other mental disorders, abuse of alcohol or recreational drugs, personal problems, poverty or isolation',0.76),
+(3,'Bipolar disorder','Mood disorders','Mood changes, elevated mood, high energy, sleep problems, loss of appetite, psychosis','Genetic, environmental, brain structure and function',0.35),
+(4,'Schizophrenia','Psychotic disorders','Delusions, hallucinations, disorganized thinking, lack of motivation, speaking little','Genetic, environmental, brain chemistry, substance abuse',0.01),
+(5,'Autism','Neurodevelopmental disorders','Difficulty with communication and interaction with other people, restricted interests and repetitive behaviors','Genetic, environmental',0.12),
+(6,'ADHD','Neurodevelopmental disorders','Difficulty paying attention, hyperactivity, impulsivity','Genetic, environmental',0.06);
+
+INSERT INTO `dosage` (`id`,`dose_quantity`,`dose_frequency`) 
+VALUES 
+(1,'30','400'),
+(2,'10','40'),
+(3,'300','90'),
+(4,'20','300'),
+(5,'220','10'),
+(6,'30','300');
 
 INSERT INTO `medicine` (`id`,`name`,`composition`,`usage_type`,`indication`,`contraindication`) 
 VALUES 
@@ -81,3 +99,90 @@ VALUES
 (5,'Loratadine','Calcium phosphate, lactose, magnesium stearate, corn starch','Oral use','Allergy relief','Patients with severe kidney disorders'),
 (6,'Aspirin','Corn starch, hypromellose, powdered cellulose, triacetin','Oral use','Pain relief, fever reduction, anti-inflammatory','Patients with a history of bleeding disorders');	
 
+INSERT INTO `treatment` (`id`,`name`,`start_date`,`planned_end_date`,`disorder_id`,`patient_id`,`doctor_id`,`psychologist_id`) 
+VALUES 
+(1,'Anxiety treatment','2022-07-15 00:00:00','2023-07-15 00:00:00',1,13,3,12),
+(2,'Depression treatment','2023-05-15 00:00:00','2024-05-15 00:00:00',2,14,4,7),
+(3,'Bipolar disorder treatment','2023-09-15 00:00:00','2024-09-15 00:00:00',3,15,2,11),
+(4,'Schizophrenia treatment','2021-05-01 00:00:00','2022-05-01 00:00:00',4,16,1,9),
+(5,'Autism treatment','2022-03-10 00:00:00','2023-03-10 00:00:00',5,17,5,8),
+(6,'ADHD treatment','2020-01-01 00:00:00','2021-01-01 00:00:00',6,18,6,10);
+
+INSERT INTO `therapy` (`id`,`time`,`purpose`,`capacity`,`psychologist_id`) 
+VALUES 
+(1,'1900-01-01 01:00:00','Cognitive behavioral therapy (CBT) is a form of psychological treatment.',1,12),
+(2,'1900-01-01 02:00:00','Dialectical behavior therapy (DBT) is a specific type of cognitive-behavioral psychotherapy.',1,7),
+(3,'1900-01-01 03:00:00','Interpersonal therapy (IPT) is a time-limited treatment.',1,11),
+(4,'1900-01-01 04:00:00','Psychodynamic therapy is a form of therapy with a focus on a holistic perspective of the client.',1,9),
+(5,'1900-01-01 05:00:00','Family therapy is a type of psychological counseling (psychotherapy) that helps family members.',1,8),
+(6,'1900-01-01 06:00:00','Couple therapy is a type of psychological therapy that helps couples of all types.',2,10);
+
+INSERT INTO `medical_record` (`id`,`patient_id`,`doctor_id`,`psychologist_id`,`treatment_id`,`therapy_id`,`record_date`,`description`) 
+VALUES 
+(1,13,3,12,1,1,'2022-07-15 00:00:00','Patient is suffering from anxiety disorder'),
+(2,14,4,7,2,2,'2023-05-15 00:00:00','Patient is suffering from depression'),
+(3,15,2,11,3,3,'2023-09-15 00:00:00','Patient is suffering from bipolar disorder'),
+(4,16,1,9,4,4,'2021-05-01 00:00:00','Patient is suffering from schizophrenia'),
+(5,17,5,8,5,5,'2022-03-10 00:00:00','Patient is suffering from autism'),
+(6,18,6,10,6,6,'2020-01-01 00:00:00','Patient is suffering from ADHD');
+
+INSERT INTO `suggestion` (`id`,`medicine_id`,`dosage_id`,`medical_record_id`) VALUES (1,1,1,1),
+(2,2,2,2),
+(3,3,3,3),
+(4,4,4,4),
+(5,5,5,5),
+(6,6,6,6);
+
+INSERT INTO `doctor_suggest_treatment` (`id`,`doctor_id`,`treatment_id`) 
+VALUES 
+(1,3,1),
+(2,4,2),
+(3,2,3),
+(4,1,4),
+(5,5,5),
+(6,6,6);
+
+INSERT INTO `doctor_update_record` (`id`,`doctor_id`,`medical_record_id`) 
+VALUES 
+(1,3,1),
+(2,4,2),
+(3,2,3),
+(4,1,4),
+(5,5,5),
+(6,6,6);
+
+INSERT INTO `medical_record_included_therapy` (`id`,`medical_record_id`,`therapy_id`) 
+VALUES 
+(1,1,1),
+(2,2,2),
+(3,3,3),
+(4,4,4),
+(5,5,5),
+(6,6,6);
+
+INSERT INTO `psychologist_helps_treatment` (`id`,`doctor_id`,`treatment_id`) 
+VALUES 
+(1,12,1),
+(2,7,2),
+(3,11,3),
+(4,9,4),
+(5,8,5),
+(6,10,6);
+
+INSERT INTO `psychologist_update_record` (`id`,`psychologist_id`,`medical_record_id`) 
+VALUES 
+(1,12,1),
+(2,7,2),
+(3,11,3),
+(4,9,4),
+(5,8,5),
+(6,10,6);
+
+INSERT INTO `treatment_treats_disorder` (`id`,`patient_id`,`treatment_id`) 
+VALUES 
+(1,13,1),
+(2,14,2),
+(3,15,3),
+(4,16,4),
+(5,17,5),
+(6,18,6);

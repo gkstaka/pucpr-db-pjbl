@@ -17,7 +17,6 @@ from models import (
     DoctorSuggestTreatment,
     DoctorUpdateRecord,
     MedicalRecordIncludedTherapy,
-    MedicineSuggestion,
     PsychologistHelpsTreatment,
     PsychologistUpdateRecord,
     TreatmentTreatsDisorder
@@ -979,22 +978,6 @@ def create_medical_record_included_therapy():
     MedicalRecordIncludedTherapy.save_all(medical_record_included_therapy_list)
 
 
-def create_medicine_suggestion():
-    medicine_list = Medicine.find_all()
-    dosage_list = Dosage.find_all()
-
-    medicine_suggestion_list = []
-    for index in range(0, len(medicine_list)):
-        medicine_suggestion_list.append(
-            MedicineSuggestion(
-                medicine_id=medicine_list[index].id,
-                dosage_id=dosage_list[index].id
-            )
-        )
-
-    MedicineSuggestion.save_all(medicine_suggestion_list)
-
-
 def create_psychologist_helps_treatment():
     psychologists = Psychologist.find_all()
     treatment_list = Treatment.find_all()
@@ -1066,9 +1049,10 @@ if __name__ == "__main__":
     create_doctor_suggest_treatment()
     create_doctor_update_record()
     create_medical_record_included_therapy()
-    create_medicine_suggestion()
     create_psychologist_helps_treatment()
     create_psychologist_update_record()
     create_treatment_treats_disorder()
 
     session.commit()
+
+# add relationship for doctor in consultation

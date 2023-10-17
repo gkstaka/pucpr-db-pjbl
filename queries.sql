@@ -29,7 +29,7 @@ JOIN disorder AS d ON p.disorder_id = d.id
 GROUP BY d.`type`;
 
 -- 12.	Listar todos os pacientes e os profissionais (médicos e psicólogos) que os atendem;
-SELECT p.id "ID paciente", p.`name` "Nome", doc_p.id "ID médico", doc_p.`name` "Médico", psy_p.id "Id psicólogo", psy_p.`name` "Nome" FROM person AS p
+SELECT p.id "ID paciente", p.`name` "Nome", doc_p.id "ID médico", doc_p.`name` "Médico", psy_p.id "Id psicólogo", psy_p.`name` "Psicólogo" FROM person AS p
 NATURAL JOIN patient AS pa
 JOIN treatment AS t ON t.patient_id = pa.id
 JOIN person AS doc_p ON t.doctor_id = doc_p.id

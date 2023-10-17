@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `psychiatric_hospital`.`disorder` (
     `name` VARCHAR(200) NOT NULL,
     `category` VARCHAR(200) NOT NULL,
     `symptoms` VARCHAR(200) NOT NULL,
-    `risk_factor` VARCHAR(200) NOT NULL,
+    `risk_factors` VARCHAR(200) NOT NULL,
     `prevalence` VARCHAR(200) NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE (`name`)
@@ -232,9 +232,9 @@ CREATE TABLE IF NOT EXISTS `psychiatric_hospital`.`psychologist_helps_treatment`
 
 
 -- -----------------------------------------------------
--- Table `psychiatric_hospital`.`medicines_suggestion`
+-- Table `psychiatric_hospital`.`suggestion`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `psychiatric_hospital`.`medicine_suggestion` (
+CREATE TABLE IF NOT EXISTS `psychiatric_hospital`.`suggestion` (
     `medicine_id` MEDIUMINT UNSIGNED NOT NULL,
     `dosage_id` MEDIUMINT UNSIGNED NOT NULL,
     `medical_record_id` MEDIUMINT UNSIGNED NOT NULL,

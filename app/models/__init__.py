@@ -19,7 +19,6 @@ from models.suggestion import Suggestion
 from models.doctor_suggest_treatment import DoctorSuggestTreatment
 from models.doctor_update_record import DoctorUpdateRecord
 from models.medical_record_included_therapy import MedicalRecordIncludedTherapy
-from models.medicine_suggestion import MedicineSuggestion
 from models.psychologist_helps_treatment import PsychologistHelpsTreatment
 from models.psychologist_update_record import PsychologistUpdateRecord
 from models.treatment_treats_disorder import TreatmentTreatsDisorder
