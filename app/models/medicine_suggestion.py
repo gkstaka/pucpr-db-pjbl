@@ -46,3 +46,12 @@ class MedicineSuggestion(Base):
     def save(cls, medicine_suggestion):
         session.add(medicine_suggestion)
         session.commit()
+
+    @classmethod
+    def update_by_id(cls, id, new_data):
+        record = session.query(cls).filter_by(id=id).first()
+        if record:
+            for key, value in new_data.items():
+                setattr(record, key, value)
+            session.commit()
+        return record
