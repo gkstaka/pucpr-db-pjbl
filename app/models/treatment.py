@@ -75,21 +75,21 @@ class Treatment(Base):
     def find_by_planned_end_date(cls, planned_end_date):
         return session.query(cls).filter_by(planned_end_date=planned_end_date).first()
 
-    @classmethod
-    def find_by_disorder_id(cls, disorder_id):
-        return session.query(cls).filter_by(disorder_id=disorder_id).all()
+    # @classmethod
+    # def find_by_disorder_id(cls, disorder_id):
+    #     return session.query(cls).filter_by(disorder_id=disorder_id).all()
 
     @classmethod
     def find_by_patient_id(cls, patient_id):
         return session.query(cls).filter_by(patient_id=patient_id).all()
 
-    @classmethod
-    def find_by_doctor_id(cls, doctor_id):
-        return session.query(cls).filter_by(doctor_id=doctor_id).all()
+    # @classmethod
+    # def find_by_doctor_id(cls, doctor_id):
+    #     return session.query(cls).filter_by(doctor_id=doctor_id).all()
 
-    @classmethod
-    def find_by_psychologist_id(cls, psychologist_id):
-        return session.query(cls).filter_by(psychologist_id=psychologist_id).all()
+    # @classmethod
+    # def find_by_psychologist_id(cls, psychologist_id):
+    #     return session.query(cls).filter_by(psychologist_id=psychologist_id).all()
 
     @classmethod
     def save_all(cls, treatments):

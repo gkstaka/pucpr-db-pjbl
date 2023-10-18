@@ -41,29 +41,6 @@ class MedicalRecord(Base):
 
     psychologist_update_records: Mapped[List["PsychologistUpdateRecord"]] = relationship(back_populates="medical_record", cascade="all, delete-orphan")
     
-    # patient_id: Mapped[int] = mapped_column(
-    #     "patient_id", MEDIUMINT, ForeignKey(Patient.id), nullable=False, unique=False
-    # )
-    # doctor_id: Mapped[int] = mapped_column(
-    #     "doctor_id", MEDIUMINT, ForeignKey(Doctor.id), nullable=False, unique=False
-    # )
-    # psychologist_id: Mapped[int] = mapped_column(
-    #     "psychologist_id",
-    #     MEDIUMINT,
-    #     ForeignKey(Psychologist.id),
-    #     nullable=False,
-    #     unique=False,
-    # )
-    # treatment_id: Mapped[int] = mapped_column(
-    #     "treatment_id",
-    #     MEDIUMINT,
-    #     ForeignKey(Treatment.id),
-    #     nullable=False,
-    #     unique=False,
-    # )
-    # therapy_id: Mapped[int] = mapped_column(
-    #     "therapy_id", MEDIUMINT, ForeignKey(Therapy.id), nullable=False, unique=False
-    # )
     
     def __init__(self, record_date, description, patient, treatment):
         self.patient = patient
@@ -83,21 +60,21 @@ class MedicalRecord(Base):
     def find_by_patient_id(cls, patient_id):
         return session.query(cls).filter_by(patient_id=patient_id).all()
 
-    @classmethod
-    def find_by_doctor_id(cls, doctor_id):
-        return session.query(cls).filter_by(doctor_id=doctor_id).all()
+    # @classmethod
+    # def find_by_doctor_id(cls, doctor_id):
+    #     return session.query(cls).filter_by(doctor_id=doctor_id).all()
 
-    @classmethod
-    def find_by_psychologist_id(cls, psychologist_id):
-        return session.query(cls).filter_by(psychologist_id=psychologist_id).all()
+    # @classmethod
+    # def find_by_psychologist_id(cls, psychologist_id):
+    #     return session.query(cls).filter_by(psychologist_id=psychologist_id).all()
 
     @classmethod
     def find_by_treatment_id(cls, treatment_id):
         return session.query(cls).filter_by(treatment_id=treatment_id).all()
 
-    @classmethod
-    def find_by_therapy_id(cls, therapy_id):
-        return session.query(cls).filter_by(therapy_id=therapy_id).all()
+    # @classmethod
+    # def find_by_therapy_id(cls, therapy_id):
+    #     return session.query(cls).filter_by(therapy_id=therapy_id).all()
 
     @classmethod
     def find_by_record_date(cls, record_date):
@@ -116,3 +93,5 @@ class MedicalRecord(Base):
     def save(cls, medical_record):
         session.add(medical_record)
         session.commit()
+
+    

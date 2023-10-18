@@ -1018,5 +1018,5 @@ if __name__ == "__main__":
     create_treatment_treats_disorder()
 
     session.commit()
-
+    session.close()
 # add relationship for doctor in consultation

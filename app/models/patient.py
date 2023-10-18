@@ -1,7 +1,7 @@
 from datetime import datetime, date
 from typing import List
 
-from sqlalchemy import ForeignKey, VARCHAR, CHAR, DATE, FLOAT, DATETIME
+from sqlalchemy import ForeignKey, VARCHAR, CHAR, DATE, FLOAT, DATETIME, func
 from sqlalchemy.dialects.mysql import MEDIUMINT
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -118,3 +118,7 @@ class Patient(Base):
     def save(cls, patient):
         session.add(patient)
         session.commit()
+
+    # @classmethod
+    # def count_patients(cls):
+    #     return session.query(func.count('*')).select_from(cls).scalar()
