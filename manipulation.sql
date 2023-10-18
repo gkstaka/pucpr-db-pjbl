@@ -1,23 +1,25 @@
 USE psychiatric_hospital;
 
-INSERT INTO `person` (`id`,`name`,`birth_date`,`sex`,`cpf`,`zip`,`street`,`street_number`,`complement`,`neighborhood`,`city`,`state`,`country`,`phone`,`email`) VALUES (1,'Bruno Miglioretto','2013-02-01','m','06411448908','70040912','Rua dos santos',12,'APT 239','Boa vista','Curitiba','PR','BRL','+5541996438691','bruno@exemple.com');
-INSERT INTO `person` (`id`,`name`,`birth_date`,`sex`,`cpf`,`zip`,`street`,`street_number`,`complement`,`neighborhood`,`city`,`state`,`country`,`phone`,`email`) VALUES (2,'João da Silva','1985-07-15','m','31076567045','74120080','Rua 18',12,NULL,'Boa vista','Curitiba','PR','BRL','+5541396438691','joao@exemple.com');
-INSERT INTO `person` (`id`,`name`,`birth_date`,`sex`,`cpf`,`zip`,`street`,`street_number`,`complement`,`neighborhood`,`city`,`state`,`country`,`phone`,`email`) VALUES (3,'John Smith','1970-04-23','m','98765432109','543210','Maple Avenue',30,'Suite 101','Downtown','Metropolis','CA','USA','+5122334455','john@example.com');
-INSERT INTO `person` (`id`,`name`,`birth_date`,`sex`,`cpf`,`zip`,`street`,`street_number`,`complement`,`neighborhood`,`city`,`state`,`country`,`phone`,`email`) VALUES (4,'Maria Garcia','1970-04-23','f','34567891234','654321','Oak Street',55,'','West End','Riverside','CA','USA','+1987654321','maria@example.com');
-INSERT INTO `person` (`id`,`name`,`birth_date`,`sex`,`cpf`,`zip`,`street`,`street_number`,`complement`,`neighborhood`,`city`,`state`,`country`,`phone`,`email`) VALUES (5,'Luis Rodriguez','1992-11-10','m','78901234567','987654','Pine Street',88,'APT 305','East Side','Springfield','IL','USA','+1654321879','luis@example.com');
-INSERT INTO `person` (`id`,`name`,`birth_date`,`sex`,`cpf`,`zip`,`street`,`street_number`,`complement`,`neighborhood`,`city`,`state`,`country`,`phone`,`email`) VALUES (6,'Sophia Johnson','1982-05-30','f','56789012345','234567','Cedar Lane',18,'','North End','Hill Valley','CA','USA','+1555123456','sophia@example.com');
-INSERT INTO `person` (`id`,`name`,`birth_date`,`sex`,`cpf`,`zip`,`street`,`street_number`,`complement`,`neighborhood`,`city`,`state`,`country`,`phone`,`email`) VALUES (7,'Eva Johnson','1982-05-30','f','98765432100','543210','Willow Street',22,'Suite 301','Downtown','Metropolis','CA','USA','+1112334455','eva@example.com');
-INSERT INTO `person` (`id`,`name`,`birth_date`,`sex`,`cpf`,`zip`,`street`,`street_number`,`complement`,`neighborhood`,`city`,`state`,`country`,`phone`,`email`) VALUES (8,'Daniel Brown','1995-09-02','m','11122334455','332211','Chestnut Avenue',45,'','West End','Riverside','CA','USA','+1987614321','daniel@example.com');
-INSERT INTO `person` (`id`,`name`,`birth_date`,`sex`,`cpf`,`zip`,`street`,`street_number`,`complement`,`neighborhood`,`city`,`state`,`country`,`phone`,`email`) VALUES (9,'Sophie Miller','1970-04-23','f','22233445566','998877','Magnolia Street',78,'APT 205','East Side','Springfield','IL','USA','+1614321879','sophie@example.com');
-INSERT INTO `person` (`id`,`name`,`birth_date`,`sex`,`cpf`,`zip`,`street`,`street_number`,`complement`,`neighborhood`,`city`,`state`,`country`,`phone`,`email`) VALUES (10,'William Clark','1970-04-23','m','33344556677','112233','Maple Lane',13,'','North End','Hill Valley','CA','USA','+1555113456','william@example.com');
-INSERT INTO `person` (`id`,`name`,`birth_date`,`sex`,`cpf`,`zip`,`street`,`street_number`,`complement`,`neighborhood`,`city`,`state`,`country`,`phone`,`email`) VALUES (11,'Ava Baker','2013-02-01','f','44455667788','334455','Pine Drive',36,'','South Side','Springfield','IL','USA','+1444333222','ava@example.com');
-INSERT INTO `person` (`id`,`name`,`birth_date`,`sex`,`cpf`,`zip`,`street`,`street_number`,`complement`,`neighborhood`,`city`,`state`,`country`,`phone`,`email`) VALUES (12,'Liam Wilson','1970-04-23','m','55566677788','123456','Sunset Boulevard',99,'Suite 501','Hollywood Hills','Los Angeles','CA','USA','+1122334455','liam@example.com');
-INSERT INTO `person` (`id`,`name`,`birth_date`,`sex`,`cpf`,`zip`,`street`,`street_number`,`complement`,`neighborhood`,`city`,`state`,`country`,`phone`,`email`) VALUES (13,'Emma Davis','1970-04-23','f','66677788899','654321','Ocean Avenue',11,'','Beachfront','Santa Monica','CA','USA','+6987654321','emma@example.com');
-INSERT INTO `person` (`id`,`name`,`birth_date`,`sex`,`cpf`,`zip`,`street`,`street_number`,`complement`,`neighborhood`,`city`,`state`,`country`,`phone`,`email`) VALUES (14,'Noah Martinez','1992-11-10','f','77788899900','112233','Palm Street',22,'APT 102','Palm Beach','Miami','FL','USA','+1654321829','noah@example.com');
-INSERT INTO `person` (`id`,`name`,`birth_date`,`sex`,`cpf`,`zip`,`street`,`street_number`,`complement`,`neighborhood`,`city`,`state`,`country`,`phone`,`email`) VALUES (15,'Olivia Taylor','1982-05-30','f','88899900011','334455','Grove Avenue',55,'','Green Park','Orlando','FL','USA','+1555123156','olivia@example.com');
-INSERT INTO `person` (`id`,`name`,`birth_date`,`sex`,`cpf`,`zip`,`street`,`street_number`,`complement`,`neighborhood`,`city`,`state`,`country`,`phone`,`email`) VALUES (16,'James Johnson','1992-11-10','m','99900011222','998877','Hillside Drive',77,'Suite 303','Hilltop','Tampa','FL','USA','+1444333252','james@example.com');
-INSERT INTO `person` (`id`,`name`,`birth_date`,`sex`,`cpf`,`zip`,`street`,`street_number`,`complement`,`neighborhood`,`city`,`state`,`country`,`phone`,`email`) VALUES (17,'Isabella Brown','1985-07-15','f','00011122233','223344','Forest Road',33,'','Woodland','Jacksonville','FL','USA','+1888777666','isabella@example.com');
-INSERT INTO `person` (`id`,`name`,`birth_date`,`sex`,`cpf`,`zip`,`street`,`street_number`,`complement`,`neighborhood`,`city`,`state`,`country`,`phone`,`email`) VALUES (18,'Sophia Hernandez','1992-11-10','f','11223341156','223344','Oak Street',99,'APT 401','Downtown','Metropolis','CA','USA','+1111134455','sophiaa@example.com');
+INSERT INTO `person` (`id`,`name`,`birth_date`,`sex`,`cpf`,`zip`,`street`,`street_number`,`complement`,`neighborhood`,`city`,`state`,`country`,`phone`,`email`) 
+VALUES 
+(1,'Bruno Miglioretto','2013-02-01','m','06411448908','70040912','Rua dos santos',12,'APT 239','Boa vista','Curitiba','PR','BRL','+5541996438691','bruno@exemple.com'),
+(2,'João da Silva','1985-07-15','m','31076567045','74120080','Rua 18',12,NULL,'Boa vista','Curitiba','PR','BRL','+5541396438691','joao@exemple.com'),
+(3,'John Smith','1970-04-23','m','98765432109','543210','Maple Avenue',30,'Suite 101','Downtown','Metropolis','CA','USA','+5122334455','john@example.com'),
+(4,'Maria Garcia','1970-04-23','f','34567891234','654321','Oak Street',55,'','West End','Riverside','CA','USA','+1987654321','maria@example.com'),
+(5,'Luis Rodriguez','1992-11-10','m','78901234567','987654','Pine Street',88,'APT 305','East Side','Springfield','IL','USA','+1654321879','luis@example.com'),
+(6,'Sophia Johnson','1982-05-30','f','56789012345','234567','Cedar Lane',18,'','North End','Hill Valley','CA','USA','+1555123456','sophia@example.com'),
+(7,'Eva Johnson','1982-05-30','f','98765432100','543210','Willow Street',22,'Suite 301','Downtown','Metropolis','CA','USA','+1112334455','eva@example.com'),
+(8,'Daniel Brown','1995-09-02','m','11122334455','332211','Chestnut Avenue',45,'','West End','Riverside','CA','USA','+1987614321','daniel@example.com'),
+(9,'Sophie Miller','1970-04-23','f','22233445566','998877','Magnolia Street',78,'APT 205','East Side','Springfield','IL','USA','+1614321879','sophie@example.com'),
+(10,'William Clark','1970-04-23','m','33344556677','112233','Maple Lane',13,'','North End','Hill Valley','CA','USA','+1555113456','william@example.com'),
+(11,'Ava Baker','2013-02-01','f','44455667788','334455','Pine Drive',36,'','South Side','Springfield','IL','USA','+1444333222','ava@example.com'),
+(12,'Liam Wilson','1970-04-23','m','55566677788','123456','Sunset Boulevard',99,'Suite 501','Hollywood Hills','Los Angeles','CA','USA','+1122334455','liam@example.com'),
+(13,'Emma Davis','1970-04-23','f','66677788899','654321','Ocean Avenue',11,'','Beachfront','Santa Monica','CA','USA','+6987654321','emma@example.com'),
+(14,'Noah Martinez','1992-11-10','f','77788899900','112233','Palm Street',22,'APT 102','Palm Beach','Miami','FL','USA','+1654321829','noah@example.com'),
+(15,'Olivia Taylor','1982-05-30','f','88899900011','334455','Grove Avenue',55,'','Green Park','Orlando','FL','USA','+1555123156','olivia@example.com'),
+(16,'James Johnson','1992-11-10','m','99900011222','998877','Hillside Drive',77,'Suite 303','Hilltop','Tampa','FL','USA','+1444333252','james@example.com'),
+(17,'Isabella Brown','1985-07-15','f','00011122233','223344','Forest Road',33,'','Woodland','Jacksonville','FL','USA','+1888777666','isabella@example.com'),
+(18,'Sophia Hernandez','1992-11-10','f','11223341156','223344','Oak Street',99,'APT 401','Downtown','Metropolis','CA','USA','+1111134455','sophiaa@example.com');
 
 
 INSERT INTO `professional` (`id`,`enrollment`,`salary`,`start_date`,`working_range`,`speciality`,`consultation_fee`) 
@@ -64,10 +66,10 @@ VALUES
 
 INSERT INTO `consultation` (`id`,`time`,`patient_id`, `doctor_id`) 
 VALUES 
-(1,'2022-07-15 00:00:00',13,1),
-(2,'2023-05-15 00:00:00',14,2),
-(3,'2023-09-15 00:00:00',15,3),
-(4,'2021-05-01 00:00:00',16,4),
+(1,'2022-07-15 00:00:00',13,3),
+(2,'2023-05-15 00:00:00',14,4),
+(3,'2023-09-15 00:00:00',15,2),
+(4,'2021-05-01 00:00:00',16,1),
 (5,'2022-03-10 00:00:00',17,5),
 (6,'2020-01-01 00:00:00',18,6);
 
@@ -107,15 +109,6 @@ VALUES
 (5,'Autism treatment','2022-03-10 00:00:00','2023-03-10 00:00:00',17),
 (6,'ADHD treatment','2020-01-01 00:00:00','2021-01-01 00:00:00',18);
 
-INSERT INTO `therapy` (`id`,`time`,`purpose`,`capacity`,`psychologist_id`) 
-VALUES 
-(1,'1900-01-01 01:00:00','Cognitive behavioral therapy (CBT) is a form of psychological treatment.',1,12),
-(2,'1900-01-01 02:00:00','Dialectical behavior therapy (DBT) is a specific type of cognitive-behavioral psychotherapy.',1,7),
-(3,'1900-01-01 03:00:00','Interpersonal therapy (IPT) is a time-limited treatment.',1,11),
-(4,'1900-01-01 04:00:00','Psychodynamic therapy is a form of therapy with a focus on a holistic perspective of the client.',1,9),
-(5,'1900-01-01 05:00:00','Family therapy is a type of psychological counseling (psychotherapy) that helps family members.',1,8),
-(6,'1900-01-01 06:00:00','Couple therapy is a type of psychological therapy that helps couples of all types.',2,10);
-
 INSERT INTO `medical_record` (`id`,`record_date`,`description`,`patient_id`,`treatment_id`) 
 VALUES 
 (1,'2022-07-15 00:00:00','Patient is suffering from anxiety disorder', 13, 1),
@@ -124,6 +117,15 @@ VALUES
 (4,'2021-05-01 00:00:00','Patient is suffering from schizophrenia',16, 4),
 (5,'2022-03-10 00:00:00','Patient is suffering from autism', 17, 5),
 (6,'2020-01-01 00:00:00','Patient is suffering from ADHD',18, 6);
+
+INSERT INTO `therapy` (`id`,`time`,`purpose`,`capacity`,`psychologist_id`) 
+VALUES 
+(1,'1900-01-01 01:00:00','Cognitive behavioral therapy (CBT) is a form of psychological treatment.',1,12),
+(2,'1900-01-01 02:00:00','Dialectical behavior therapy (DBT) is a specific type of cognitive-behavioral psychotherapy.',1,7),
+(3,'1900-01-01 03:00:00','Interpersonal therapy (IPT) is a time-limited treatment.',1,11),
+(4,'1900-01-01 04:00:00','Psychodynamic therapy is a form of therapy with a focus on a holistic perspective of the client.',1,9),
+(5,'1900-01-01 05:00:00','Family therapy is a type of psychological counseling (psychotherapy) that helps family members.',1,8),
+(6,'1900-01-01 06:00:00','Couple therapy is a type of psychological therapy that helps couples of all types.',2,10);
 
 INSERT INTO `suggestion` (`id`,`medicine_id`,`dosage_id`,`medical_record_id`) 
 VALUES (1,1,1,1),
