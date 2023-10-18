@@ -8,52 +8,66 @@ from models import Base, Patient, Doctor, Psychologist, Treatment, Medicine
 from models.therapy import Therapy
 from services.database import session
 
-
+from typing import List
 class MedicalRecord(Base):
     __tablename__ = "medical_record"
 
     id: Mapped[int] = mapped_column(
         "id", MEDIUMINT, nullable=False, autoincrement=True, primary_key=True
     )
-    patient_id: Mapped[int] = mapped_column(
-        "patient_id", MEDIUMINT, ForeignKey(Patient.id), nullable=False, unique=False
-    )
-    doctor_id: Mapped[int] = mapped_column(
-        "doctor_id", MEDIUMINT, ForeignKey(Doctor.id), nullable=False, unique=False
-    )
-    psychologist_id: Mapped[int] = mapped_column(
-        "psychologist_id",
-        MEDIUMINT,
-        ForeignKey(Psychologist.id),
-        nullable=False,
-        unique=False,
-    )
-    treatment_id: Mapped[int] = mapped_column(
-        "treatment_id",
-        MEDIUMINT,
-        ForeignKey(Treatment.id),
-        nullable=False,
-        unique=False,
-    )
-    therapy_id: Mapped[int] = mapped_column(
-        "therapy_id", MEDIUMINT, ForeignKey(Therapy.id), nullable=False, unique=False
-    )
+    
     record_date: Mapped[str] = mapped_column(
         "record_date", DATETIME, nullable=False, unique=False, default=datetime.now()
     )
     description: Mapped[str] = mapped_column(
         "description", VARCHAR(200), nullable=False, unique=False
     )
+    
     suggestions: Mapped["Suggestion"] = relationship(
         back_populates="medical_record", cascade="all, delete-orphan"
     )
 
-    def __init__(self, patient_id, doctor_id, psychologist_id, treatment_id, therapy_id, record_date, description):
-        self.patient_id = patient_id
-        self.doctor_id = doctor_id
-        self.psychologist_id = psychologist_id
-        self.treatment_id = treatment_id
-        self.therapy_id = therapy_id
+    patient_id: Mapped[int] = mapped_column(ForeignKey("patient.id"))
+    patient: Mapped["Patient"] = relationship(back_populates="medical_record")
+    
+    treatment_id: Mapped[int] = mapped_column(ForeignKey("treatment.id"))
+    treatment: Mapped["Treatment"] = relationship(back_populates="medical_records")
+
+    medical_record_included_therapies: Mapped[List["MedicalRecordIncludedTherapy"]] = relationship(
+        back_populates="medical_record", cascade="all, delete-orphan"
+        )
+
+    doctor_update_records: Mapped[List["DoctorUpdateRecord"]] = relationship(back_populates="medical_record", cascade="all, delete-orphan")
+
+    psychologist_update_records: Mapped[List["PsychologistUpdateRecord"]] = relationship(back_populates="medical_record", cascade="all, delete-orphan")
+    
+    # patient_id: Mapped[int] = mapped_column(
+    #     "patient_id", MEDIUMINT, ForeignKey(Patient.id), nullable=False, unique=False
+    # )
+    # doctor_id: Mapped[int] = mapped_column(
+    #     "doctor_id", MEDIUMINT, ForeignKey(Doctor.id), nullable=False, unique=False
+    # )
+    # psychologist_id: Mapped[int] = mapped_column(
+    #     "psychologist_id",
+    #     MEDIUMINT,
+    #     ForeignKey(Psychologist.id),
+    #     nullable=False,
+    #     unique=False,
+    # )
+    # treatment_id: Mapped[int] = mapped_column(
+    #     "treatment_id",
+    #     MEDIUMINT,
+    #     ForeignKey(Treatment.id),
+    #     nullable=False,
+    #     unique=False,
+    # )
+    # therapy_id: Mapped[int] = mapped_column(
+    #     "therapy_id", MEDIUMINT, ForeignKey(Therapy.id), nullable=False, unique=False
+    # )
+    
+    def __init__(self, record_date, description, patient, treatment):
+        self.patient = patient
+        self.treatment = treatment
         self.record_date = record_date
         self.description = description
 

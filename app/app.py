@@ -832,63 +832,42 @@ def create_therapies():
 
 def create_medical_record():
     patient_list = Patient.find_all()
-    doctor_list = Doctor.find_all()
-    psychologist_list = Psychologist.find_all()
     treatment_list = Treatment.find_all()
-    therapy_list = Therapy.find_all()
 
     medical_records = [
         MedicalRecord(
-            patient_id=patient_list[0].id,
-            doctor_id=doctor_list[0].id,
-            psychologist_id=psychologist_list[0].id,
-            treatment_id=treatment_list[0].id,
-            therapy_id=therapy_list[0].id,
+            patient=patient_list[0],
+            treatment=treatment_list[0],
             record_date=datetime.strptime("2022-07-15", "%Y-%m-%d").date(),
             description="Patient is suffering from anxiety disorder"
         ),
         MedicalRecord(
-            patient_id=patient_list[1].id,
-            doctor_id=doctor_list[1].id,
-            psychologist_id=psychologist_list[1].id,
-            treatment_id=treatment_list[1].id,
-            therapy_id=therapy_list[1].id,
+            patient=patient_list[1],
+            treatment=treatment_list[1],
             record_date=datetime.strptime("2023-05-15", "%Y-%m-%d").date(),
             description="Patient is suffering from depression"
         ),
         MedicalRecord(
-            patient_id=patient_list[2].id,
-            doctor_id=doctor_list[2].id,
-            psychologist_id=psychologist_list[2].id,
-            treatment_id=treatment_list[2].id,
-            therapy_id=therapy_list[2].id,
+            patient=patient_list[2],
+            treatment=treatment_list[2],
             record_date=datetime.strptime("2023-09-15", "%Y-%m-%d").date(),
             description="Patient is suffering from bipolar disorder"
         ),
         MedicalRecord(
-            patient_id=patient_list[3].id,
-            doctor_id=doctor_list[3].id,
-            psychologist_id=psychologist_list[3].id,
-            treatment_id=treatment_list[3].id,
-            therapy_id=therapy_list[3].id,
+            patient=patient_list[3],
+            treatment=treatment_list[3],
             record_date=datetime.strptime("2021-05-01", "%Y-%m-%d").date(),
             description="Patient is suffering from schizophrenia"
         ),
         MedicalRecord(
-            patient_id=patient_list[4].id,
-            doctor_id=doctor_list[4].id,
-            psychologist_id=psychologist_list[4].id,
-            treatment_id=treatment_list[4].id,
-            therapy_id=therapy_list[4].id,
+            patient=patient_list[4],
+            treatment=treatment_list[4],
             record_date=datetime.strptime("2022-03-10", "%Y-%m-%d").date(),
             description="Patient is suffering from autism"
         ),
         MedicalRecord(
-            patient_id=patient_list[5].id,
-            doctor_id=doctor_list[5].id,
-            psychologist_id=psychologist_list[5].id,
-            treatment_id=treatment_list[5].id,
-            therapy_id=therapy_list[5].id,
+            patient=patient_list[5],
+            treatment=treatment_list[5],
             record_date=datetime.strptime("2020-01-01", "%Y-%m-%d").date(),
             description="Patient is suffering from ADHD"
         )
@@ -939,8 +918,8 @@ def create_doctor_update_record():
     for index in range(0, len(doctor_list)):
         doctor_update_record_list.append(
             DoctorUpdateRecord(
-                doctor_id=doctor_list[index].id,
-                medical_record_id=medical_records[index].id
+                doctor=doctor_list[index],
+                medical_record=medical_records[index]
             )
         )
 
@@ -955,8 +934,8 @@ def create_medical_record_included_therapy():
     for index in range(0, len(medical_records)):
         medical_record_included_therapy_list.append(
             MedicalRecordIncludedTherapy(
-                medical_record_id=medical_records[index].id,
-                therapy_id=therapy_list[index].id
+                medical_record=medical_records[index],
+                therapy=therapy_list[index]
             )
         )
 
@@ -987,8 +966,8 @@ def create_psychologist_update_record():
     for index in range(0, len(psychologists)):
         psychologist_update_record_list.append(
             PsychologistUpdateRecord(
-                psychologist_id=psychologists[index].id,
-                medical_record_id=medical_records[index].id
+                psychologist=psychologists[index],
+                medical_record=medical_records[index]
             )
         )
 

@@ -1,6 +1,6 @@
 from sqlalchemy import ForeignKey
 from sqlalchemy.dialects.mysql import MEDIUMINT
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from models import Base, Doctor, MedicalRecord
 from services.database import session
@@ -13,21 +13,17 @@ class DoctorUpdateRecord(Base):
         "id", MEDIUMINT, nullable=False, autoincrement=True, primary_key=True
     )
 
-    doctor_id: Mapped[int] = mapped_column(
-        "doctor_id", MEDIUMINT, ForeignKey(Doctor.id), nullable=False, unique=False
-    )
+    doctor_id: Mapped[int] = mapped_column(ForeignKey("doctor.id"))
+    doctor: Mapped["Doctor"] = relationship(back_populates="doctor_update_records")
+    
+    medical_record_id: Mapped[int] = mapped_column(ForeignKey("medical_record.id"))
+    medical_record: Mapped["MedicalRecord"] = relationship(back_populates="doctor_update_records")
 
-    medical_record_id: Mapped[int] = mapped_column(
-        "medical_record_id",
-        MEDIUMINT,
-        ForeignKey(MedicalRecord.id),
-        nullable=False,
-        unique=False,
-    )
-
-    def __init__(self, doctor_id, medical_record_id):
-        self.doctor_id = doctor_id
-        self.medical_record_id = medical_record_id
+    
+    
+    def __init__(self, doctor, medical_record):
+        self.doctor = doctor
+        self.medical_record = medical_record
 
     @classmethod
     def find_all(cls):

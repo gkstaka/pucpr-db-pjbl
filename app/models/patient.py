@@ -51,6 +51,8 @@ class Patient(Base):
         back_populates="patient", cascade="all, delete-orphan"
     )
 
+    medical_record: Mapped["MedicalRecord"] = relationship(back_populates="patient", cascade="all, delete-orphan")
+    
     def __init__(
         self,
         weight,

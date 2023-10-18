@@ -7,7 +7,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from models import Base, Patient, Psychologist, Treatment
 from services.database import session
 
-
+from typing import List
 class Therapy(Base):
     __tablename__ = "therapy"
 
@@ -30,7 +30,11 @@ class Therapy(Base):
     psychologist_id: Mapped[int] = mapped_column(ForeignKey(Psychologist.id))
     psychologist: Mapped["Psychologist"] = relationship(back_populates="therapies")
 
+    medical_record_included_therapies: Mapped[List["MedicalRecordIncludedTherapy"]] = relationship(
+        back_populates="therapy", cascade="all, delete-orphan"
+        )
 
+    
     def __init__(self, time, purpose, capacity, psychologist):
         self.time = time
         self.purpose = purpose

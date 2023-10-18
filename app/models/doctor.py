@@ -27,6 +27,10 @@ class Doctor(Base):
     doctor_suggest_treatments: Mapped[List["DoctorSuggestTreatment"]] = relationship(
         back_populates="doctor", cascade="all, delete-orphan"
         )
+
+    doctor_update_records: Mapped[List["DoctorUpdateRecord"]] = relationship(
+        back_populates="doctor", cascade="all, delete-orphan"
+        )
     
     def __init__(self, crm, professional):
         self.crm = crm

@@ -47,6 +47,8 @@ class Treatment(Base):
         back_populates="treatment", cascade="all, delete-orphan"
         )
 
+    medical_records: Mapped[List["MedicalRecord"]] = relationship(back_populates="treatment", cascade="all, delete-orphan")
+    
     def __init__(self, name, start_date, planned_end_date, patient):
         self.name = name
         self.start_date = start_date
