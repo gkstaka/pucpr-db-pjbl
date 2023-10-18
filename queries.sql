@@ -26,19 +26,37 @@ JOIN treatment_treats_disorder AS ttd ON ttd.disorder_id = d.id
 JOIN treatment AS t ON t.id = ttd.treatment_id
 GROUP BY d.`name`;
 
-/*-- 10.	Calcular a proporção de pacientes de específico sexo atendidos por psicólogos de específico sexo (count(person.sexo) from person join patient join psychoilogist [buscar a terapia via prontuario], group by patient-psychologist);
-SELECT ppt.sex, COUNT(*) FROM patient AS pt
+-- 7.	Encontrar a média de medicamentos tomados por total de pacientes (avg medicine_suggestion / patient count());
+SELECT subquery.`count`/COUNT(mr.id) "Average medication per patient" 
+FROM (
+	SELECT COUNT(*) AS `count` FROM suggestion
+    ) AS subquery    
+JOIN medical_record AS mr
+GROUP BY `count`;
+
+
+
+
+-- 10.	Calcular a proporção de pacientes de específico sexo atendidos por psicólogos de específico sexo (count(person.sexo) from person join patient join psychoilogist [buscar a terapia via prontuario], group by patient-psychologist);
+SELECT ppt.sex "Patient sex", ppsy.sex "Psychologist sex", COUNT(*) "" FROM patient AS pt
 NATURAL JOIN person AS ppt
-GROUP BY ppt.sex;
-*/
+JOIN treatment AS t ON ppt.id = t.patient_id
+JOIN psychologist_helps_treatment AS pht ON pht.treatment_id = t.id
+JOIN psychologist AS psy ON pht.psychologist_id = psy.id
+JOIN person AS ppsy ON psy.id = ppsy.id
+GROUP BY ppt.sex, ppsy.sex;
 
 
 -- 12.	Listar todos os pacientes e os profissionais (médicos e psicólogos) que os atendem;
 SELECT p.id "ID paciente", p.`name` "Nome", doc_p.id "ID médico", doc_p.`name` "Médico", psy_p.id "Id psicólogo", psy_p.`name` "Psicólogo" FROM person AS p
 NATURAL JOIN patient AS pa
 JOIN treatment AS t ON t.patient_id = pa.id
-JOIN person AS doc_p ON t.doctor_id = doc_p.id
-LEFT JOIN person AS psy_p ON t.psychologist_id = psy_p.id; 
+JOIN doctor_suggest_treatment AS dt ON dt.treatment_id = t.id
+JOIN doctor AS d ON dt.doctor_id = d.id
+JOIN person AS doc_p ON d.id = doc_p.id
+LEFT JOIN psychologist_helps_treatment AS pht ON pht.treatment_id = t.id
+JOIN psychologist AS psy ON psy.id = pht.psychologist_id
+JOIN person AS psy_p ON psy.id = psy_p.id; 
 
 -- 13.	Calcular a média de tempo de tratamento agrupado por transtornos (avg, group by, join treatment_treats_disorder);
 SELECT d.`name`, AVG(TIMESTAMPDIFF(DAY, t.start_date, t.planned_end_date)) "Average time" FROM treatment AS t
@@ -48,37 +66,24 @@ GROUP BY d.`name`;
 
 
 -- 14.  Verificar quais transtornos estão sendo tratados atualmente;
-SELECT d.`type` AS "Tipo de Transtorno"
+SELECT d.`name` AS "Transtorno", COUNT(t.id) "quantidade" 
 FROM treatment AS t
-JOIN disorder AS d ON t.disorder_id = d.id
-WHERE NOW() < t.end_date;
+JOIN treatment_treats_disorder AS ttd ON ttd.treatment_id = t.id
+JOIN disorder AS d ON ttd.disorder_id = d.id
+WHERE NOW() < t.planned_end_date
+GROUP BY d.`name`;
 
 -- 15.	Contar os profissionais na equipe agrupado por especialização 
-SELECT speciality "Speciality", COUNT(*) "Quantity"FROM professional GROUP BY speciality;
+SELECT speciality "Speciality", COUNT(*) "Quantity" FROM professional GROUP BY speciality;
 
 -- 16.  Listar todos os pacientes que receberam ajuda por nome do psicólogo;
-SELECT p.`name` AS "Nome do Paciente", psy.`name` AS "Nome do Psicólogo"
-FROM patient AS p
-JOIN medical_record AS mr ON p.medical_record_id = mr.id
-JOIN medical_record_included_therapy AS mrit ON mr.id = mrit.medical_record_id
-JOIN therapy AS t ON mrit.therapy_id = t.id
-JOIN psychologist AS psy ON t.psychologist_id = psy.id
-GROUP BY psy.`name`
-ORDER BY psy.`name`;
-
-SELECT p.`name` "Patient name", ppsy.`name` "Psychologist name" FROM person AS p
+SELECT ppsy.`name` "Psychologist name", p.`name` "Patient name" FROM person AS p
 NATURAL JOIN patient AS pt
 JOIN treatment AS t ON pt.id = t.patient_id
 JOIN psychologist_helps_treatment AS pht ON pht.treatment_id = t.id
 JOIN psychologist AS psy ON pht.psychologist_id = psy.id
-JOIN person AS ppsy ON pht.id = ppsy.id; 
-;
-
-;
-select * from psychologist_helps_treatment;
-insert into psychologist_helps_treatment (psychologist_id, treatment_id)VALUES (7,3);
-describe psychologist_helps_treatment;
-
+JOIN person AS ppsy ON pht.id = ppsy.id
+ORDER BY ppsy.`name`; 
 
 -- 18.	Listar os médicos que mais atualizaram o prontuário (select doctor, count(doctor_update_record) from doctor join doctor_update_record group by doctor)
 SELECT p.`name` "Name", COUNT(dur.id) "Medical records updated" FROM doctor_update_record AS dur
