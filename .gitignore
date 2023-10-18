@@ -1,3 +1,9 @@
+#Python file
+app/tempCodeRunnerFile.py
+
+#Model file to check relations
+'app/modelagem logica correcao modelos.png'
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

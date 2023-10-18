@@ -1,5 +1,5 @@
 from sqlalchemy import ForeignKey
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.dialects.mysql import MEDIUMINT
 from models import Base, Doctor, Treatment
 from services.database import session
@@ -12,21 +12,15 @@ class DoctorSuggestTreatment(Base):
         "id", MEDIUMINT, nullable=False, autoincrement=True, primary_key=True
     )
 
-    doctor_id: Mapped[int] = mapped_column(
-        "doctor_id", MEDIUMINT, ForeignKey(Doctor.id), nullable=False, unique=False
-    )
+    doctor_id: Mapped[int] = mapped_column(ForeignKey("doctor.id"))
+    doctor: Mapped["Doctor"] = relationship(back_populates="doctor_suggest_treatments")
+    
+    treatment_id: Mapped[int] = mapped_column(ForeignKey("treatment.id"))
+    treatment: Mapped["Treatment"] = relationship(back_populates="doctor_suggest_treatments")
 
-    treatment_id: Mapped[int] = mapped_column(
-        "treatment_id",
-        MEDIUMINT,
-        ForeignKey(Treatment.id),
-        nullable=False,
-        unique=False,
-    )
-
-    def __init__(self, doctor_id, treatment_id):
-        self.doctor_id = doctor_id
-        self.treatment_id = treatment_id
+    def __init__(self, doctor, treatment):
+        self.doctor = doctor
+        self.treatment = treatment
 
     @classmethod
     def find_all(cls):

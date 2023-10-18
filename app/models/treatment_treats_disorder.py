@@ -16,17 +16,13 @@ class TreatmentTreatsDisorder(Base):
     disorder_id: Mapped[int] = mapped_column(ForeignKey("disorder.id"))
     disorder: Mapped["Disorder"] = relationship(back_populates="treatment_treats_disorders")
 
-    treatment_id: Mapped[int] = mapped_column(
-        "treatment_id",
-        MEDIUMINT,
-        ForeignKey(Treatment.id),
-        nullable=False,
-        unique=False,
-    )
+    treatment_id: Mapped[int] = mapped_column(ForeignKey("treatment.id"))
+    treatment: Mapped["Treatment"] = relationship(back_populates="treatment_treats_disorders")
 
-    def __init__(self, disorder, treatment_id):
+    
+    def __init__(self, disorder, treatment):
         self.disorder = disorder
-        self.treatment_id = treatment_id
+        self.treatment = treatment
 
     @classmethod
     def find_all(cls):

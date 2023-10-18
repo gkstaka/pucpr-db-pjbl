@@ -923,8 +923,8 @@ def create_doctor_suggest_treatment():
     for index in range(0, len(doctor_list)):
         doctor_suggest_treatment_list.append(
             DoctorSuggestTreatment(
-                doctor_id=doctor_list[index].id,
-                treatment_id=treatment_list[index].id
+                doctor=doctor_list[index],
+                treatment=treatment_list[index]
             )
         )
 
@@ -971,8 +971,8 @@ def create_psychologist_helps_treatment():
     for index in range(0, len(psychologists)):
         psychologist_helps_treatment_list.append(
             PsychologistHelpsTreatment(
-                psychologist_id=psychologists[index].id,
-                treatment_id=treatment_list[index].id
+                psychologist=psychologists[index],
+                treatment=treatment_list[index]
             )
         )
 
@@ -1004,7 +1004,7 @@ def create_treatment_treats_disorder():
         treatment_treats_disorder_list.append(
             TreatmentTreatsDisorder(
                 disorder=disorder_list[index],
-                treatment_id=treatment_list[index].id
+                treatment=treatment_list[index],
             )
         )
 

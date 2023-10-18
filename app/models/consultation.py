@@ -19,8 +19,10 @@ class Consultation(Base):
     )
     patient_id: Mapped[int] = mapped_column(ForeignKey("patient.id"))
     patient: Mapped["Patient"] = relationship(back_populates="consultations")
+    
     doctor_id: Mapped[int] = mapped_column(ForeignKey("doctor.id"))
     doctor: Mapped["Doctor"] = relationship(back_populates="consultations")
+    
     def __init__(self, time, patient, doctor):
         self.time = time
         self.patient = patient

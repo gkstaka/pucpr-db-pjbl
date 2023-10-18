@@ -4,9 +4,10 @@ from sqlalchemy import VARCHAR, DATETIME, ForeignKey
 from sqlalchemy.dialects.mysql import MEDIUMINT
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from models import Base, Disorder, Patient, Doctor, Psychologist
+from models import Base, Patient
 from services.database import session
 
+from typing import List
 
 class Treatment(Base):
     __tablename__ = "treatment"
@@ -35,7 +36,16 @@ class Treatment(Base):
         ForeignKey("patient.id")
     )
     patient: Mapped["Patient"] = relationship(back_populates="treatment")
+    
+    treatment_treats_disorders: Mapped[List["TreatmentTreatsDisorder"]] = relationship(back_populates="treatment", cascade="all, delete-orphan")
 
+    doctor_suggest_treatments: Mapped[List["DoctorSuggestTreatment"]] = relationship(
+        back_populates="treatment", cascade="all, delete-orphan"
+        )
+
+    psychologist_helps_treatments: Mapped[List["PsychologistHelpsTreatment"]] = relationship(
+        back_populates="treatment", cascade="all, delete-orphan"
+        )
 
     def __init__(self, name, start_date, planned_end_date, patient):
         self.name = name
