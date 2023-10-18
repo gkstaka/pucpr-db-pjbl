@@ -1,6 +1,6 @@
 from typing import List
 
-from sqlalchemy import ForeignKey, VARCHAR, CHAR, FLOAT, DATE
+from sqlalchemy import ForeignKey, VARCHAR, CHAR, FLOAT, DATE, func, asc
 from sqlalchemy.dialects.mysql import MEDIUMINT
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -102,3 +102,7 @@ class Professional(Base):
     def save(cls, professional):
         session.add(professional)
         session.commit()
+
+    @classmethod
+    def list_by_salary(cls):
+        return session.query(cls).order_by(asc(cls.salary)).all()

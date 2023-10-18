@@ -119,6 +119,8 @@ class Patient(Base):
         session.add(patient)
         session.commit()
 
-    # @classmethod
-    # def count_patients(cls):
-    #     return session.query(func.count('*')).select_from(cls).scalar()
+    @classmethod
+    def count_patients(cls):
+        return session.query(func.count(cls.id)).scalar()
+
+    

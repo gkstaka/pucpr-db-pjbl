@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import DATETIME, ForeignKey
+from sqlalchemy import DATETIME, ForeignKey, func
 from sqlalchemy.dialects.mysql import MEDIUMINT
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -57,3 +57,7 @@ class Consultation(Base):
     def save(cls, consultation):
         session.add(consultation)
         session.commit()
+
+    @classmethod
+    def count_consultations(cls):
+        return session.query(func.count(cls.id)).scalar()

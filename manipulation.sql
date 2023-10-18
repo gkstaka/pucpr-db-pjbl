@@ -102,7 +102,7 @@ VALUES
 
 INSERT INTO `treatment` (`id`,`name`,`start_date`,`planned_end_date`,`patient_id`) 
 VALUES 
-(1,'Anxiety treatment','2022-07-15 00:00:00','2023-07-15 00:00:00',13),
+(1,'Anxiety treatment','2021-07-15 00:00:00','2023-07-15 00:00:00',13),
 (2,'Depression treatment','2023-05-15 00:00:00','2024-05-15 00:00:00',14),
 (3,'Bipolar disorder treatment','2023-09-15 00:00:00','2024-09-15 00:00:00',15),
 (4,'Schizophrenia treatment','2021-05-01 00:00:00','2022-05-01 00:00:00',16),
@@ -188,3 +188,8 @@ VALUES
 (4,4,4),
 (5,5,5),
 (6,6,6);
+
+/*-------------------------UPDATES-------------------------*/
+
+UPDATE treatment SET start_date = NOW(), planned_end_date = "2025-05-03" WHERE id = 2;
+
