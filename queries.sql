@@ -144,4 +144,19 @@ CREATE OR REPLACE VIEW view_patients AS
         ORDER BY pt.hospitalization_date;
 SELECT * FROM view_patients;
 
--- 2. 
+-- 2. Listar diagnósticos de pacientes 
+CREATE OR REPLACE VIEW diagnosis AS
+	SELECT pt.id "patient id", pt.weight, pt.marital_status, pt.profession, pt.health_insurance, pt.hospitalization_date, d.`name` "disorder" FROM patient AS pt
+    JOIN treatment AS t ON t.patient_id = pt.id
+    JOIN treatment_treats_disorder AS ttd ON ttd.treatment_id = t.id
+    JOIN disorder AS d ON d.id = ttd.disorder_id;
+SELECT * FROM diagnosis;
+
+-- 3. Mostrar coquetel de remédios de cada prontuário médico
+CREATE OR REPLACE VIEW misc_medicine_info AS
+	SELECT mr.id "Medical record id", m.`name` , d.dose_quantity, d.dose_frequency FROM medical_record AS mr
+	JOIN suggestion AS s ON s.medical_record_id = mr.id
+    JOIN medicine AS m ON m.id = s.medicine_id
+    JOIN dosage AS d ON d.id = s.dosage_id
+    ORDER BY mr.id;
+SELECT * FROM misc_medicine_info;

@@ -193,3 +193,26 @@ VALUES
 
 UPDATE treatment SET start_date = NOW(), planned_end_date = "2025-05-03" WHERE id = 2;
 
+UPDATE consultation SET `time` = "2023-07-30" WHERE id = 1;
+
+UPDATE dosage SET dose_frequency = "every 8 hours", dose_quantity = "150mg" WHERE id = 3;
+
+UPDATE professional SET salary = 15000 WHERE id = 4;
+
+UPDATE medical_record SET record_date = "2022-04-11" WHERE id = 2;
+
+/*-------------------------DELETES-------------------------*/
+
+DELETE FROM medical_record_included_therapy WHERE id = 2; -- necessário para deletar a terapia abaixo
+
+DELETE FROM therapy WHERE id = 2;
+
+DELETE FROM doctor_update_record WHERE id = 3;
+
+SET SQL_SAFE_UPDATES = 0;
+DELETE FROM consultation WHERE `time` < "2023-07-01";
+SET SQL_SAFE_UPDATES = 1;
+
+SET FOREIGN_KEY_CHECKS = 0;
+DELETE FROM patient WHERE id = 13;
+SET FOREIGN_KEY_CHECKS = 1;
