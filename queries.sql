@@ -59,7 +59,9 @@ JOIN person AS ppsy ON psy.id = ppsy.id
 GROUP BY ppt.sex, ppsy.sex
 ORDER BY ppsy.sex;
 
-
+-- 11.	Listar os transtornos em ordem de quais são podem ser mais comuns;
+SELECT * FROM disorder
+ORDER BY disorder.prevalence DESC;
 
 -- 12.	Listar todos os pacientes e os profissionais (médicos e psicólogos) que os atendem;
 SELECT p.id "ID paciente", p.`name` "Nome", doc_p.id "ID médico", doc_p.`name` "Médico", psy_p.id "Id psicólogo", psy_p.`name` "Psicólogo" FROM person AS p
@@ -99,7 +101,11 @@ JOIN psychologist AS psy ON pht.psychologist_id = psy.id
 JOIN person AS ppsy ON pht.id = ppsy.id
 ORDER BY ppsy.`name`; 
 
--- 17.	Calcular estatísticas de transtornos com base no estado civil (patient marital status% group by disorder group by marital_status);
+-- 17.	Contar pacientes de acordo com o estado civil
+SELECT marital_status , COUNT(*) FROM patient
+GROUP BY marital_status;
+
+
 
 -- 18.	Listar os médicos que mais atualizaram o prontuário (select doctor, count(doctor_update_record) from doctor join doctor_update_record group by doctor)
 SELECT p.`name` "Name", COUNT(dur.id) "Medical records updated" FROM doctor_update_record AS dur

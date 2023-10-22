@@ -1,5 +1,6 @@
 USE psychiatric_hospital;
-
+-- Procedures
+-- 1. Inserir um novo paciente
 DROP PROCEDURE IF EXISTS insert_patient;
 DELIMITER $$
 CREATE PROCEDURE insert_patient (
@@ -57,6 +58,8 @@ CALL insert_patient(
     'MediCare'
 );
 
+
+-- 2. Calcular a proporção de internações de um determinado ano separada e ordenada por mês 
 DROP PROCEDURE IF EXISTS hospitalization_proportion;
 DELIMITER $$
 CREATE PROCEDURE hospitalization_proportion (IN _year INT)
