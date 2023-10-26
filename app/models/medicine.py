@@ -31,20 +31,13 @@ class Medicine(Base):
         back_populates="medicine", cascade="all, delete-orphan"
     )
 
-    def __init__(self, name, composition, usage_type, indication, contraindication):
+    def __init__(self, name, composition, usage_type, indication, contraindication, **kw):
+        super().__init__(**kw)
         self.name = name
         self.composition = composition
         self.usage_type = usage_type
         self.indication = indication
         self.contraindication = contraindication
-
-    @classmethod
-    def find_all(cls):
-        return session.query(cls).all()
-
-    @classmethod
-    def find_by_id(cls, id):
-        return session.query(cls).filter_by(id=id).first()
 
     @classmethod
     def find_by_name(cls, name):

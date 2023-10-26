@@ -15,23 +15,14 @@ class DoctorUpdateRecord(Base):
 
     doctor_id: Mapped[int] = mapped_column(ForeignKey("doctor.id"))
     doctor: Mapped["Doctor"] = relationship(back_populates="doctor_update_records")
-    
+
     medical_record_id: Mapped[int] = mapped_column(ForeignKey("medical_record.id"))
     medical_record: Mapped["MedicalRecord"] = relationship(back_populates="doctor_update_records")
 
-    
-    
-    def __init__(self, doctor, medical_record):
+    def __init__(self, doctor, medical_record, **kw):
+        super().__init__(**kw)
         self.doctor = doctor
         self.medical_record = medical_record
-
-    @classmethod
-    def find_all(cls):
-        return session.query(cls).all()
-
-    @classmethod
-    def find_by_id(cls, id):
-        return session.query(cls).filter_by(id=id).first()
 
     @classmethod
     def find_by_doctor_id(cls, doctor_id):

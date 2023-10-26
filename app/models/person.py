@@ -71,7 +71,6 @@ class Person(Base):
         country,
         phone,
         email,
-        *args,
         **kwargs
     ):
         super().__init__(**kwargs)
@@ -89,14 +88,6 @@ class Person(Base):
         self.country = country
         self.phone = phone
         self.email = email
-
-    @classmethod
-    def find_all(cls):
-        return session.query(cls).all()
-
-    @classmethod
-    def find_by_id(cls, id):
-        return session.query(cls).filter_by(id=id).first()
 
     @classmethod
     def find_by_name(cls, name):

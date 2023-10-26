@@ -19,18 +19,10 @@ class TreatmentTreatsDisorder(Base):
     treatment_id: Mapped[int] = mapped_column(ForeignKey("treatment.id"))
     treatment: Mapped["Treatment"] = relationship(back_populates="treatment_treats_disorders")
 
-    
-    def __init__(self, disorder, treatment):
+    def __init__(self, disorder, treatment, **kw):
+        super().__init__(**kw)
         self.disorder = disorder
         self.treatment = treatment
-
-    @classmethod
-    def find_all(cls):
-        return session.query(cls).all()
-
-    @classmethod
-    def find_by_id(cls, id):
-        return session.query(cls).filter_by(id=id).first()
 
     @classmethod
     def find_by_disorder_id(cls, disorder_id):

@@ -43,16 +43,8 @@ class Professional(Base):
         back_populates="professional", cascade="all, delete-orphan"
     )
 
-    def __init__(
-        self,
-        enrollment,
-        salary,
-        start_date,
-        working_range,
-        speciality,
-        consultation_fee,
-        person,
-    ):
+    def __init__(self, enrollment, salary, start_date, working_range, speciality, consultation_fee, person, **kw):
+        super().__init__(**kw)
         self.enrollment = enrollment
         self.salary = salary
         self.start_date = start_date
@@ -60,14 +52,6 @@ class Professional(Base):
         self.speciality = speciality
         self.consultation_fee = consultation_fee
         self.person = person
-
-    @classmethod
-    def find_all(cls):
-        return session.query(cls).all()
-
-    @classmethod
-    def find_by_id(cls, id):
-        return session.query(cls).filter_by(id=id).first()
 
     @classmethod
     def find_by_enrollment(cls, enrollment):

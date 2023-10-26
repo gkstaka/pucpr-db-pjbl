@@ -23,17 +23,10 @@ class MedicalRecordIncludedTherapy(Base):
     )
     therapy: Mapped["Therapy"] = relationship(back_populates="medical_record_included_therapies")
 
-    def __init__(self, medical_record, therapy):
+    def __init__(self, medical_record, therapy, **kw):
+        super().__init__(**kw)
         self.medical_record = medical_record
         self.therapy = therapy
-
-    @classmethod
-    def find_all(cls):
-        return session.query(cls).all()
-
-    @classmethod
-    def find_by_id(cls, id):
-        return session.query(cls).filter_by(id=id).first()
 
     @classmethod
     def find_by_medical_record_id(cls, medical_record_id):

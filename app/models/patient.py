@@ -53,17 +53,9 @@ class Patient(Base):
 
     medical_record: Mapped["MedicalRecord"] = relationship(back_populates="patient", cascade="all, delete-orphan")
     
-    def __init__(
-        self,
-        weight,
-        marital_status,
-        profession,
-        emergency_contact_name,
-        emergency_contact_phone,
-        health_insurance,
-        hospitalization_date,
-        person,
-    ):
+    def __init__(self, weight, marital_status, profession, emergency_contact_name, emergency_contact_phone,
+                 health_insurance, hospitalization_date, person, **kw):
+        super().__init__(**kw)
         self.weight = weight
         self.marital_status = marital_status
         self.profession = profession
@@ -72,14 +64,6 @@ class Patient(Base):
         self.health_insurance = health_insurance
         self.hospitalization_date = hospitalization_date
         self.person = person
-
-    @classmethod
-    def find_all(cls):
-        return session.query(cls).all()
-
-    @classmethod
-    def find_by_id(cls, id):
-        return session.query(cls).filter_by(id=id).first()
 
     @classmethod
     def find_by_weight(cls, weight):

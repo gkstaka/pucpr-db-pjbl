@@ -23,18 +23,11 @@ class Consultation(Base):
     doctor_id: Mapped[int] = mapped_column(ForeignKey("doctor.id"))
     doctor: Mapped["Doctor"] = relationship(back_populates="consultations")
     
-    def __init__(self, time, patient, doctor):
+    def __init__(self, time, patient, doctor, **kw):
+        super().__init__(**kw)
         self.time = time
         self.patient = patient
         self.doctor = doctor
-
-    @classmethod
-    def find_all(cls):
-        return session.query(cls).all()
-
-    @classmethod
-    def find_by_id(cls, id):
-        return session.query(cls).filter_by(id=id).first()
 
     @classmethod
     def find_by_time(cls, time):

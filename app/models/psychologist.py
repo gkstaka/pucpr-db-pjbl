@@ -33,17 +33,10 @@ class Psychologist(Base):
         back_populates="psychologist", cascade="all, delete-orphan"
         )
     
-    def __init__(self, crp, professional):
+    def __init__(self, crp, professional, **kw):
+        super().__init__(**kw)
         self.crp = crp
         self.professional = professional
-
-    @classmethod
-    def find_all(cls):
-        return session.query(cls).all()
-
-    @classmethod
-    def find_by_id(cls, id):
-        return session.query(cls).filter_by(id=id).first()
 
     @classmethod
     def find_by_crp(cls, crp):

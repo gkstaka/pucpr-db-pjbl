@@ -22,17 +22,10 @@ class Dosage(Base):
         back_populates="dosage", cascade="all, delete-orphan"
     )
 
-    def __init__(self, dose_quantity, dose_frequency):
+    def __init__(self, dose_quantity, dose_frequency, **kw):
+        super().__init__(**kw)
         self.dose_quantity = dose_quantity
         self.dose_frequency = dose_frequency
-
-    @classmethod
-    def find_all(cls):
-        return session.query(cls).all()
-
-    @classmethod
-    def find_by_id(cls, id):
-        return session.query(cls).filter_by(id=id).first()
 
     @classmethod
     def find_by_dose_quantity(cls, dose_quantity):

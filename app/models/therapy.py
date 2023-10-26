@@ -8,6 +8,8 @@ from models import Base, Patient, Psychologist, Treatment
 from services.database import session
 
 from typing import List
+
+
 class Therapy(Base):
     __tablename__ = "therapy"
 
@@ -32,22 +34,14 @@ class Therapy(Base):
 
     medical_record_included_therapies: Mapped[List["MedicalRecordIncludedTherapy"]] = relationship(
         back_populates="therapy", cascade="all, delete-orphan"
-        )
+    )
 
-    
-    def __init__(self, time, purpose, capacity, psychologist):
+    def __init__(self, time, purpose, capacity, psychologist, **kw):
+        super().__init__(**kw)
         self.time = time
         self.purpose = purpose
         self.capacity = capacity
         self.psychologist = psychologist
-
-    @classmethod
-    def find_all(cls):
-        return session.query(cls).all()
-
-    @classmethod
-    def find_by_id(cls, id):
-        return session.query(cls).filter_by(id=id).first()
 
     @classmethod
     def find_by_time(cls, time):

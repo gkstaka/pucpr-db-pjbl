@@ -6,6 +6,8 @@ from models import Base
 from services.database import session
 
 from typing import List
+
+
 class Disorder(Base):
     __tablename__ = "disorder"
 
@@ -31,23 +33,17 @@ class Disorder(Base):
         "prevalence", FLOAT, nullable=False, unique=False
     )
 
-    treatment_treats_disorders: Mapped[List["TreatmentTreatsDisorder"]] = relationship(back_populates="disorder", cascade="all, delete-orphan")
+    treatment_treats_disorders: Mapped[List["TreatmentTreatsDisorder"]] = relationship(
+        back_populates="disorder", cascade="all, delete-orphan"
+    )
 
-
-    def __init__(self, name, category, symptoms, risk_factors, prevalence):
+    def __init__(self, name, category, symptoms, risk_factors, prevalence, **kw):
+        super().__init__(**kw)
         self.name = name
         self.category = category
         self.symptoms = symptoms
         self.risk_factors = risk_factors
         self.prevalence = prevalence
-
-    @classmethod
-    def find_all(cls):
-        return session.query(cls).all()
-
-    @classmethod
-    def find_by_id(cls, id):
-        return session.query(cls).filter_by(id=id).first()
 
     @classmethod
     def find_by_name(cls, name):

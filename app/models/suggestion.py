@@ -19,18 +19,11 @@ class Suggestion(Base):
     medical_record_id: Mapped[int] = mapped_column(ForeignKey("medical_record.id"))
     medical_record: Mapped["MedicalRecord"] = relationship(back_populates="suggestions")
 
-    def __init__(self, medicine_id, dosage_id, medical_record_id):
+    def __init__(self, medicine_id, dosage_id, medical_record_id, **kw):
+        super().__init__(**kw)
         self.medicine_id = medicine_id
         self.dosage_id = dosage_id
         self.medical_record_id = medical_record_id
-
-    @classmethod
-    def find_all(cls):
-        return session.query(cls).all()
-
-    @classmethod
-    def find_by_id(cls, id):
-        return session.query(cls).filter_by(id=id).first()
 
     @classmethod
     def find_by_medicine_id(cls, medicine_id):

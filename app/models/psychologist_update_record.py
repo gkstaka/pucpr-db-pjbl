@@ -19,17 +19,10 @@ class PsychologistUpdateRecord(Base):
     medical_record_id: Mapped[int] = mapped_column(ForeignKey("medical_record.id"))
     medical_record: Mapped["MedicalRecord"] = relationship(back_populates="psychologist_update_records")
 
-    def __init__(self, psychologist, medical_record):
+    def __init__(self, psychologist, medical_record, **kw):
+        super().__init__(**kw)
         self.psychologist = psychologist
         self.medical_record = medical_record
-
-    @classmethod
-    def find_all(cls):
-        return session.query(cls).all()
-
-    @classmethod
-    def find_by_id(cls, id):
-        return session.query(cls).filter_by(id=id).first()
 
     @classmethod
     def find_by_psychologist_id(cls, psychologist_id):

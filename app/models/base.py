@@ -10,6 +10,14 @@ class Base(DeclarativeBase):
         super().__init__(**kw)
 
     @classmethod
+    def find_all(cls):
+        return session.query(cls).all()
+
+    @classmethod
+    def find_by_id(cls, id):
+        return session.query(cls).filter_by(id=id).first()
+
+    @classmethod
     def update_by_id(cls, id, new_data):
         record = session.query(cls).filter_by(id=id).first()
         if record:
@@ -37,7 +45,9 @@ class Base(DeclarativeBase):
                 deleted_count += 1
         session.commit()
 
-        if deleted_count == len(ids):
+        if deleted_count == 0:
+            return None
+        elif deleted_count == len(ids):
             return True
         else:
             return False

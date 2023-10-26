@@ -32,17 +32,10 @@ class Doctor(Base):
         back_populates="doctor", cascade="all, delete-orphan"
         )
     
-    def __init__(self, crm, professional):
+    def __init__(self, crm, professional, **kw):
+        super().__init__(**kw)
         self.crm = crm
         self.professional = professional
-
-    @classmethod
-    def find_all(cls):
-        return session.query(cls).all()
-
-    @classmethod
-    def find_by_id(cls, id):
-        return session.query(cls).filter_by(id=id).first()
 
     @classmethod
     def find_by_crm(cls, crm):
