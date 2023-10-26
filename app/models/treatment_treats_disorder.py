@@ -41,3 +41,11 @@ class TreatmentTreatsDisorder(Base):
     def save(cls, treatment_treats_disorder):
         session.add(treatment_treats_disorder)
         session.commit()
+
+ def update_by_id(cls, id, new_data):
+        record = session.query(cls).filter_by(id=id).first()
+        if record:
+            for key, value in new_data.items():
+                setattr(record, key, value)
+            session.commit()
+        return record
