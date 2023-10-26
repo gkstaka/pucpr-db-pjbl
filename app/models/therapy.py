@@ -72,3 +72,10 @@ class Therapy(Base):
     @classmethod
     def count_therapies(cls):
         return session.query(func.count(cls.id)).scalar()
+
+
+def count_total_therapies():
+    session = Session()
+    count = session.query(func.count(Therapy.id)).scalar()
+    session.close()
+    return count
