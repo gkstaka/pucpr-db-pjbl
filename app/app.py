@@ -1271,3 +1271,53 @@ if __name__ == "__main__":
     query_20()
 
     session.close()
+
+total_patients = count_total_patients()
+print(f"Total de pacientes atendidos: {total_patients}")
+
+total_consultations = count_total_consultations()
+print(f"Total de consultas realizadas: {total_consultations}")
+
+total_therapies = count_total_therapies()
+print(f"Total de terapias realizadas: {total_therapies}")
+
+
+for treatment in ongoing_treatments:
+    print(f"ID: {treatment.id}, Nome: {treatment.name}, Data de Término: {treatment.end_date}")
+
+
+for professional in professionals:
+    print(f"ID: {professional.id}, Nome: {professional.name}, Salário: {professional.salary}")
+
+
+for name, count in results:
+    print(f"Transtorno: {name}, Quantidade de Pacientes: {count}")
+
+
+average_medicines_per_patient = calculate_average_medicines_per_patient()
+print(f"Média de medicamentos por paciente: {average_medicines_per_patient}")
+
+
+for row in results:
+    patient_sex = row.patient_sex
+    doctor_sex = row.doctor_sex
+    consultation_count = row.consultation_count
+    print(f"Paciente Sexo: {patient_sex}, Médico Sexo: {doctor_sex}, Número de Consultas: {consultation_count}")
+
+
+for symptom, occurrences in results:
+    print(f"Sintoma: {symptom}, Ocorrências: {occurrences}")
+
+
+results = get_currently_treated_disorders()
+
+if results:
+    print("Transtornos atualmente em tratamento:")
+    for disorder in results:
+        print(disorder.name)
+else:
+    print("Nenhum transtorno está sendo tratado atualmente.")
+
+
+for specialization, count in results:
+    print(f"Especialização: {specialization}, Número de Profissionais: {count}")
