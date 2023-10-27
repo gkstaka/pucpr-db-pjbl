@@ -14,9 +14,11 @@ class DoctorSuggestTreatment(Base):
 
     doctor_id: Mapped[int] = mapped_column(ForeignKey("doctor.id"))
     doctor: Mapped["Doctor"] = relationship(back_populates="doctor_suggest_treatments")
-    
+
     treatment_id: Mapped[int] = mapped_column(ForeignKey("treatment.id"))
-    treatment: Mapped["Treatment"] = relationship(back_populates="doctor_suggest_treatments")
+    treatment: Mapped["Treatment"] = relationship(
+        back_populates="doctor_suggest_treatments"
+    )
 
     def __init__(self, doctor, treatment, **kw):
         super().__init__(**kw)

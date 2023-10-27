@@ -51,10 +51,22 @@ class Patient(Base):
         back_populates="patient", cascade="all, delete-orphan"
     )
 
-    medical_record: Mapped["MedicalRecord"] = relationship(back_populates="patient", cascade="all, delete-orphan")
-    
-    def __init__(self, weight, marital_status, profession, emergency_contact_name, emergency_contact_phone,
-                 health_insurance, hospitalization_date, person, **kw):
+    medical_record: Mapped["MedicalRecord"] = relationship(
+        back_populates="patient", cascade="all, delete-orphan"
+    )
+
+    def __init__(
+        self,
+        weight,
+        marital_status,
+        profession,
+        emergency_contact_name,
+        emergency_contact_phone,
+        health_insurance,
+        hospitalization_date,
+        person,
+        **kw
+    ):
         super().__init__(**kw)
         self.weight = weight
         self.marital_status = marital_status
@@ -79,11 +91,19 @@ class Patient(Base):
 
     @classmethod
     def find_by_emergency_contact_name(cls, emergency_contact_name):
-        return session.query(cls).filter_by(emergency_contact_name=emergency_contact_name).all()
+        return (
+            session.query(cls)
+            .filter_by(emergency_contact_name=emergency_contact_name)
+            .all()
+        )
 
     @classmethod
     def find_by_emergency_contact_phone(cls, emergency_contact_phone):
-        return session.query(cls).filter_by(emergency_contact_phone=emergency_contact_phone).all()
+        return (
+            session.query(cls)
+            .filter_by(emergency_contact_phone=emergency_contact_phone)
+            .all()
+        )
 
     @classmethod
     def find_by_health_insurance(cls, health_insurance):
@@ -91,7 +111,11 @@ class Patient(Base):
 
     @classmethod
     def find_by_hospitalization_date(cls, hospitalization_date):
-        return session.query(cls).filter_by(hospitalization_date=hospitalization_date).all()
+        return (
+            session.query(cls)
+            .filter_by(hospitalization_date=hospitalization_date)
+            .all()
+        )
 
     @classmethod
     def save_all(cls, patients):
@@ -106,5 +130,3 @@ class Patient(Base):
     @classmethod
     def count_patients(cls):
         return session.query(func.count(cls.id)).scalar()
-
-    

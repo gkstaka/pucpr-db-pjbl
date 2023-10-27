@@ -16,12 +16,16 @@ class MedicalRecordIncludedTherapy(Base):
     medical_record_id: Mapped[int] = mapped_column(
         ForeignKey("medical_record.id"),
     )
-    medical_record: Mapped["MedicalRecord"] = relationship(back_populates="medical_record_included_therapies")
-    
+    medical_record: Mapped["MedicalRecord"] = relationship(
+        back_populates="medical_record_included_therapies"
+    )
+
     therapy_id: Mapped[int] = mapped_column(
         ForeignKey("therapy.id"),
     )
-    therapy: Mapped["Therapy"] = relationship(back_populates="medical_record_included_therapies")
+    therapy: Mapped["Therapy"] = relationship(
+        back_populates="medical_record_included_therapies"
+    )
 
     def __init__(self, medical_record, therapy, **kw):
         super().__init__(**kw)

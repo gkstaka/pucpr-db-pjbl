@@ -17,7 +17,9 @@ class DoctorUpdateRecord(Base):
     doctor: Mapped["Doctor"] = relationship(back_populates="doctor_update_records")
 
     medical_record_id: Mapped[int] = mapped_column(ForeignKey("medical_record.id"))
-    medical_record: Mapped["MedicalRecord"] = relationship(back_populates="doctor_update_records")
+    medical_record: Mapped["MedicalRecord"] = relationship(
+        back_populates="doctor_update_records"
+    )
 
     def __init__(self, doctor, medical_record, **kw):
         super().__init__(**kw)

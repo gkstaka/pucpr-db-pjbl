@@ -13,10 +13,14 @@ class PsychologistHelpsTreatment(Base):
     )
 
     psychologist_id: Mapped[int] = mapped_column(ForeignKey("psychologist.id"))
-    psychologist: Mapped["Psychologist"] = relationship(back_populates="psychologist_helps_treatments")
-    
+    psychologist: Mapped["Psychologist"] = relationship(
+        back_populates="psychologist_helps_treatments"
+    )
+
     treatment_id: Mapped[int] = mapped_column(ForeignKey("treatment.id"))
-    treatment: Mapped["Treatment"] = relationship(back_populates="psychologist_helps_treatments")
+    treatment: Mapped["Treatment"] = relationship(
+        back_populates="psychologist_helps_treatments"
+    )
 
     def __init__(self, psychologist, treatment, **kw):
         super().__init__(**kw)

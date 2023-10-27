@@ -23,16 +23,18 @@ class Psychologist(Base):
 
     professional: Mapped["Professional"] = relationship(back_populates="psychologists")
 
-    therapies: Mapped[List["Therapy"]] = relationship(back_populates="psychologist", cascade="all, delete-orphan")
-
-    psychologist_helps_treatments: Mapped[List["PsychologistHelpsTreatment"]] = relationship(
+    therapies: Mapped[List["Therapy"]] = relationship(
         back_populates="psychologist", cascade="all, delete-orphan"
-        )
+    )
 
-    psychologist_update_records: Mapped[List["PsychologistUpdateRecord"]] = relationship(
-        back_populates="psychologist", cascade="all, delete-orphan"
-        )
-    
+    psychologist_helps_treatments: Mapped[
+        List["PsychologistHelpsTreatment"]
+    ] = relationship(back_populates="psychologist", cascade="all, delete-orphan")
+
+    psychologist_update_records: Mapped[
+        List["PsychologistUpdateRecord"]
+    ] = relationship(back_populates="psychologist", cascade="all, delete-orphan")
+
     def __init__(self, crp, professional, **kw):
         super().__init__(**kw)
         self.crp = crp

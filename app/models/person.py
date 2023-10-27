@@ -147,14 +147,18 @@ class Person(Base):
 
     @classmethod
     def find_by_address(cls, street, street_number, neighborhood, city, state, country):
-        return session.query(cls).filter_by(
-            street=street,
-            street_number=street_number,
-            neighborhood=neighborhood,
-            city=city,
-            state=state,
-            country=country
-        ).all()
+        return (
+            session.query(cls)
+            .filter_by(
+                street=street,
+                street_number=street_number,
+                neighborhood=neighborhood,
+                city=city,
+                state=state,
+                country=country,
+            )
+            .all()
+        )
 
     @classmethod
     def save_all(cls, people):

@@ -43,7 +43,17 @@ class Professional(Base):
         back_populates="professional", cascade="all, delete-orphan"
     )
 
-    def __init__(self, enrollment, salary, start_date, working_range, speciality, consultation_fee, person, **kw):
+    def __init__(
+        self,
+        enrollment,
+        salary,
+        start_date,
+        working_range,
+        speciality,
+        consultation_fee,
+        person,
+        **kw
+    ):
         super().__init__(**kw)
         self.enrollment = enrollment
         self.salary = salary

@@ -6,6 +6,8 @@ from models import Base, Professional
 from services.database import session
 
 from typing import List
+
+
 class Doctor(Base):
     __tablename__ = "doctor"
 
@@ -22,16 +24,16 @@ class Doctor(Base):
     professional: Mapped["Professional"] = relationship(back_populates="doctors")
     consultations: Mapped[List["Consultation"]] = relationship(
         back_populates="doctor", cascade="all, delete-orphan"
-        )
+    )
 
     doctor_suggest_treatments: Mapped[List["DoctorSuggestTreatment"]] = relationship(
         back_populates="doctor", cascade="all, delete-orphan"
-        )
+    )
 
     doctor_update_records: Mapped[List["DoctorUpdateRecord"]] = relationship(
         back_populates="doctor", cascade="all, delete-orphan"
-        )
-    
+    )
+
     def __init__(self, crm, professional, **kw):
         super().__init__(**kw)
         self.crm = crm

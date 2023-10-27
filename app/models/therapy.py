@@ -32,9 +32,9 @@ class Therapy(Base):
     psychologist_id: Mapped[int] = mapped_column(ForeignKey(Psychologist.id))
     psychologist: Mapped["Psychologist"] = relationship(back_populates="therapies")
 
-    medical_record_included_therapies: Mapped[List["MedicalRecordIncludedTherapy"]] = relationship(
-        back_populates="therapy", cascade="all, delete-orphan"
-    )
+    medical_record_included_therapies: Mapped[
+        List["MedicalRecordIncludedTherapy"]
+    ] = relationship(back_populates="therapy", cascade="all, delete-orphan")
 
     def __init__(self, time, purpose, capacity, psychologist, **kw):
         super().__init__(**kw)

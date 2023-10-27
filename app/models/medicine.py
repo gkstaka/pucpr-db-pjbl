@@ -31,7 +31,9 @@ class Medicine(Base):
         back_populates="medicine", cascade="all, delete-orphan"
     )
 
-    def __init__(self, name, composition, usage_type, indication, contraindication, **kw):
+    def __init__(
+        self, name, composition, usage_type, indication, contraindication, **kw
+    ):
         super().__init__(**kw)
         self.name = name
         self.composition = composition

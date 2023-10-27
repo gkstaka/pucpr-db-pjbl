@@ -35,15 +35,17 @@ class MedicalRecord(Base):
     treatment_id: Mapped[int] = mapped_column(ForeignKey("treatment.id"))
     treatment: Mapped["Treatment"] = relationship(back_populates="medical_records")
 
-    medical_record_included_therapies: Mapped[List["MedicalRecordIncludedTherapy"]] = relationship(
+    medical_record_included_therapies: Mapped[
+        List["MedicalRecordIncludedTherapy"]
+    ] = relationship(back_populates="medical_record", cascade="all, delete-orphan")
+
+    doctor_update_records: Mapped[List["DoctorUpdateRecord"]] = relationship(
         back_populates="medical_record", cascade="all, delete-orphan"
     )
 
-    doctor_update_records: Mapped[List["DoctorUpdateRecord"]] = relationship(back_populates="medical_record",
-                                                                             cascade="all, delete-orphan")
-
-    psychologist_update_records: Mapped[List["PsychologistUpdateRecord"]] = relationship(
-        back_populates="medical_record", cascade="all, delete-orphan")
+    psychologist_update_records: Mapped[
+        List["PsychologistUpdateRecord"]
+    ] = relationship(back_populates="medical_record", cascade="all, delete-orphan")
 
     def __init__(self, record_date, description, patient, treatment, **kw):
         super().__init__(**kw)

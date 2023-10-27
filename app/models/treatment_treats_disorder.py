@@ -14,10 +14,14 @@ class TreatmentTreatsDisorder(Base):
     )
 
     disorder_id: Mapped[int] = mapped_column(ForeignKey("disorder.id"))
-    disorder: Mapped["Disorder"] = relationship(back_populates="treatment_treats_disorders")
+    disorder: Mapped["Disorder"] = relationship(
+        back_populates="treatment_treats_disorders"
+    )
 
     treatment_id: Mapped[int] = mapped_column(ForeignKey("treatment.id"))
-    treatment: Mapped["Treatment"] = relationship(back_populates="treatment_treats_disorders")
+    treatment: Mapped["Treatment"] = relationship(
+        back_populates="treatment_treats_disorders"
+    )
 
     def __init__(self, disorder, treatment, **kw):
         super().__init__(**kw)
@@ -42,10 +46,11 @@ class TreatmentTreatsDisorder(Base):
         session.add(treatment_treats_disorder)
         session.commit()
 
- def update_by_id(cls, id, new_data):
-        record = session.query(cls).filter_by(id=id).first()
-        if record:
-            for key, value in new_data.items():
-                setattr(record, key, value)
-            session.commit()
-        return record
+
+def update_by_id(cls, id, new_data):
+    record = session.query(cls).filter_by(id=id).first()
+    if record:
+        for key, value in new_data.items():
+            setattr(record, key, value)
+        session.commit()
+    return record

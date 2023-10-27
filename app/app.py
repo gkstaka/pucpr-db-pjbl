@@ -22,7 +22,7 @@ from models import (
     MedicalRecordIncludedTherapy,
     PsychologistHelpsTreatment,
     PsychologistUpdateRecord,
-    TreatmentTreatsDisorder
+    TreatmentTreatsDisorder,
 )
 from services.database import session
 from utils.database_utils import create_db
@@ -621,43 +621,43 @@ def create_disorders():
             category="Anxiety disorders",
             symptoms="Excessive worry, restlessness, fatigue, difficulty concentrating, irritability, sleep problems",
             risk_factors="Trauma, stress due to an illness, stress buildup, personality",
-            prevalence=0.89
+            prevalence=0.89,
         ),
         Disorder(
             name="Depression",
             category="Mood disorders",
             symptoms="Sadness, loss of interest, feelings of guilt or low self-worth, disturbed sleep or appetite, tiredness, poor concentration",
             risk_factors="Childhood trauma, other mental disorders, abuse of alcohol or recreational drugs, personal problems, poverty or isolation",
-            prevalence=0.76
+            prevalence=0.76,
         ),
         Disorder(
             name="Bipolar disorder",
             category="Mood disorders",
             symptoms="Mood changes, elevated mood, high energy, sleep problems, loss of appetite, psychosis",
             risk_factors="Genetic, environmental, brain structure and function",
-            prevalence=0.35
+            prevalence=0.35,
         ),
         Disorder(
             name="Schizophrenia",
             category="Psychotic disorders",
             symptoms="Delusions, hallucinations, disorganized thinking, lack of motivation, speaking little",
             risk_factors="Genetic, environmental, brain chemistry, substance abuse",
-            prevalence=0.01
+            prevalence=0.01,
         ),
         Disorder(
             name="Autism",
             category="Neurodevelopmental disorders",
             symptoms="Difficulty with communication and interaction with other people, restricted interests and repetitive behaviors",
             risk_factors="Genetic, environmental",
-            prevalence=0.12
+            prevalence=0.12,
         ),
         Disorder(
             name="ADHD",
             category="Neurodevelopmental disorders",
             symptoms="Difficulty paying attention, hyperactivity, impulsivity",
             risk_factors="Genetic, environmental",
-            prevalence=0.06
-        )
+            prevalence=0.06,
+        ),
     ]
 
     Disorder.save_all(disorder_list)
@@ -751,7 +751,7 @@ def create_treatments():
             name="Anxiety treatment",
             start_date=datetime.strptime("2022-07-15", "%Y-%m-%d").date(),
             planned_end_date=datetime.strptime("2023-07-15", "%Y-%m-%d").date(),
-            patient=patient_list[0]
+            patient=patient_list[0],
         ),
         Treatment(
             name="Depression treatment",
@@ -782,7 +782,7 @@ def create_treatments():
             start_date=datetime.strptime("2020-01-01", "%Y-%m-%d").date(),
             planned_end_date=datetime.strptime("2021-01-01", "%Y-%m-%d").date(),
             patient=patient_list[5],
-        )
+        ),
     ]
 
     Treatment.save_all(treatments)
@@ -796,38 +796,38 @@ def create_therapies():
             time=datetime.strptime("01:00:00", "%H:%M:%S"),
             purpose="Cognitive behavioral therapy (CBT) is a form of psychological treatment.",
             capacity=1,
-            psychologist=psychologists[0]
+            psychologist=psychologists[0],
         ),
         Therapy(
             time=datetime.strptime("02:00:00", "%H:%M:%S"),
             purpose="Dialectical behavior therapy (DBT) is a specific type of cognitive-behavioral psychotherapy.",
             capacity=1,
-            psychologist=psychologists[1]
+            psychologist=psychologists[1],
         ),
         Therapy(
             time=datetime.strptime("03:00:00", "%H:%M:%S"),
             purpose="Interpersonal therapy (IPT) is a time-limited treatment.",
             capacity=1,
-            psychologist=psychologists[2]
+            psychologist=psychologists[2],
         ),
         Therapy(
             time=datetime.strptime("04:00:00", "%H:%M:%S"),
             purpose="Psychodynamic therapy is a form of therapy with a focus on a holistic perspective of the client.",
             capacity=1,
-            psychologist=psychologists[3]
+            psychologist=psychologists[3],
         ),
         Therapy(
             time=datetime.strptime("05:00:00", "%H:%M:%S"),
             purpose="Family therapy is a type of psychological counseling (psychotherapy) that helps family members.",
             capacity=1,
-            psychologist=psychologists[4]
+            psychologist=psychologists[4],
         ),
         Therapy(
             time=datetime.strptime("06:00:00", "%H:%M:%S"),
             purpose="Couple therapy is a type of psychological therapy that helps couples of all types.",
             capacity=2,
-            psychologist=psychologists[5]
-        )
+            psychologist=psychologists[5],
+        ),
     ]
 
     Therapy.save_all(therapy_list)
@@ -842,38 +842,38 @@ def create_medical_record():
             patient=patient_list[0],
             treatment=treatment_list[0],
             record_date=datetime.strptime("2022-07-15", "%Y-%m-%d").date(),
-            description="Patient is suffering from anxiety disorder"
+            description="Patient is suffering from anxiety disorder",
         ),
         MedicalRecord(
             patient=patient_list[1],
             treatment=treatment_list[1],
             record_date=datetime.strptime("2023-05-15", "%Y-%m-%d").date(),
-            description="Patient is suffering from depression"
+            description="Patient is suffering from depression",
         ),
         MedicalRecord(
             patient=patient_list[2],
             treatment=treatment_list[2],
             record_date=datetime.strptime("2023-09-15", "%Y-%m-%d").date(),
-            description="Patient is suffering from bipolar disorder"
+            description="Patient is suffering from bipolar disorder",
         ),
         MedicalRecord(
             patient=patient_list[3],
             treatment=treatment_list[3],
             record_date=datetime.strptime("2021-05-01", "%Y-%m-%d").date(),
-            description="Patient is suffering from schizophrenia"
+            description="Patient is suffering from schizophrenia",
         ),
         MedicalRecord(
             patient=patient_list[4],
             treatment=treatment_list[4],
             record_date=datetime.strptime("2022-03-10", "%Y-%m-%d").date(),
-            description="Patient is suffering from autism"
+            description="Patient is suffering from autism",
         ),
         MedicalRecord(
             patient=patient_list[5],
             treatment=treatment_list[5],
             record_date=datetime.strptime("2020-01-01", "%Y-%m-%d").date(),
-            description="Patient is suffering from ADHD"
-        )
+            description="Patient is suffering from ADHD",
+        ),
     ]
 
     MedicalRecord.save_all(medical_records)
@@ -890,7 +890,7 @@ def create_suggestions():
             Suggestion(
                 medicine_id=medicines[index].id,
                 dosage_id=dosage_list[index].id,
-                medical_record_id=medical_records[index].id
+                medical_record_id=medical_records[index].id,
             )
         )
 
@@ -905,8 +905,7 @@ def create_doctor_suggest_treatment():
     for index in range(0, len(doctor_list)):
         doctor_suggest_treatment_list.append(
             DoctorSuggestTreatment(
-                doctor=doctor_list[index],
-                treatment=treatment_list[index]
+                doctor=doctor_list[index], treatment=treatment_list[index]
             )
         )
 
@@ -921,8 +920,7 @@ def create_doctor_update_record():
     for index in range(0, len(doctor_list)):
         doctor_update_record_list.append(
             DoctorUpdateRecord(
-                doctor=doctor_list[index],
-                medical_record=medical_records[index]
+                doctor=doctor_list[index], medical_record=medical_records[index]
             )
         )
 
@@ -937,8 +935,7 @@ def create_medical_record_included_therapy():
     for index in range(0, len(medical_records)):
         medical_record_included_therapy_list.append(
             MedicalRecordIncludedTherapy(
-                medical_record=medical_records[index],
-                therapy=therapy_list[index]
+                medical_record=medical_records[index], therapy=therapy_list[index]
             )
         )
 
@@ -953,8 +950,7 @@ def create_psychologist_helps_treatment():
     for index in range(0, len(psychologists)):
         psychologist_helps_treatment_list.append(
             PsychologistHelpsTreatment(
-                psychologist=psychologists[index],
-                treatment=treatment_list[index]
+                psychologist=psychologists[index], treatment=treatment_list[index]
             )
         )
 
@@ -969,8 +965,7 @@ def create_psychologist_update_record():
     for index in range(0, len(psychologists)):
         psychologist_update_record_list.append(
             PsychologistUpdateRecord(
-                psychologist=psychologists[index],
-                medical_record=medical_records[index]
+                psychologist=psychologists[index], medical_record=medical_records[index]
             )
         )
 
@@ -1016,7 +1011,7 @@ def query_4():
     treatments = Treatment.find_all()
     current_treatments = []
     for treatment in treatments:
-        if treatment.planned_end_date > datetime.now().date():
+        if treatment.planned_end_date > datetime.now():
             current_treatments.append(treatment)
     print(current_treatments)
 
@@ -1024,7 +1019,7 @@ def query_4():
 def query_5():
     print("5. Listar profissionais por ordem de salário")
     professionals = Professional.find_all()
-    sorted_professionals = sorted(professionals, key=lambda x: getattr(x, 'salary'))
+    sorted_professionals = sorted(professionals, key=lambda x: getattr(x, "salary"))
     print(sorted_professionals)
 
 
@@ -1033,57 +1028,85 @@ def query_6():
     ttd = aliased(TreatmentTreatsDisorder)
     t = aliased(Treatment)
 
-    query = session.query(d.name.label("Disorder name"), func.count(t.id).label("Treatments count")). \
-        join(ttd, ttd.disorder_id == d.id). \
-        join(t, t.id == ttd.treatment_id). \
-        group_by(d.name)
+    query = (
+        session.query(
+            d.name.label("Disorder name"), func.count(t.id).label("Treatments count")
+        )
+        .join(ttd, ttd.disorder_id == d.id)
+        .join(t, t.id == ttd.treatment_id)
+        .group_by(d.name)
+    )
 
     results = query.all()
     print(results)
 
 
 def query_7():
-    subquery = session.query(func.count().label('count')).select_from(Suggestion).subquery()
+    subquery = (
+        session.query(Suggestion.medicine_id, func.count().label("count")).select_from(Suggestion).group_by(Suggestion.medicine_id).subquery()
+    )
 
-    query = session.query(subquery.c['count'] / func.count(MedicalRecord.id).label('Average medication per patient')). \
-        join(MedicalRecord). \
-        group_by(subquery.c['count'])
+    query = (
+        session.query(
+            subquery.c["count"]
+            / func.count(MedicalRecord.id).label("Average medication per patient")
+        )
+        .join(MedicalRecord, MedicalRecord.id == subquery.c["medicine_id"])
+        .group_by(subquery.c["count"])
+    )
 
     results = query.all()
     print(results)
 
 
 def query_8():
-    query = session.query(func.count(Patient.id), func.extract('month', Patient.hospitalization_date).label('month')). \
-        group_by(func.extract('month', Patient.hospitalization_date)). \
-        order_by(func.extract('month', Patient.hospitalization_date))
+    query = (
+        session.query(
+            func.count(Patient.id),
+            func.extract("month", Patient.hospitalization_date).label("month"),
+        )
+        .group_by(func.extract("month", Patient.hospitalization_date))
+        .order_by(func.extract("month", Patient.hospitalization_date))
+    )
 
     results = query.all()
     print(results)
 
 
 def query_9():
-    query = session.query(Person.sex.label("Patient sex"), func.count().label("Total")). \
-        join(Patient, Patient.id == Person.id). \
-        join(Consultation, Consultation.patient_id == Patient.id). \
-        join(Doctor, Doctor.id == Consultation.doctor_id). \
-        join(Person, Doctor.id == Person.id). \
-        group_by(Person.sex, Person.sex). \
-        order_by(Person.sex)
+    doctor_person = aliased(Person)
+    query = (
+        session.query(Person.sex.label("Patient sex"), func.count().label("Total"))
+        .join(Patient, Patient.id == Person.id)
+        .join(Consultation, Consultation.patient_id == Patient.id)
+        .join(Doctor, Doctor.id == Consultation.doctor_id)
+        .join(doctor_person, Doctor.id == doctor_person.id)
+        .group_by(Person.sex, doctor_person.sex)
+        .order_by(Person.sex)
+    )
 
     results = query.all()
     print(results)
 
 
 def query_10():
-    query = session.query(Person.sex.label("Patient sex"), func.count().label("")). \
-        join(Patient, Patient.id == Person.id). \
-        join(Treatment, Treatment.patient_id == Person.id). \
-        join(PsychologistHelpsTreatment, PsychologistHelpsTreatment.treatment_id == Treatment.id). \
-        join(Psychologist, PsychologistHelpsTreatment.psychologist_id == Psychologist.id). \
-        join(Person, Psychologist.id == Person.id). \
-        group_by(Person.sex, Person.sex). \
-        order_by(Person.sex)
+    psychologist_person = aliased(Person)
+
+    query = (
+        session.query(Person.sex.label("Patient sex"), func.count().label(""))
+        .join(Patient, Patient.id == Person.id)
+        .join(Treatment, Treatment.patient_id == Person.id)
+        .join(
+            PsychologistHelpsTreatment,
+            PsychologistHelpsTreatment.treatment_id == Treatment.id,
+        )
+        .join(
+            Psychologist, PsychologistHelpsTreatment.psychologist_id == Psychologist.id
+        )
+        .join(psychologist_person, Psychologist.id == psychologist_person.id)
+        .group_by(Person.sex, psychologist_person.sex)
+        .order_by(Person.sex)
+    )
 
     results = query.all()
     print(results)
@@ -1097,35 +1120,52 @@ def query_11():
 
 
 def query_12():
-    query = session.query(
-        Person.id.label("ID paciente"),
-        Person.name.label("Nome"),
-        Doctor.id.label("ID médico"),
-        text("'Médico'").label("Médico"),
-        Psychologist.id.label("Id psicólogo"),
-        text("'Psicólogo'").label("Psicólogo")
-    ). \
-        join(Patient, Patient.id == Person.id). \
-        join(Treatment, Treatment.patient_id == Patient.id). \
-        outerjoin(DoctorSuggestTreatment, DoctorSuggestTreatment.treatment_id == Treatment.id). \
-        join(Doctor, Doctor.id == DoctorSuggestTreatment.doctor_id). \
-        join(Person, Doctor.id == Person.id). \
-        outerjoin(PsychologistHelpsTreatment, PsychologistHelpsTreatment.treatment_id == Treatment.id). \
-        join(Psychologist, Psychologist.id == PsychologistHelpsTreatment.psychologist_id). \
-        join(Person, Psychologist.id == Person.id)
+    doctor_person = aliased(Person)
+    query = (
+        session.query(
+            Person.id.label("ID paciente"),
+            Person.name.label("Nome"),
+            Doctor.id.label("ID médico"),
+            text("Médico").label("Médico"),
+            Psychologist.id.label("Id psicólogo"),
+            text("Psicólogo").label("Psicólogo"),
+        )
+        .join(Patient, Patient.id == Person.id)
+        .join(Treatment, Treatment.patient_id == Patient.id)
+        .outerjoin(
+            DoctorSuggestTreatment, DoctorSuggestTreatment.treatment_id == Treatment.id
+        )
+        .join(Doctor, Doctor.id == DoctorSuggestTreatment.doctor_id)
+        .join(Person, Doctor.id == Person.id)
+        .outerjoin(
+            PsychologistHelpsTreatment,
+            PsychologistHelpsTreatment.treatment_id == Treatment.id,
+        )
+        .join(
+            Psychologist, Psychologist.id == PsychologistHelpsTreatment.psychologist_id
+        )
+        .join(Person, Psychologist.id == Person.id)
+    )
 
     results = query.all()
     print(results)
 
 
 def query_13():
-    query = session.query(
-        Disorder.name,
-        func.avg(func.datediff(Treatment.planned_end_date, Treatment.start_date)).label("Average time")
-    ). \
-        join(TreatmentTreatsDisorder, TreatmentTreatsDisorder.treatment_id == Treatment.id). \
-        join(Disorder, TreatmentTreatsDisorder.disorder_id == Disorder.id). \
-        group_by(Disorder.name)
+    query = (
+        session.query(
+            Disorder.name,
+            func.avg(
+                func.datediff(Treatment.planned_end_date, Treatment.start_date)
+            ).label("Average time"),
+        )
+        .join(
+            TreatmentTreatsDisorder,
+            TreatmentTreatsDisorder.treatment_id == Treatment.id,
+        )
+        .join(Disorder, TreatmentTreatsDisorder.disorder_id == Disorder.id)
+        .group_by(Disorder.name)
+    )
 
     results = query.all()
     print(results)
@@ -1134,120 +1174,143 @@ def query_13():
 def query_14():
     current_datetime = datetime.now()
 
-    query = session.query(
-        Disorder.name.label("Transtorno"),
-        func.count(Treatment.id).label("quantidade")
-    ). \
-        join(TreatmentTreatsDisorder, TreatmentTreatsDisorder.treatment_id == Treatment.id). \
-        join(Disorder, TreatmentTreatsDisorder.disorder_id == Disorder.id). \
-        filter(current_datetime < Treatment.planned_end_date). \
-        group_by(Disorder.name)
+    query = (
+        session.query(
+            Disorder.name.label("Transtorno"),
+            func.count(Treatment.id).label("quantidade"),
+        )
+        .join(
+            TreatmentTreatsDisorder,
+            TreatmentTreatsDisorder.treatment_id == Treatment.id,
+        )
+        .join(Disorder, TreatmentTreatsDisorder.disorder_id == Disorder.id)
+        .filter(current_datetime < Treatment.planned_end_date)
+        .group_by(Disorder.name)
+    )
 
     results = query.all()
     print(results)
 
 
 def query_15():
-    query = session.query(Professional.speciality, func.count().label("Quantity")).group_by(Professional.speciality)
+    query = session.query(
+        Professional.speciality, func.count().label("Quantity")
+    ).group_by(Professional.speciality)
 
     results = query.all()
     print(results)
 
 
 def query_16():
-    query = session.query(
-        Person.name.label("Psychologist name"),
-        Person.name.label("Patient name")
-    ). \
-        join(Patient, Patient.id == Person.id). \
-        join(Treatment, Treatment.patient_id == Patient.id). \
-        join(PsychologistHelpsTreatment, PsychologistHelpsTreatment.treatment_id == Treatment.id). \
-        join(Psychologist, PsychologistHelpsTreatment.psychologist_id == Psychologist.id). \
-        join(Person, Psychologist.id == Person.id). \
-        order_by(Person.name)
+    query = (
+        session.query(
+            Person.name.label("Psychologist name"), Person.name.label("Patient name")
+        )
+        .join(Patient, Patient.id == Person.id)
+        .join(Treatment, Treatment.patient_id == Patient.id)
+        .join(
+            PsychologistHelpsTreatment,
+            PsychologistHelpsTreatment.treatment_id == Treatment.id,
+        )
+        .join(
+            Psychologist, PsychologistHelpsTreatment.psychologist_id == Psychologist.id
+        )
+        .join(Person, Psychologist.id == Person.id)
+        .order_by(Person.name)
+    )
 
     results = query.all()
     print(results)
 
 
 def query_17():
-    query = session.query(Patient.marital_status, func.count().label("Count")).group_by(Patient.marital_status)
+    query = session.query(Patient.marital_status, func.count().label("Count")).group_by(
+        Patient.marital_status
+    )
 
     results = query.all()
     print(results)
 
 
 def query_18():
-    query = session.query(
-        Person.name.label("Name"),
-        func.count(DoctorUpdateRecord.id).label("Medical records updated")
-    ). \
-        join(Doctor, Doctor.id == DoctorUpdateRecord.doctor_id). \
-        join(Professional, Professional.id == Doctor.id). \
-        join(Person, Person.id == Professional.id). \
-        group_by(Doctor.id). \
-        order_by(func.count(DoctorUpdateRecord.id).desc())
+    query = (
+        session.query(
+            Person.name.label("Name"),
+            func.count(DoctorUpdateRecord.id).label("Medical records updated"),
+        )
+        .join(Doctor, Doctor.id == DoctorUpdateRecord.doctor_id)
+        .join(Professional, Professional.id == Doctor.id)
+        .join(Person, Person.id == Professional.id)
+        .group_by(Doctor.id)
+        .order_by(func.count(DoctorUpdateRecord.id).desc())
+    )
 
     results = query.all()
     print(results)
 
 
 def query_19():
-    query = session.query(
-        Person.name.label("Nome do Psicólogo"),
-        func.count(PsychologistUpdateRecord.id).label("Quantidade de Atualizações")
-    ). \
-        join(Professional, Professional.id == Psychologist.id). \
-        join(Person, Person.id == Professional.id). \
-        join(PsychologistUpdateRecord, Person.id == PsychologistUpdateRecord.psychologist_id). \
-        group_by(Person.name). \
-        order_by(func.count(PsychologistUpdateRecord.id).desc())
+    query = (
+        session.query(
+            Person.name.label("Nome do Psicólogo"),
+            func.count(PsychologistUpdateRecord.id).label("Quantidade de Atualizações"),
+        )
+        .join(Professional, Professional.id == Psychologist.id)
+        .join(Person, Person.id == Professional.id)
+        .join(
+            PsychologistUpdateRecord,
+            Person.id == PsychologistUpdateRecord.psychologist_id,
+        )
+        .group_by(Person.name)
+        .order_by(func.count(PsychologistUpdateRecord.id).desc())
+    )
 
     results = query.all()
     print(results)
 
 
 def query_20():
-    query = session.query(
-        Person.name,
-        func.count(Consultation.id).label("Consultation stats")
-    ). \
-        join(Doctor, Doctor.id == Professional.id). \
-        join(Person, Person.id == Professional.id). \
-        join(Consultation, Consultation.doctor_id == Doctor.id). \
-        group_by(Person.name). \
-        limit(1)
+    query = (
+        session.query(
+            Person.name, func.count(Consultation.id).label("Consultation stats")
+        )
+        .join(Doctor, Doctor.id == Professional.id)
+        .join(Person, Person.id == Professional.id)
+        .join(Consultation, Consultation.doctor_id == Doctor.id)
+        .group_by(Person.name)
+        .limit(1)
+    )
 
     result = query.first()
     print(result)
 
 
 if __name__ == "__main__":
-    print("Creating database...")
-    create_db()
-
-    create_people()
-    create_patients()
-
-    create_professionals()
-    create_doctors()
-    create_psychologists()
-
-    create_consultations()
-    create_disorders()
-    create_dosages()
-    create_medicines()
-    create_treatments()
-    create_therapies()
-    create_medical_record()
-    create_suggestions()
-
-    create_doctor_suggest_treatment()
-    create_doctor_update_record()
-    create_medical_record_included_therapy()
-    create_psychologist_helps_treatment()
-    create_psychologist_update_record()
-    create_treatment_treats_disorder()
+    # print("Creating database...")
+    # create_db()
+    #
+    # create_people()
+    # create_patients()
+    #
+    # create_professionals()
+    # create_doctors()
+    # create_psychologists()
+    #
+    # create_consultations()
+    # create_disorders()
+    # create_dosages()
+    # create_medicines()
+    # create_treatments()
+    # create_therapies()
+    # create_medical_record()
+    # create_suggestions()
+    #
+    # create_doctor_suggest_treatment()
+    # create_doctor_update_record()
+    # create_medical_record_included_therapy()
+    # create_psychologist_helps_treatment()
+    # create_psychologist_update_record()
+    # create_treatment_treats_disorder()
 
     query_1()
     query_2()
@@ -1255,7 +1318,7 @@ if __name__ == "__main__":
     query_4()
     query_5()
     query_6()
-    query_7()
+    # query_7()
     query_8()
     query_9()
     query_10()
@@ -1264,60 +1327,60 @@ if __name__ == "__main__":
     query_13()
     query_14()
     query_15()
-    query_16()
+    # query_16()
     query_17()
     query_18()
-    query_19()
-    query_20()
+    # query_19()
+    # query_20()
 
     session.close()
-
-total_patients = count_total_patients()
-print(f"Total de pacientes atendidos: {total_patients}")
-
-total_consultations = count_total_consultations()
-print(f"Total de consultas realizadas: {total_consultations}")
-
-total_therapies = count_total_therapies()
-print(f"Total de terapias realizadas: {total_therapies}")
-
-
-for treatment in ongoing_treatments:
-    print(f"ID: {treatment.id}, Nome: {treatment.name}, Data de Término: {treatment.end_date}")
-
-
-for professional in professionals:
-    print(f"ID: {professional.id}, Nome: {professional.name}, Salário: {professional.salary}")
-
-
-for name, count in results:
-    print(f"Transtorno: {name}, Quantidade de Pacientes: {count}")
-
-
-average_medicines_per_patient = calculate_average_medicines_per_patient()
-print(f"Média de medicamentos por paciente: {average_medicines_per_patient}")
-
-
-for row in results:
-    patient_sex = row.patient_sex
-    doctor_sex = row.doctor_sex
-    consultation_count = row.consultation_count
-    print(f"Paciente Sexo: {patient_sex}, Médico Sexo: {doctor_sex}, Número de Consultas: {consultation_count}")
-
-
-for symptom, occurrences in results:
-    print(f"Sintoma: {symptom}, Ocorrências: {occurrences}")
-
-
-results = get_currently_treated_disorders()
-
-if results:
-    print("Transtornos atualmente em tratamento:")
-    for disorder in results:
-        print(disorder.name)
-else:
-    print("Nenhum transtorno está sendo tratado atualmente.")
-
-
-for specialization, count in results:
-    print(f"Especialização: {specialization}, Número de Profissionais: {count}")
+#
+# total_patients = count_total_patients()
+# print(f"Total de pacientes atendidos: {total_patients}")
+#
+# total_consultations = count_total_consultations()
+# print(f"Total de consultas realizadas: {total_consultations}")
+#
+# total_therapies = count_total_therapies()
+# print(f"Total de terapias realizadas: {total_therapies}")
+#
+#
+# for treatment in ongoing_treatments:
+#     print(f"ID: {treatment.id}, Nome: {treatment.name}, Data de Término: {treatment.end_date}")
+#
+#
+# for professional in professionals:
+#     print(f"ID: {professional.id}, Nome: {professional.name}, Salário: {professional.salary}")
+#
+#
+# for name, count in results:
+#     print(f"Transtorno: {name}, Quantidade de Pacientes: {count}")
+#
+#
+# average_medicines_per_patient = calculate_average_medicines_per_patient()
+# print(f"Média de medicamentos por paciente: {average_medicines_per_patient}")
+#
+#
+# for row in results:
+#     patient_sex = row.patient_sex
+#     doctor_sex = row.doctor_sex
+#     consultation_count = row.consultation_count
+#     print(f"Paciente Sexo: {patient_sex}, Médico Sexo: {doctor_sex}, Número de Consultas: {consultation_count}")
+#
+#
+# for symptom, occurrences in results:
+#     print(f"Sintoma: {symptom}, Ocorrências: {occurrences}")
+#
+#
+# results = get_currently_treated_disorders()
+#
+# if results:
+#     print("Transtornos atualmente em tratamento:")
+#     for disorder in results:
+#         print(disorder.name)
+# else:
+#     print("Nenhum transtorno está sendo tratado atualmente.")
+#
+#
+# for specialization, count in results:
+#     print(f"Especialização: {specialization}, Número de Profissionais: {count}")

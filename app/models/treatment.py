@@ -33,24 +33,24 @@ class Treatment(Base):
         default=datetime.now(),
     )
 
-    patient_id: Mapped[int] = mapped_column(
-        ForeignKey("patient.id")
-    )
+    patient_id: Mapped[int] = mapped_column(ForeignKey("patient.id"))
     patient: Mapped["Patient"] = relationship(back_populates="treatment")
 
-    treatment_treats_disorders: Mapped[List["TreatmentTreatsDisorder"]] = relationship(back_populates="treatment",
-                                                                                       cascade="all, delete-orphan")
+    treatment_treats_disorders: Mapped[List["TreatmentTreatsDisorder"]] = relationship(
+        back_populates="treatment", cascade="all, delete-orphan"
+    )
 
     doctor_suggest_treatments: Mapped[List["DoctorSuggestTreatment"]] = relationship(
         back_populates="treatment", cascade="all, delete-orphan"
     )
 
-    psychologist_helps_treatments: Mapped[List["PsychologistHelpsTreatment"]] = relationship(
+    psychologist_helps_treatments: Mapped[
+        List["PsychologistHelpsTreatment"]
+    ] = relationship(back_populates="treatment", cascade="all, delete-orphan")
+
+    medical_records: Mapped[List["MedicalRecord"]] = relationship(
         back_populates="treatment", cascade="all, delete-orphan"
     )
-
-    medical_records: Mapped[List["MedicalRecord"]] = relationship(back_populates="treatment",
-                                                                  cascade="all, delete-orphan")
 
     def __init__(self, name, start_date, planned_end_date, patient, **kw):
         super().__init__(**kw)

@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 from urllib.parse import quote
 
-instance = f"mysql+pymysql://root:{quote('gkstaka')}@localhost:3306/psychiatric_hospital"
+instance = f"mysql+pymysql://root:vBst&Ebb5hw@localhost:3306/psychiatric_hospital"
 
 if not database_exists(url=instance):
     create_database(url=instance)
