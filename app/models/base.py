@@ -1,5 +1,5 @@
 from typing import Any
-
+from sqlalchemy import update, and_, delete
 from sqlalchemy.orm import DeclarativeBase
 
 from services.database import session
@@ -17,14 +17,14 @@ class Base(DeclarativeBase):
     def find_by_id(cls, id):
         return session.query(cls).filter_by(id=id).first()
 
-    @classmethod
-    def update_by_id(cls, id, new_data):
-        record = session.query(cls).filter_by(id=id).first()
-        if record:
-            for key, value in new_data.items():
-                setattr(record, key, value)
-            session.commit()
-        return record
+    # @classmethod
+    # def update_by_id(cls, id, new_data):
+    #     record = session.query(cls).filter_by(id=id).first()
+    #     if record:
+    #         for key, value in new_data.items():
+    #             setattr(record, key, value)
+    #         session.commit()
+    #     return record
 
     @classmethod
     def delete_item(cls, id):
@@ -51,3 +51,13 @@ class Base(DeclarativeBase):
             return True
         else:
             return False
+
+    @classmethod
+    def update_by(cls, filter_by: dict, **kwargs):
+        stmt = update(cls).where(and_(*[getattr(cls, k) == v for k, v in filter_by.items()])).values(**kwargs)
+        session.execute(stmt)
+        session.commit()
+    
+   
+
+    

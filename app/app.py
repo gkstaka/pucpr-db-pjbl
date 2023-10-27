@@ -987,7 +987,33 @@ def create_treatment_treats_disorder():
 
     TreatmentTreatsDisorder.save_all(treatment_treats_disorder_list)
 
+def updates():
+    
+    date_string = "2025-01-05"
+    date_format = "%Y-%m-%d"
+    Treatment.update_by(filter_by={"id": 2}, start_date=datetime.now(), planned_end_date=datetime.strptime(date_string, date_format))
 
+    date_string = "2024-03-11"
+    Consultation.update_by(filter_by={"id": 2}, time=datetime.strptime(date_string, date_format))
+
+    Dosage.update_by(filter_by={"id": 4}, dose_frequency="every 8 hours", dose_quantity="150mg")
+
+    Professional.update_by(filter_by={"id": 4}, salary=16000)
+
+    Therapy.update_by(filter_by={"id": 6}, capacity=6)
+
+
+def deletes():
+    MedicalRecordIncludedTherapy.delete_item(2)
+    
+    Therapy.delete_item(2)
+
+    DoctorUpdateRecord.delete_item(3)
+    
+    Patient.delete_item(13)
+
+    Consultation.delete_item(1)
+   
 def query_1():
     print("1. Contar quantidade total de pacientes atendidos")
     patients = Patient.find_all()
@@ -1327,26 +1353,29 @@ if __name__ == "__main__":
     # create_psychologist_update_record()
     # create_treatment_treats_disorder()
 
-    query_1()
-    query_2()
-    query_3()
-    query_4()
-    query_5()
-    query_6()
-    query_7()
-    query_8()
-    query_9()
-    query_10()
-    query_11()
-    query_12()
-    query_13()
-    query_14()
-    query_15()
-    query_16()
-    query_17()
-    query_18()
-    query_19()
-    query_20()
+    # updates()
+    deletes()
+
+    # query_1()
+    # query_2()
+    # query_3()
+    # query_4()
+    # query_5()
+    # query_6()
+    # query_7()
+    # query_8()
+    # query_9()
+    # query_10()
+    # query_11()
+    # query_12()
+    # query_13()
+    # query_14()
+    # query_15()
+    # query_16()
+    # query_17()
+    # query_18()
+    # query_19()
+    # query_20()
 
     session.close()
 #
