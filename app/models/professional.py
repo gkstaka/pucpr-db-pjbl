@@ -100,3 +100,8 @@ class Professional(Base):
     @classmethod
     def list_by_salary(cls):
         return session.query(cls).order_by(asc(cls.salary)).all()
+
+    def __str__(self):
+        return (
+            f"Professional: {self.id}, {self.enrollment}, {self.salary}, {self.start_date}, {self.working_range}, {self.speciality}, {self.consultation_fee}"
+        )

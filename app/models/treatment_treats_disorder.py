@@ -46,6 +46,9 @@ class TreatmentTreatsDisorder(Base):
         session.add(treatment_treats_disorder)
         session.commit()
 
+    def __str__(self):
+        return f"Treatment Treats Disorder: {self.id}, {self.treatment}, {self.disorder}"
+
 
 def update_by_id(cls, id, new_data):
     record = session.query(cls).filter_by(id=id).first()

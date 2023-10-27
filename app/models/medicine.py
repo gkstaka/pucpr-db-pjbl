@@ -70,3 +70,7 @@ class Medicine(Base):
     def save(cls, medicine):
         session.add(medicine)
         session.commit()
+
+    def __str__(self):
+        return f"Medicine: {self.id}, {self.name}, {self.composition}, {self.usage_type}, {self.indication}, {self.contraindication}"
+    

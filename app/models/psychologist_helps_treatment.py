@@ -44,3 +44,6 @@ class PsychologistHelpsTreatment(Base):
     def save(cls, psychologist_helps_treatment):
         session.add(psychologist_helps_treatment)
         session.commit()
+
+    def __str__(self):
+        return f"Psychologist Helps Treatment: {self.id}, {self.psychologist.name} - {self.treatment.name}"

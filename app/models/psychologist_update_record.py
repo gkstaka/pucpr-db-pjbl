@@ -45,3 +45,6 @@ class PsychologistUpdateRecord(Base):
     def save(cls, psychologist_update_record):
         session.add(psychologist_update_record)
         session.commit()
+
+    def __str__(self):
+        return f"Psychologist Update Record: {self.id}, {self.psychologist_id}, {self.medical_record_id}"

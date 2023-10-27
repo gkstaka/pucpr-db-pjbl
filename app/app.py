@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import func, text
+from sqlalchemy import func, text, literal_column
 from sqlalchemy.orm import aliased
 
 from models import (
@@ -1083,7 +1083,7 @@ def query_8():
 def query_9():
     doctor_person = aliased(Person)
     query = (
-        session.query(Person.sex.label("Patient sex"), func.count().label("Total"))
+        session.query(Person.sex.label("Patient sex"), doctor_person.sex.label("Doctor sex"), func.count().label("Total"))
         .join(Patient, Patient.id == Person.id)
         .join(Consultation, Consultation.patient_id == Patient.id)
         .join(Doctor, Doctor.id == Consultation.doctor_id)
@@ -1100,7 +1100,7 @@ def query_10():
     psychologist_person = aliased(Person)
 
     query = (
-        session.query(Person.sex.label("Patient sex"), func.count().label(""))
+        session.query(Person.sex.label("Patient sex"), psychologist_person.sex.label("Psychologist sex"), func.count().label(""))
         .join(Patient, Patient.id == Person.id)
         .join(Treatment, Treatment.patient_id == Person.id)
         .join(
@@ -1128,14 +1128,16 @@ def query_11():
 
 def query_12():
     doctor_person = aliased(Person)
+    psychologist_person = aliased(Person)
+    
     query = (
         session.query(
             Person.id.label("ID paciente"),
             Person.name.label("Nome"),
             Doctor.id.label("ID médico"),
-            text("Médico").label("Médico"),
+            literal_column("'Médico'").label("Médico"), 
             Psychologist.id.label("Id psicólogo"),
-            text("Psicólogo").label("Psicólogo"),
+            literal_column("'Psicólogo'").label("Psicólogo"),  
         )
         .join(Patient, Patient.id == Person.id)
         .join(Treatment, Treatment.patient_id == Patient.id)
@@ -1143,7 +1145,7 @@ def query_12():
             DoctorSuggestTreatment, DoctorSuggestTreatment.treatment_id == Treatment.id
         )
         .join(Doctor, Doctor.id == DoctorSuggestTreatment.doctor_id)
-        .join(Person, Doctor.id == Person.id)
+        .join(doctor_person, Doctor.id == doctor_person.id)  #
         .outerjoin(
             PsychologistHelpsTreatment,
             PsychologistHelpsTreatment.treatment_id == Treatment.id,
@@ -1151,7 +1153,7 @@ def query_12():
         .join(
             Psychologist, Psychologist.id == PsychologistHelpsTreatment.psychologist_id
         )
-        .join(Person, Psychologist.id == Person.id)
+        .join(psychologist_person, Psychologist.id == psychologist_person.id)  
     )
 
     results = query.all()
@@ -1299,6 +1301,7 @@ def query_20():
 
 if __name__ == "__main__":
     print("Creating database...")
+    
     # create_db()
     
     # create_people()
@@ -1324,26 +1327,26 @@ if __name__ == "__main__":
     # create_psychologist_update_record()
     # create_treatment_treats_disorder()
 
-    # query_1()
-    # query_2()
-    # query_3()
-    # query_4()
-    # query_5()
-    # query_6()
+    query_1()
+    query_2()
+    query_3()
+    query_4()
+    query_5()
+    query_6()
     query_7()
-    # query_8()
-    # query_9()
-    # query_10()
-    # query_11()
-    # query_12()
-    # query_13()
-    # query_14()
-    # query_15()
-    # query_16()
-    # query_17()
-    # query_18()
-    # query_19()
-    # query_20()
+    query_8()
+    query_9()
+    query_10()
+    query_11()
+    query_12()
+    query_13()
+    query_14()
+    query_15()
+    query_16()
+    query_17()
+    query_18()
+    query_19()
+    query_20()
 
     session.close()
 #

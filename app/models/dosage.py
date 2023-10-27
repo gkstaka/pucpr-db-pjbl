@@ -44,3 +44,6 @@ class Dosage(Base):
     def save(cls, dosage):
         session.add(dosage)
         session.commit()
+
+    def __str__(self):
+        return f"Dosage: {self.id}, {self.dose_quantity}, {self.dose_frequency}"

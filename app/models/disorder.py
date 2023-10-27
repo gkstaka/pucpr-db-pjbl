@@ -74,3 +74,6 @@ class Disorder(Base):
     def save(cls, disorder):
         session.add(disorder)
         session.commit()
+
+    def __str__(self):
+        return f"Disorder: {self.id} - {self.name} - {self.category} - {self.symptoms} - {self.risk_factors} - {self.prevalence}"

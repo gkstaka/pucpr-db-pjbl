@@ -91,3 +91,6 @@ class MedicalRecord(Base):
     def save(cls, medical_record):
         session.add(medical_record)
         session.commit()
+
+    def __str__(self):
+        return f"Medical Record: {self.id}, {self.record_date}, {self.description}, {self.patient_id}, {self.treatment_id}"

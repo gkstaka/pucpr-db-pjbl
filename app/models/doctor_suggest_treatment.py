@@ -42,3 +42,6 @@ class DoctorSuggestTreatment(Base):
     def save(cls, doctor_treatment):
         session.add(doctor_treatment)
         session.commit()
+
+    def __str__(self):
+        return f"Doctor Suggest Treatment: {self.id} - {self.doctor_id} - {self.treatment_id}"

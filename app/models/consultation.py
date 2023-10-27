@@ -54,3 +54,7 @@ class Consultation(Base):
     @classmethod
     def count_consultations(cls):
         return session.query(func.count(cls.id)).scalar()
+
+    def __str__(self):
+        return f"Consultation: {self.id} - {self.time} - {self.patient_id} - {self.doctor_id}"
+    

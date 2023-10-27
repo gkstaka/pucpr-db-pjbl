@@ -49,3 +49,6 @@ class MedicalRecordIncludedTherapy(Base):
     def save(cls, medical_record_included_therapy):
         session.add(medical_record_included_therapy)
         session.commit()
+
+    def __str__(self):
+        return f"Medical Record Included Therapy: {self.id}, {self.medical_record_id}, {self.therapy_id}"

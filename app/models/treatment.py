@@ -96,3 +96,6 @@ class Treatment(Base):
     def save(cls, treatment):
         session.add(treatment)
         session.commit()
+
+    def __str__(self):
+        return f"Treatment: {self.id}, {self.name}, {self.start_date}, {self.planned_end_date}, {self.patient}"

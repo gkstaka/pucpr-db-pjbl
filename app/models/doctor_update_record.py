@@ -43,3 +43,6 @@ class DoctorUpdateRecord(Base):
     def save(cls, doctor_update_record):
         session.add(doctor_update_record)
         session.commit()
+
+    def __str__(self):
+        return f"Doctor Update Record: {self.id}, {self.doctor_id}, {self.medical_record_id}"

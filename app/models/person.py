@@ -169,3 +169,11 @@ class Person(Base):
     def save(cls, person):
         session.add(person)
         session.commit()
+
+    def __str__(self):
+
+        return (
+            f"Person: {self.id}, {self.name}, {self.birth_date}, {self.sex}, {self.zip}, {self.cpf}, " 
+            f"{self.street}, {self.street_number}, {self.complement}, {self.neighborhood}, {self.city}, "
+            f"{self.state}, {self.country}, {self.phone}, {self.email}"
+        )

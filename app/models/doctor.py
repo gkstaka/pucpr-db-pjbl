@@ -52,3 +52,6 @@ class Doctor(Base):
     def save(cls, doctor):
         session.add(doctor)
         session.commit()
+
+    def __str__(self):
+        return f"Doctor: {self.id}, {self.crm}"

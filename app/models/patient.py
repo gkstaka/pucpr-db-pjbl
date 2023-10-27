@@ -130,3 +130,10 @@ class Patient(Base):
     @classmethod
     def count_patients(cls):
         return session.query(func.count(cls.id)).scalar()
+
+    def __str__(self):
+        return (
+            f"Patient: {self.id}, {self.weight}, {self.marital_status}, {self.profession}, {self.emergency_contact_name}, " + 
+            f"{self.emergency_contact_phone}, {self.health_insurance}, {self.hospitalization_date}"
+        )
+    

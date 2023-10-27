@@ -46,3 +46,6 @@ class Suggestion(Base):
     def save(cls, suggestion):
         session.add(suggestion)
         session.commit()
+
+    def __str__(self):
+        return f"Suggestion: {self.id}, {self.medicine_id}, {self.dosage_id}, {self.medical_record_id}"

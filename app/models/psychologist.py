@@ -53,3 +53,6 @@ class Psychologist(Base):
     def save(cls, psychologist):
         session.add(psychologist)
         session.commit()
+
+    def __str__(self):
+        return f"Psychologist: {self.id}, {self.crp}"
