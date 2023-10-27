@@ -27,12 +27,8 @@ JOIN treatment AS t ON t.id = ttd.treatment_id
 GROUP BY d.`name`;
 
 -- 7.	Encontrar a média de medicamentos tomados por total de pacientes;
-SELECT subquery.`count`/COUNT(mr.id) "Average medication per patient" 
-FROM (
-	SELECT COUNT(*) AS `count` FROM suggestion
-    ) AS subquery    
-JOIN medical_record AS mr
-GROUP BY `count`;
+SELECT COUNT(suggestion.id )/COUNT(mr.id) "Average medication taken" FROM suggestion
+JOIN medical_record mr ON mr.id = suggestion.medical_record_id ;
 
 -- 8.	Mostrar quantidade de internação separados por mês
 SELECT COUNT(p.id) , MONTH(hospitalization_date) AS `month` FROM patient AS p
