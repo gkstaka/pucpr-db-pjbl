@@ -1042,17 +1042,24 @@ def query_6():
 
 
 def query_7():
-    subquery = (
-        session.query(Suggestion.medicine_id, func.count().label("count")).select_from(Suggestion).group_by(Suggestion.medicine_id).subquery()
-    )
+    # subquery = (
+    #     session.query(Suggestion.medicine_id, func.count().label("count")).select_from(Suggestion).group_by(Suggestion.medicine_id).subquery()
+    # )
+
+    # query = (
+    #     session.query(
+    #         subquery.c["count"]
+    #         / func.count(MedicalRecord.id).label("Average medication per patient")
+    #     )
+    #     .join(MedicalRecord, MedicalRecord.id == subquery.c["medicine_id"])
+    #     .group_by(subquery.c["count"])
+    # )
 
     query = (
         session.query(
-            subquery.c["count"]
-            / func.count(MedicalRecord.id).label("Average medication per patient")
+            (func.count(Suggestion.id) / func.count(MedicalRecord.id)).label("Average medication taken")
         )
-        .join(MedicalRecord, MedicalRecord.id == subquery.c["medicine_id"])
-        .group_by(subquery.c["count"])
+        .join(MedicalRecord, MedicalRecord.id == Suggestion.medical_record_id)
     )
 
     results = query.all()
@@ -1202,9 +1209,11 @@ def query_15():
 
 
 def query_16():
+    psychologist_alias = aliased(Person)
+
     query = (
         session.query(
-            Person.name.label("Psychologist name"), Person.name.label("Patient name")
+            psychologist_alias.name.label("Psychologist name"), Person.name.label("Patient name")
         )
         .join(Patient, Patient.id == Person.id)
         .join(Treatment, Treatment.patient_id == Patient.id)
@@ -1215,9 +1224,12 @@ def query_16():
         .join(
             Psychologist, PsychologistHelpsTreatment.psychologist_id == Psychologist.id
         )
-        .join(Person, Psychologist.id == Person.id)
-        .order_by(Person.name)
+        .join(psychologist_alias, Psychologist.id == psychologist_alias.id)
+        .order_by(psychologist_alias.name)
     )
+
+    results = query.all()
+    print(results)
 
     results = query.all()
     print(results)
@@ -1255,12 +1267,12 @@ def query_19():
             Person.name.label("Nome do Psicólogo"),
             func.count(PsychologistUpdateRecord.id).label("Quantidade de Atualizações"),
         )
-        .join(Professional, Professional.id == Psychologist.id)
-        .join(Person, Person.id == Professional.id)
+        .join(Professional, Professional.id == Person.id) 
+        .join(Psychologist, Psychologist.id == Person.id) 
         .join(
-            PsychologistUpdateRecord,
-            Person.id == PsychologistUpdateRecord.psychologist_id,
-        )
+            PsychologistUpdateRecord, 
+            Psychologist.id == PsychologistUpdateRecord.psychologist_id
+        )  
         .group_by(Person.name)
         .order_by(func.count(PsychologistUpdateRecord.id).desc())
     )
@@ -1271,12 +1283,12 @@ def query_19():
 
 def query_20():
     query = (
-        session.query(
+    session.query(
             Person.name, func.count(Consultation.id).label("Consultation stats")
         )
-        .join(Doctor, Doctor.id == Professional.id)
-        .join(Person, Person.id == Professional.id)
-        .join(Consultation, Consultation.doctor_id == Doctor.id)
+        .join(Professional, Professional.id == Person.id)  # Joining with Professional using Person's ID
+        .join(Doctor, Doctor.id == Person.id)  # Joining with Doctor using Person's ID
+        .join(Consultation, Consultation.doctor_id == Doctor.id)  # Joining with Consultation using Doctor's ID
         .group_by(Person.name)
         .limit(1)
     )
@@ -1286,16 +1298,16 @@ def query_20():
 
 
 if __name__ == "__main__":
-    # print("Creating database...")
+    print("Creating database...")
     # create_db()
-    #
+    
     # create_people()
     # create_patients()
-    #
+    
     # create_professionals()
     # create_doctors()
     # create_psychologists()
-    #
+    
     # create_consultations()
     # create_disorders()
     # create_dosages()
@@ -1304,7 +1316,7 @@ if __name__ == "__main__":
     # create_therapies()
     # create_medical_record()
     # create_suggestions()
-    #
+    
     # create_doctor_suggest_treatment()
     # create_doctor_update_record()
     # create_medical_record_included_therapy()
@@ -1312,24 +1324,24 @@ if __name__ == "__main__":
     # create_psychologist_update_record()
     # create_treatment_treats_disorder()
 
-    query_1()
-    query_2()
-    query_3()
-    query_4()
-    query_5()
-    query_6()
-    # query_7()
-    query_8()
-    query_9()
-    query_10()
-    query_11()
-    query_12()
-    query_13()
-    query_14()
-    query_15()
+    # query_1()
+    # query_2()
+    # query_3()
+    # query_4()
+    # query_5()
+    # query_6()
+    query_7()
+    # query_8()
+    # query_9()
+    # query_10()
+    # query_11()
+    # query_12()
+    # query_13()
+    # query_14()
+    # query_15()
     # query_16()
-    query_17()
-    query_18()
+    # query_17()
+    # query_18()
     # query_19()
     # query_20()
 
