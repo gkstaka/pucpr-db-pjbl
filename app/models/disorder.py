@@ -1,12 +1,13 @@
-from sqlalchemy import VARCHAR, FLOAT
+from sqlalchemy import VARCHAR, FLOAT, func
 from sqlalchemy.dialects.mysql import MEDIUMINT
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+
 
 from models import Base
 from services.database import session
 
 from typing import List
-
+from datetime import datetime
 
 class Disorder(Base):
     __tablename__ = "disorder"
@@ -77,3 +78,28 @@ class Disorder(Base):
 
     def __str__(self):
         return f"Disorder: {self.id} - {self.name} - {self.category} - {self.symptoms} - {self.risk_factors} - {self.prevalence}"
+
+    @classmethod
+    def list_by_prevalence(cls):
+        return session.query(cls).order_by(cls.prevalence.desc()).all()
+
+    @classmethod
+    def count_current_treatment_disorder(cls):
+        from models import TreatmentTreatsDisorder, Treatment
+        current_datetime = datetime.now()
+
+        query = (
+            session.query(
+                cls.name.label("Transtorno"),
+                func.count(Treatment.id).label("quantidade"),
+            )
+            .join(
+                TreatmentTreatsDisorder,
+                TreatmentTreatsDisorder.treatment_id == Treatment.id,
+            )
+            .join(cls, TreatmentTreatsDisorder.disorder_id == cls.id)
+            .filter(current_datetime < Treatment.planned_end_date)
+            .group_by(cls.name)
+        )
+
+        return query.all()

@@ -1,10 +1,10 @@
 from datetime import datetime
 
-from sqlalchemy import VARCHAR, DATETIME, ForeignKey
+from sqlalchemy import VARCHAR, DATETIME, ForeignKey, func
 from sqlalchemy.dialects.mysql import MEDIUMINT
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.orm import Mapped, mapped_column, relationship, aliased
 
-from models import Base, Patient
+from models import Base
 from services.database import session
 
 from typing import List
@@ -25,7 +25,7 @@ class Treatment(Base):
         "start_date", DATETIME, nullable=False, unique=False, default=datetime.now()
     )
 
-    planned_end_date: Mapped[int] = mapped_column(
+    planned_end_date: Mapped[datetime] = mapped_column(
         "planned_end_date",
         DATETIME,
         nullable=False,
@@ -99,3 +99,43 @@ class Treatment(Base):
 
     def __str__(self):
         return f"Treatment: {self.id}, {self.name}, {self.start_date}, {self.planned_end_date}, {self.patient}"
+
+    @classmethod
+    def list_ongoing_treatments(cls):
+        return session.query(cls).filter(cls.planned_end_date > datetime.now()).all()
+
+    @classmethod
+    def group_by_disorder(cls):
+        from models import Disorder, TreatmentTreatsDisorder
+        d = aliased(Disorder)
+        ttd = aliased(TreatmentTreatsDisorder)
+        t = aliased(cls)
+
+        query = (
+            session.query(
+                d.name.label("Disorder name"), func.count(t.id).label("Treatments count")
+            )
+            .join(ttd, ttd.disorder_id == d.id)
+            .join(t, t.id == ttd.treatment_id)
+            .group_by(d.name)
+        )
+        return query.all()
+
+    @classmethod
+    def avg_treatment_duration_by_disorder(cls):
+        from models import Disorder, TreatmentTreatsDisorder
+        query = (
+            session.query(
+                Disorder.name,
+                func.avg(
+                    func.datediff(cls.planned_end_date, cls.start_date)
+                ).label("Average time"),
+            )
+            .join(
+                TreatmentTreatsDisorder,
+                TreatmentTreatsDisorder.treatment_id == Treatment.id,
+            )
+            .join(Disorder, TreatmentTreatsDisorder.disorder_id == Disorder.id)
+            .group_by(Disorder.name)
+        )
+        return query.all()

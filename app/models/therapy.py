@@ -76,9 +76,5 @@ class Therapy(Base):
     def __str__(self):
             return f"Therapy: {self.id}, {self.time}, {self.purpose}, {self.capacity}, {self.psychologist_id}"
 
-def count_total_therapies():
-    session = Session()
-    count = session.query(func.count(Therapy.id)).scalar()
-    session.close()
-    return count
+
 

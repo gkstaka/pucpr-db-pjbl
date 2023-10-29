@@ -1,8 +1,8 @@
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, func
 from sqlalchemy.dialects.mysql import MEDIUMINT
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from models import Base, Dosage
+from models import Base
 from services.database import session
 
 
@@ -49,3 +49,11 @@ class Suggestion(Base):
 
     def __str__(self):
         return f"Suggestion: {self.id}, {self.medicine_id}, {self.dosage_id}, {self.medical_record_id}"
+
+    @classmethod
+    def average_medication_taken(cls):
+        from models import MedicalRecord
+        return (
+            session.query((func.count(cls.id) / func.count(MedicalRecord.id)).label("Average medication taken"))
+            .join(MedicalRecord, MedicalRecord.id == cls.medical_record_id).scalar()
+            )

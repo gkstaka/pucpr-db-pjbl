@@ -2,7 +2,7 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.dialects.mysql import MEDIUMINT
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from models import Base, Treatment
+from models import Base
 from services.database import session
 
 

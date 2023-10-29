@@ -60,7 +60,7 @@ SELECT * FROM disorder
 ORDER BY disorder.prevalence DESC;
 
 -- 12.	Listar todos os pacientes e os profissionais (médicos e psicólogos) que os atendem;
-SELECT p.id "ID paciente", p.`name` "Nome", doc_p.id "ID médico", doc_p.`name` "Médico", psy_p.id "Id psicólogo", psy_p.`name` "Psicólogo" FROM person AS p
+/*SELECT p.id "ID paciente", p.`name` "Nome", doc_p.id "ID médico", doc_p.`name` "Médico", psy_p.id "Id psicólogo", psy_p.`name` "Psicólogo" FROM person AS p
 NATURAL JOIN patient AS pa
 JOIN treatment AS t ON t.patient_id = pa.id
 LEFT JOIN doctor_suggest_treatment AS dt ON dt.treatment_id = t.id
@@ -68,7 +68,21 @@ JOIN doctor AS d ON dt.doctor_id = d.id
 JOIN person AS doc_p ON d.id = doc_p.id
 LEFT JOIN psychologist_helps_treatment AS pht ON pht.treatment_id = t.id
 JOIN psychologist AS psy ON psy.id = pht.psychologist_id
-JOIN person AS psy_p ON psy.id = psy_p.id; 
+JOIN person AS psy_p ON psy.id = psy_p.id; */
+
+SELECT p.id "ID paciente", p.`name` "Nome", doc_p.id "ID profissional", doc_p.`name` "Nome", "Médico" AS "Tipo de profissional" FROM person AS p
+NATURAL JOIN patient AS pa
+JOIN treatment AS t ON t.patient_id = pa.id
+JOIN doctor_suggest_treatment AS dt ON dt.treatment_id = t.id
+JOIN doctor AS d ON dt.doctor_id = d.id
+JOIN person AS doc_p ON d.id = doc_p.id
+UNION
+SELECT p.id "ID paciente", p.`name` "Nome", psy_p.id "Id profissional", psy_p.`name` "Nome", "Psicólogo" AS "Tipo de profissional" FROM person AS p
+NATURAL JOIN patient AS pa
+JOIN treatment AS t ON t.patient_id = pa.id
+JOIN psychologist_helps_treatment AS pht ON pht.treatment_id = t.id
+JOIN psychologist AS psy ON psy.id = pht.psychologist_id
+JOIN person AS psy_p ON psy.id = psy_p.id;
 
 -- 13.	Calcular a média de tempo de tratamento agrupado por transtornos (avg, group by, join treatment_treats_disorder);
 SELECT d.`name`, AVG(TIMESTAMPDIFF(DAY, t.start_date, t.planned_end_date)) "Average time" FROM treatment AS t
@@ -77,7 +91,7 @@ JOIN disorder AS d ON ttd.disorder_id = d.id
 GROUP BY d.`name`;
 
 
--- 14.  Verificar quais transtornos estão sendo tratados atualmente;
+-- 14.  Verificar quantidade dos transtornos estão sendo tratados atualmente;
 SELECT d.`name` AS "Transtorno", COUNT(t.id) "quantidade" 
 FROM treatment AS t
 JOIN treatment_treats_disorder AS ttd ON ttd.treatment_id = t.id
@@ -85,16 +99,17 @@ JOIN disorder AS d ON ttd.disorder_id = d.id
 WHERE NOW() < t.planned_end_date
 GROUP BY d.`name`;
 
--- 15.	Contar os profissionais na equipe agrupado por especialização 
+-- 15.	Contar os profissionais na equipe agrupado por especialização;
 SELECT speciality "Speciality", COUNT(*) "Quantity" FROM professional GROUP BY speciality;
 
--- 16.  Listar todos os pacientes que receberam ajuda por nome do psicólogo;
-SELECT ppsy.`name` "Psychologist name", p.`name` "Patient name" FROM person AS p
+-- 16.  Contar quantidade de pacientes atendidos agrupados por psicólogo;
+SELECT ppsy.`name` "Psychologist name", COUNT(*) "Number patients" FROM person AS p
 NATURAL JOIN patient AS pt
 JOIN treatment AS t ON pt.id = t.patient_id
 JOIN psychologist_helps_treatment AS pht ON pht.treatment_id = t.id
 JOIN psychologist AS psy ON pht.psychologist_id = psy.id
 JOIN person AS ppsy ON pht.id = ppsy.id
+GROUP BY ppsy.`name`
 ORDER BY ppsy.`name`; 
 
 -- 17.	Contar pacientes de acordo com o estado civil

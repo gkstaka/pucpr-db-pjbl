@@ -1,9 +1,9 @@
 from datetime import datetime, date
 from typing import List
 
-from sqlalchemy import ForeignKey, VARCHAR, CHAR, DATE, FLOAT, DATETIME, func
+from sqlalchemy import ForeignKey, VARCHAR, CHAR, DATE, FLOAT, DATETIME, func, literal_column
 from sqlalchemy.dialects.mysql import MEDIUMINT
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.orm import Mapped, mapped_column, relationship, aliased
 
 from models import Base, Person
 from services.database import session
@@ -136,4 +136,131 @@ class Patient(Base):
             f"Patient: {self.id}, {self.weight}, {self.marital_status}, {self.profession}, {self.emergency_contact_name}, " + 
             f"{self.emergency_contact_phone}, {self.health_insurance}, {self.hospitalization_date}"
         )
-    
+
+    @classmethod
+    def hospitalization_date_monthly(cls):
+        query = (
+            session.query(
+                func.count(cls.id),
+                func.extract("month", cls.hospitalization_date).label("month"),
+            )
+            .group_by(func.extract("month", cls.hospitalization_date))
+            .order_by(func.extract("month", cls.hospitalization_date))
+        )
+        return query.all()
+        
+
+    @classmethod
+    def prefferd_doctor_sex(cls):
+        from models import Person, Consultation, Doctor
+        doctor_person = aliased(Person)
+        query = (
+            session.query(Person.sex.label("Patient sex"), doctor_person.sex.label("Doctor sex"), func.count().label("Total"))
+            .join(Patient, Patient.id == Person.id)
+            .join(Consultation, Consultation.patient_id == Patient.id)
+            .join(Doctor, Doctor.id == Consultation.doctor_id)
+            .join(doctor_person, Doctor.id == doctor_person.id)
+            .group_by(Person.sex, doctor_person.sex)
+            .order_by(Person.sex)
+        )
+
+        return query.all()
+
+    @classmethod
+    def preffered_psychologist_sex(cls):
+        from models import Person, Treatment, PsychologistHelpsTreatment, Psychologist
+        psychologist_person = aliased(Person)
+        query = (
+            session.query(Person.sex.label("Patient sex"), psychologist_person.sex.label("Psychologist sex"), func.count().label(""))
+            .join(cls, cls.id == Person.id)
+            .join(Treatment, Treatment.patient_id == Person.id)
+            .join(
+                PsychologistHelpsTreatment,
+                PsychologistHelpsTreatment.treatment_id == Treatment.id,
+            )
+            .join(
+                Psychologist, PsychologistHelpsTreatment.psychologist_id == Psychologist.id
+            )
+            .join(psychologist_person, Psychologist.id == psychologist_person.id)
+            .group_by(Person.sex, psychologist_person.sex)
+            .order_by(Person.sex)
+        )
+        return query.all()
+
+    @classmethod
+    def list_linked_professionals(cls):
+        from models import Person, Treatment, PsychologistHelpsTreatment, Psychologist, Doctor, DoctorSuggestTreatment
+        doctor_person = aliased(Person)
+        psychologist_person = aliased(Person)
+
+        doctor_query = (
+            session.query(
+                Person.id.label("ID paciente"),
+                Person.name.label("Patient name"),
+                Doctor.id.label("ID profissional"),
+                doctor_person.name.label("Professional name"),
+                literal_column("'Doctor'").label("Professional type") 
+                )
+            .join(Patient, Patient.id == Person.id)
+            .join(Treatment, Treatment.patient_id == Patient.id)
+            .join(
+                DoctorSuggestTreatment, DoctorSuggestTreatment.treatment_id == Treatment.id
+            )
+            .join(Doctor, Doctor.id == DoctorSuggestTreatment.doctor_id)
+            .join(doctor_person, Doctor.id == doctor_person.id)  
+            
+        )
+
+        psychologist_query = (
+            session.query(
+                Person.id.label("ID paciente"),
+                Person.name.label("Patient name"),
+                Psychologist.id.label("ID profissional"),
+                psychologist_person.name.label("Professional name"),
+                literal_column("'Psychologist'").label("Professional type") 
+                )
+            .join(Patient, Patient.id == Person.id)
+            .join(Treatment, Treatment.patient_id == Patient.id)
+            .join(
+                PsychologistHelpsTreatment, PsychologistHelpsTreatment.treatment_id == Treatment.id
+            )
+            .join(Psychologist, Psychologist.id == PsychologistHelpsTreatment.psychologist_id)
+            .join(psychologist_person, Psychologist.id == psychologist_person.id)  
+            
+        )
+
+        return doctor_query.union(psychologist_query).all()
+        
+        # query = (
+        #     session.query(
+        #         Person.id.label("ID paciente"),
+        #         Person.name.label("Nome"),
+        #         Doctor.id.label("ID médico"),
+        #         literal_column("'Médico'").label("Médico"), 
+        #         Psychologist.id.label("Id psicólogo"),
+        #         literal_column("'Psicólogo'").label("Psicólogo"),  
+        #     )
+        #     .join(Patient, Patient.id == Person.id)
+        #     .join(Treatment, Treatment.patient_id == Patient.id)
+        #     .outerjoin(
+        #         DoctorSuggestTreatment, DoctorSuggestTreatment.treatment_id == Treatment.id
+        #     )
+        #     .join(Doctor, Doctor.id == DoctorSuggestTreatment.doctor_id)
+        #     .join(doctor_person, Doctor.id == doctor_person.id)  #
+        #     .outerjoin(
+        #         PsychologistHelpsTreatment,
+        #         PsychologistHelpsTreatment.treatment_id == Treatment.id,
+        #     )
+        #     .join(
+        #         Psychologist, Psychologist.id == PsychologistHelpsTreatment.psychologist_id
+        #     )
+        #     .join(psychologist_person, Psychologist.id == psychologist_person.id)  
+        # )"
+
+    @classmethod
+    def count_marital_status(cls):
+        query = session.query(cls.marital_status, func.count().label("Count")).group_by(
+            cls.marital_status
+        )
+
+        return query.all()

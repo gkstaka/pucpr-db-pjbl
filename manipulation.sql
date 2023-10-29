@@ -341,7 +341,7 @@ DELETE FROM doctor_update_record WHERE id = 3;
 SET SQL_SAFE_UPDATES = 0;
 DELETE FROM consultation WHERE `time` < "2023-07-01";
 SET SQL_SAFE_UPDATES = 1;
-
+select * from consultation;
 SET FOREIGN_KEY_CHECKS = 0;
 DELETE FROM patient WHERE id = 13;
 SET FOREIGN_KEY_CHECKS = 1;
