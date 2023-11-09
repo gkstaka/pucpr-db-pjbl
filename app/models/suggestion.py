@@ -53,7 +53,13 @@ class Suggestion(Base):
     @classmethod
     def average_medication_taken(cls):
         from models import MedicalRecord
+
         return (
-            session.query((func.count(cls.id) / func.count(MedicalRecord.id)).label("Average medication taken"))
-            .join(MedicalRecord, MedicalRecord.id == cls.medical_record_id).scalar()
+            session.query(
+                (func.count(cls.id) / func.count(MedicalRecord.id)).label(
+                    "Average medication taken"
+                )
             )
+            .join(MedicalRecord, MedicalRecord.id == cls.medical_record_id)
+            .scalar()
+        )

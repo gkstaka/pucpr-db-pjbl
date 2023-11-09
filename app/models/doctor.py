@@ -59,24 +59,26 @@ class Doctor(Base):
     @classmethod
     def most_record_updates(cls):
         from models import DoctorUpdateRecord, Person, Professional
+
         query = (
-        session.query(
-            Person.name.label("Name"),
-            func.count(DoctorUpdateRecord.id).label("Medical records updated"),
+            session.query(
+                Person.name.label("Name"),
+                func.count(DoctorUpdateRecord.id).label("Medical records updated"),
+            )
+            .join(cls, cls.id == DoctorUpdateRecord.doctor_id)
+            .join(Professional, Professional.id == cls.id)
+            .join(Person, Person.id == Professional.id)
+            .group_by(cls.id)
+            .order_by(func.count(DoctorUpdateRecord.id).desc())
         )
-        .join(cls, cls.id == DoctorUpdateRecord.doctor_id)
-        .join(Professional, Professional.id == cls.id)
-        .join(Person, Person.id == Professional.id)
-        .group_by(cls.id)
-        .order_by(func.count(DoctorUpdateRecord.id).desc())
-    )
         return query.all()
 
     @classmethod
     def most_consultations(cls):
         from models import Consultation, Person
+
         query = (
-        session.query(
+            session.query(
                 Person.name, func.count(Consultation.id).label("Consultation stats")
             )
             .join(Professional, Professional.id == Person.id)

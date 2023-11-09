@@ -107,13 +107,15 @@ class Treatment(Base):
     @classmethod
     def group_by_disorder(cls):
         from models import Disorder, TreatmentTreatsDisorder
+
         d = aliased(Disorder)
         ttd = aliased(TreatmentTreatsDisorder)
         t = aliased(cls)
 
         query = (
             session.query(
-                d.name.label("Disorder name"), func.count(t.id).label("Treatments count")
+                d.name.label("Disorder name"),
+                func.count(t.id).label("Treatments count"),
             )
             .join(ttd, ttd.disorder_id == d.id)
             .join(t, t.id == ttd.treatment_id)
@@ -124,12 +126,13 @@ class Treatment(Base):
     @classmethod
     def avg_treatment_duration_by_disorder(cls):
         from models import Disorder, TreatmentTreatsDisorder
+
         query = (
             session.query(
                 Disorder.name,
-                func.avg(
-                    func.datediff(cls.planned_end_date, cls.start_date)
-                ).label("Average time"),
+                func.avg(func.datediff(cls.planned_end_date, cls.start_date)).label(
+                    "Average time"
+                ),
             )
             .join(
                 TreatmentTreatsDisorder,

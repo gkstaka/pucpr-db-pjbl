@@ -74,7 +74,4 @@ class Therapy(Base):
         return session.query(func.count(cls.id)).scalar()
 
     def __str__(self):
-            return f"Therapy: {self.id}, {self.time}, {self.purpose}, {self.capacity}, {self.psychologist_id}"
-
-
-
+        return f"Therapy: {self.id}, {self.time}, {self.purpose}, {self.capacity}, {self.psychologist_id}"

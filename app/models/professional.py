@@ -52,7 +52,7 @@ class Professional(Base):
         speciality,
         consultation_fee,
         person,
-        **kw
+        **kw,
     ):
         super().__init__(**kw)
         self.enrollment = enrollment
@@ -103,18 +103,18 @@ class Professional(Base):
 
     def __str__(self):
         return (
-            f"Professional: {self.id}, {self.enrollment}, {self.salary}, {self.start_date}, " + 
-            f" {self.working_range}, {self.speciality}, {self.consultation_fee}"
+            f"Professional: {self.id}, {self.enrollment}, {self.salary}, {self.start_date}, "
+            + f" {self.working_range}, {self.speciality}, {self.consultation_fee}"
         )
+
     @classmethod
     def list_by_salary(cls):
         return session.query(cls).order_by(cls.salary.asc()).all()
 
     @classmethod
     def count_speciality(cls):
-        query = (
-            session.query(Professional.speciality, func.count().label("Quantity"))
-            .group_by(Professional.speciality)
-        )
+        query = session.query(
+            Professional.speciality, func.count().label("Quantity")
+        ).group_by(Professional.speciality)
 
         return query.all()

@@ -57,5 +57,3 @@ class Consultation(Base):
 
     def __str__(self):
         return f"Consultation: {self.id} - {self.time} - {self.patient_id} - {self.doctor_id}"
-
- 

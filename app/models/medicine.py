@@ -73,4 +73,3 @@ class Medicine(Base):
 
     def __str__(self):
         return f"Medicine: {self.id}, {self.name}, {self.composition}, {self.usage_type}, {self.indication}, {self.contraindication}"
-    

@@ -1,7 +1,16 @@
 from datetime import datetime, date
 from typing import List
 
-from sqlalchemy import ForeignKey, VARCHAR, CHAR, DATE, FLOAT, DATETIME, func, literal_column
+from sqlalchemy import (
+    ForeignKey,
+    VARCHAR,
+    CHAR,
+    DATE,
+    FLOAT,
+    DATETIME,
+    func,
+    literal_column,
+)
 from sqlalchemy.dialects.mysql import MEDIUMINT
 from sqlalchemy.orm import Mapped, mapped_column, relationship, aliased
 
@@ -65,7 +74,7 @@ class Patient(Base):
         health_insurance,
         hospitalization_date,
         person,
-        **kw
+        **kw,
     ):
         super().__init__(**kw)
         self.weight = weight
@@ -133,8 +142,8 @@ class Patient(Base):
 
     def __str__(self):
         return (
-            f"Patient: {self.id}, {self.weight}, {self.marital_status}, {self.profession}, {self.emergency_contact_name}, " + 
-            f"{self.emergency_contact_phone}, {self.health_insurance}, {self.hospitalization_date}"
+            f"Patient: {self.id}, {self.weight}, {self.marital_status}, {self.profession}, {self.emergency_contact_name}, "
+            + f"{self.emergency_contact_phone}, {self.health_insurance}, {self.hospitalization_date}"
         )
 
     @classmethod
@@ -148,14 +157,18 @@ class Patient(Base):
             .order_by(func.extract("month", cls.hospitalization_date))
         )
         return query.all()
-        
 
     @classmethod
     def prefferd_doctor_sex(cls):
         from models import Person, Consultation, Doctor
+
         doctor_person = aliased(Person)
         query = (
-            session.query(Person.sex.label("Patient sex"), doctor_person.sex.label("Doctor sex"), func.count().label("Total"))
+            session.query(
+                Person.sex.label("Patient sex"),
+                doctor_person.sex.label("Doctor sex"),
+                func.count().label("Total"),
+            )
             .join(Patient, Patient.id == Person.id)
             .join(Consultation, Consultation.patient_id == Patient.id)
             .join(Doctor, Doctor.id == Consultation.doctor_id)
@@ -169,9 +182,14 @@ class Patient(Base):
     @classmethod
     def preffered_psychologist_sex(cls):
         from models import Person, Treatment, PsychologistHelpsTreatment, Psychologist
+
         psychologist_person = aliased(Person)
         query = (
-            session.query(Person.sex.label("Patient sex"), psychologist_person.sex.label("Psychologist sex"), func.count().label(""))
+            session.query(
+                Person.sex.label("Patient sex"),
+                psychologist_person.sex.label("Psychologist sex"),
+                func.count().label(""),
+            )
             .join(cls, cls.id == Person.id)
             .join(Treatment, Treatment.patient_id == Person.id)
             .join(
@@ -179,7 +197,8 @@ class Patient(Base):
                 PsychologistHelpsTreatment.treatment_id == Treatment.id,
             )
             .join(
-                Psychologist, PsychologistHelpsTreatment.psychologist_id == Psychologist.id
+                Psychologist,
+                PsychologistHelpsTreatment.psychologist_id == Psychologist.id,
             )
             .join(psychologist_person, Psychologist.id == psychologist_person.id)
             .group_by(Person.sex, psychologist_person.sex)
@@ -189,7 +208,15 @@ class Patient(Base):
 
     @classmethod
     def list_linked_professionals(cls):
-        from models import Person, Treatment, PsychologistHelpsTreatment, Psychologist, Doctor, DoctorSuggestTreatment
+        from models import (
+            Person,
+            Treatment,
+            PsychologistHelpsTreatment,
+            Psychologist,
+            Doctor,
+            DoctorSuggestTreatment,
+        )
+
         doctor_person = aliased(Person)
         psychologist_person = aliased(Person)
 
@@ -199,16 +226,16 @@ class Patient(Base):
                 Person.name.label("Patient name"),
                 Doctor.id.label("ID profissional"),
                 doctor_person.name.label("Professional name"),
-                literal_column("'Doctor'").label("Professional type") 
-                )
+                literal_column("'Doctor'").label("Professional type"),
+            )
             .join(Patient, Patient.id == Person.id)
             .join(Treatment, Treatment.patient_id == Patient.id)
             .join(
-                DoctorSuggestTreatment, DoctorSuggestTreatment.treatment_id == Treatment.id
+                DoctorSuggestTreatment,
+                DoctorSuggestTreatment.treatment_id == Treatment.id,
             )
             .join(Doctor, Doctor.id == DoctorSuggestTreatment.doctor_id)
-            .join(doctor_person, Doctor.id == doctor_person.id)  
-            
+            .join(doctor_person, Doctor.id == doctor_person.id)
         )
 
         psychologist_query = (
@@ -217,28 +244,31 @@ class Patient(Base):
                 Person.name.label("Patient name"),
                 Psychologist.id.label("ID profissional"),
                 psychologist_person.name.label("Professional name"),
-                literal_column("'Psychologist'").label("Professional type") 
-                )
+                literal_column("'Psychologist'").label("Professional type"),
+            )
             .join(Patient, Patient.id == Person.id)
             .join(Treatment, Treatment.patient_id == Patient.id)
             .join(
-                PsychologistHelpsTreatment, PsychologistHelpsTreatment.treatment_id == Treatment.id
+                PsychologistHelpsTreatment,
+                PsychologistHelpsTreatment.treatment_id == Treatment.id,
             )
-            .join(Psychologist, Psychologist.id == PsychologistHelpsTreatment.psychologist_id)
-            .join(psychologist_person, Psychologist.id == psychologist_person.id)  
-            
+            .join(
+                Psychologist,
+                Psychologist.id == PsychologistHelpsTreatment.psychologist_id,
+            )
+            .join(psychologist_person, Psychologist.id == psychologist_person.id)
         )
 
         return doctor_query.union(psychologist_query).all()
-        
+
         # query = (
         #     session.query(
         #         Person.id.label("ID paciente"),
         #         Person.name.label("Nome"),
         #         Doctor.id.label("ID médico"),
-        #         literal_column("'Médico'").label("Médico"), 
+        #         literal_column("'Médico'").label("Médico"),
         #         Psychologist.id.label("Id psicólogo"),
-        #         literal_column("'Psicólogo'").label("Psicólogo"),  
+        #         literal_column("'Psicólogo'").label("Psicólogo"),
         #     )
         #     .join(Patient, Patient.id == Person.id)
         #     .join(Treatment, Treatment.patient_id == Patient.id)
@@ -254,7 +284,7 @@ class Patient(Base):
         #     .join(
         #         Psychologist, Psychologist.id == PsychologistHelpsTreatment.psychologist_id
         #     )
-        #     .join(psychologist_person, Psychologist.id == psychologist_person.id)  
+        #     .join(psychologist_person, Psychologist.id == psychologist_person.id)
         # )"
 
     @classmethod

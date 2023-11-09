@@ -987,16 +987,24 @@ def create_treatment_treats_disorder():
 
     TreatmentTreatsDisorder.save_all(treatment_treats_disorder_list)
 
+
 def updates():
-    
     date_string = "2025-01-05"
     date_format = "%Y-%m-%d"
-    Treatment.update_by_column(filter_by={"id": 2}, start_date=datetime.now(), planned_end_date=datetime.strptime(date_string, date_format))
+    Treatment.update_by_column(
+        filter_by={"id": 2},
+        start_date=datetime.now(),
+        planned_end_date=datetime.strptime(date_string, date_format),
+    )
 
     date_string = "2024-03-11"
-    Consultation.update_by_column(filter_by={"id": 2}, time=datetime.strptime(date_string, date_format))
+    Consultation.update_by_column(
+        filter_by={"id": 2}, time=datetime.strptime(date_string, date_format)
+    )
 
-    Dosage.update_by_column(filter_by={"id": 4}, dose_frequency="every 8 hours", dose_quantity="150mg")
+    Dosage.update_by_column(
+        filter_by={"id": 4}, dose_frequency="every 8 hours", dose_quantity="150mg"
+    )
 
     Professional.update_by_column(filter_by={"id": 4}, salary=16000)
 
@@ -1005,15 +1013,16 @@ def updates():
 
 def deletes():
     MedicalRecordIncludedTherapy.delete_item(2)
-    
+
     Therapy.delete_item(2)
 
     DoctorUpdateRecord.delete_item(3)
-    
+
     Patient.delete_item(13)
 
     Consultation.delete_item(1)
-   
+
+
 def query_1():
     print("1. Contar quantidade total de pacientes atendidos")
     count = Patient.count_patients()
@@ -1092,6 +1101,7 @@ def query_14():
     quantity_disorder = Disorder.count_current_treatment_disorder()
     print(quantity_disorder)
 
+
 def query_15():
     count_speciality = Professional.count_speciality()
     print(count_speciality)
@@ -1124,16 +1134,16 @@ def query_20():
 
 if __name__ == "__main__":
     print("Creating database...")
-    
+
     create_db()
-    
+
     create_people()
     create_patients()
-    
+
     create_professionals()
     create_doctors()
     create_psychologists()
-    
+
     create_consultations()
     create_disorders()
     create_dosages()
@@ -1142,7 +1152,7 @@ if __name__ == "__main__":
     create_therapies()
     create_medical_record()
     create_suggestions()
-    
+
     create_doctor_suggest_treatment()
     create_doctor_update_record()
     create_medical_record_included_therapy()
@@ -1174,6 +1184,4 @@ if __name__ == "__main__":
     query_19()
     query_20()
 
-    
     session.close()
-

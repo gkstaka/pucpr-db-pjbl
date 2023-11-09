@@ -47,7 +47,9 @@ class TreatmentTreatsDisorder(Base):
         session.commit()
 
     def __str__(self):
-        return f"Treatment Treats Disorder: {self.id}, {self.treatment}, {self.disorder}"
+        return (
+            f"Treatment Treats Disorder: {self.id}, {self.treatment}, {self.disorder}"
+        )
 
 
 def update_by_id(cls, id, new_data):

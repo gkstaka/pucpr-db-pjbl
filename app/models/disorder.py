@@ -9,6 +9,7 @@ from services.database import session
 from typing import List
 from datetime import datetime
 
+
 class Disorder(Base):
     __tablename__ = "disorder"
 
@@ -86,6 +87,7 @@ class Disorder(Base):
     @classmethod
     def count_current_treatment_disorder(cls):
         from models import TreatmentTreatsDisorder, Treatment
+
         current_datetime = datetime.now()
 
         query = (

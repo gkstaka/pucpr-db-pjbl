@@ -54,13 +54,19 @@ class Base(DeclarativeBase):
 
     @classmethod
     def update_by_column(cls, filter_by: dict, **kwargs):
-        stmt = update(cls).where(and_(*[getattr(cls, k) == v for k, v in filter_by.items()])).values(**kwargs)
+        stmt = (
+            update(cls)
+            .where(and_(*[getattr(cls, k) == v for k, v in filter_by.items()]))
+            .values(**kwargs)
+        )
         session.execute(stmt)
         session.commit()
-    
+
     @classmethod
     def find_by_column(cls, **kwargs):
-        stmt = session.query(cls).where(and_(*[getattr(cls, k) == v for k, v in kwargs.items()]))
+        stmt = session.query(cls).where(
+            and_(*[getattr(cls, k) == v for k, v in kwargs.items()])
+        )
         return stmt.all()
 
     def __repr__(self):
